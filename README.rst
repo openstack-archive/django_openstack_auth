@@ -18,7 +18,7 @@ Installing is quick and easy:
  #. Add ``openstack_auth`` to ``settings.INSTALLED_APPS``.
 
  #. Add ``'keystone_auth.backend.KeystoneBackend'`` to your
-   ``settings.AUTHENTICATION_BACKENDS``, e.g.::
+    ``settings.AUTHENTICATION_BACKENDS``, e.g.::
 
         AUTHENTICATION_BACKENDS = ('keystone_auth.backend.KeystoneBackend',)
 
