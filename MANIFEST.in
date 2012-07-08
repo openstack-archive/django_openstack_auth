@@ -1,0 +1,3 @@
+recursive-include docs *.rst
+recursive-include openstack_auth/locale *
+recursive-include openstack_auth/tests/templates *.html
