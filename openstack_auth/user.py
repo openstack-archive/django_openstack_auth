@@ -76,6 +76,15 @@ class User(AnonymousUser):
     def __repr__(self):
         return "<%s: %s>" % (self.__class__.__name__, self.username)
 
+    def is_token_expired(self):
+        """
+        Returns ``True`` if the token is expired, ``False`` if not, and
+        ``None`` if there is no token set.
+        """
+        if self.token is None:
+            return None
+        return not check_token_expiration(self.token)
+
     def is_authenticated(self):
         """ Checks for a valid token that has not yet expired. """
         return self.token is not None and check_token_expiration(self.token)

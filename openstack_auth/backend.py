@@ -10,6 +10,7 @@ from keystoneclient.v2_0.tokens import Token, TokenManager
 
 from .exceptions import KeystoneAuthException
 from .user import create_user_from_token
+from .utils import check_token_expiration
 
 
 LOG = logging.getLogger(__name__)
@@ -19,6 +20,17 @@ KEYSTONE_CLIENT_ATTR = "_keystoneclient"
 
 
 class KeystoneBackend(object):
+    def check_auth_expiry(self, token):
+        if not check_token_expiration(token):
+            msg = _("The authentication token issued by the Identity service "
+                    "has expired.")
+            LOG.warning("The authentication token issued by the Identity "
+                        "service appears to have expired before it was "
+                        "issued. This may indicate a problem with either your "
+                        "server or client configuration.")
+            raise KeystoneAuthException(msg)
+        return True
+
     def get_user(self, user_id):
         if user_id == self.request.session["user_id"]:
             token = Token(TokenManager(None),
@@ -51,6 +63,9 @@ class KeystoneBackend(object):
                     "Please try again later.")
             raise KeystoneAuthException(msg)
 
+        # Check expiry for our unscoped token.
+        self.check_auth_expiry(unscoped_token)
+
         # FIXME: Log in to default tenant when the Keystone API returns it...
         # For now we list all the user's tenants and iterate through.
         try:
@@ -77,6 +92,9 @@ class KeystoneBackend(object):
         if token is None:
             msg = _("Unable to authenticate to any available projects.")
             raise KeystoneAuthException(msg)
+
+        # Check expiry for our new scoped token.
+        self.check_auth_expiry(token)
 
         # If we made it here we succeeded. Create our User!
         user = create_user_from_token(request, token, client.management_url)
