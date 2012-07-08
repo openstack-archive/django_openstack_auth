@@ -8,6 +8,10 @@ OpenStack's Keystone Identity API.
 
 The current version is designed to work with the Keystone V2 API.
 
+You can `view the documenation`_ on Read The Docs.
+
+.. _view the documentation: http://django-openstack-auth.readthedocs.org/en/latest/
+
 Installation
 ============
 
