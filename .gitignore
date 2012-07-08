@@ -2,6 +2,6 @@
 *.egg
 *.egg-info
 .DS_STORE
-doc/build
+docs/_build
 build
 dist

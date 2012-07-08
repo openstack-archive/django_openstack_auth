@@ -13,6 +13,9 @@ class Login(AuthenticationForm):
 
     Handles authentication with Keystone, choosing a tenant, and fetching
     a scoped token token for that tenant.
+
+    Inherits from the base ``django.contrib.auth.forms.AuthenticationForm``
+    class for added security features.
     """
     region = forms.ChoiceField(label=_("Region"), required=False)
     username = forms.CharField(label=_("User Name"))

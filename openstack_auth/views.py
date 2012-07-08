@@ -23,6 +23,7 @@ LOG = logging.getLogger(__name__)
 @csrf_protect
 @never_cache
 def login(request):
+    """ Logs a user in using the :class:`~openstack_auth.forms.Login` form. """
     # Get our initial region for the form.
     initial = {}
     current_region = request.session.get('region_endpoint', None)
@@ -59,11 +60,13 @@ def login(request):
 
 
 def logout(request):
+    """ Securely logs a user out. """
     return django_logout(request)
 
 
 @login_required
 def switch(request, tenant_id):
+    """ Switches an authenticated user from one tenant to another. """
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
     endpoint = request.user.endpoint

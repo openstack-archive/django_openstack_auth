@@ -20,6 +20,9 @@ KEYSTONE_CLIENT_ATTR = "_keystoneclient"
 
 
 class KeystoneBackend(object):
+    """
+    Django authentication backend class for use with ``django.contrib.auth``.
+    """
     def check_auth_expiry(self, token):
         if not check_token_expiration(token):
             msg = _("The authentication token issued by the Identity service "
@@ -32,6 +35,13 @@ class KeystoneBackend(object):
         return True
 
     def get_user(self, user_id):
+        """
+        Returns the current user (if authenticated) based on the user ID
+        and session data.
+
+        Note: this required monkey-patching the ``contrib.auth`` middleware
+        to make the ``request`` object available to the auth backend class.
+        """
         if user_id == self.request.session["user_id"]:
             token = Token(TokenManager(None),
                           self.request.session['token'],

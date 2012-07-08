@@ -43,6 +43,10 @@ def patch_middleware_get_user():
 
 
 def check_token_expiration(token):
+    """ Timezone-aware checking of the auth token's expiration timestamp.
+
+    Returns ``True`` if the token has not yet expired, otherwise ``False``.
+    """
     expiration = parse_datetime(token.expires)
     if settings.USE_TZ and timezone.is_naive(expiration):
         # Presumes that the Keystone is using UTC.
