@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-08 18:01-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: backend.py:28
+msgid "The authentication token issued by the Identity service has expired."
+msgstr ""
+
+#: backend.py:69
+msgid "Invalid user name or password."
+msgstr ""
+
+#: backend.py:72
+msgid "An error occurred authenticating. Please try again later."
+msgstr ""
+
+#: backend.py:84
+msgid "Unable to retrieve authorized projects."
+msgstr ""
+
+#: backend.py:89
+msgid "You are not authorized for any projects."
+msgstr ""
+
+#: backend.py:103
+msgid "Unable to authenticate to any available projects."
+msgstr ""
+
+#: forms.py:20
+msgid "Region"
+msgstr ""
+
+#: forms.py:21
+msgid "User Name"
+msgstr ""
+
+#: forms.py:22
+msgid "Password"
+msgstr ""
