@@ -115,7 +115,8 @@ class User(AnonymousUser):
                                                 auth_url=endpoint,
                                                 token=token.id)
                 authd = client.tenants.list()
-            except keystone_exceptions.ClientException:
+            except (keystone_exceptions.ClientException,
+                    keystone_exceptions.AuthorizationFailure):
                 authd = []
             self._authorized_tenants = authd
         return self._authorized_tenants or []

@@ -68,7 +68,8 @@ class KeystoneBackend(object):
         except keystone_exceptions.Unauthorized:
             msg = _('Invalid user name or password.')
             raise KeystoneAuthException(msg)
-        except keystone_exceptions.ClientException:
+        except (keystone_exceptions.ClientException,
+                keystone_exceptions.AuthorizationFailure):
             msg = _("An error occurred authenticating. "
                     "Please try again later.")
             raise KeystoneAuthException(msg)
@@ -80,7 +81,8 @@ class KeystoneBackend(object):
         # For now we list all the user's tenants and iterate through.
         try:
             tenants = client.tenants.list()
-        except keystone_exceptions.ClientException:
+        except (keystone_exceptions.ClientException,
+                keystone_exceptions.AuthorizationFailure):
             msg = _('Unable to retrieve authorized projects.')
             raise KeystoneAuthException(msg)
 
@@ -96,7 +98,8 @@ class KeystoneBackend(object):
                                                    token=unscoped_token.id,
                                                    tenant_id=tenant.id)
                 break
-            except keystone_exceptions.ClientException:
+            except (keystone_exceptions.ClientException,
+                    keystone_exceptions.AuthorizationFailure):
                 token = None
 
         if token is None:
