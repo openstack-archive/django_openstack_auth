@@ -89,6 +89,12 @@ class User(AnonymousUser):
         """ Checks for a valid token that has not yet expired. """
         return self.token is not None and check_token_expiration(self.token)
 
+    def is_anonymous(self):
+        """
+        Returns ``True`` if the user is not authenticated,``False`` otherwise.
+        """
+        return not self.is_authenticated()
+
     @property
     def is_active(self):
         return self.enabled
@@ -99,10 +105,7 @@ class User(AnonymousUser):
         Evaluates whether this user has admin privileges. Returns
         ``True`` or ``False``.
         """
-        for role in self.roles:
-            if role['name'].lower() == 'admin':
-                return True
-        return False
+        return 'admin' in [role['name'].lower() for role in self.roles]
 
     @property
     def authorized_tenants(self):
