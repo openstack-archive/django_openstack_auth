@@ -2,6 +2,7 @@ import logging
 
 from django import shortcuts
 from django.conf import settings
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import (login as django_login,
                                        logout_then_login as django_logout)
 from django.contrib.auth.decorators import login_required
@@ -37,12 +38,13 @@ def login(request):
     else:
         form = curry(Login, initial=initial)
 
+    extra_context = {'redirect_field_name': REDIRECT_FIELD_NAME}
+
     if request.is_ajax():
         template_name = 'auth/_login.html'
-        extra_context = {'hide': True}
+        extra_context['hide'] = True
     else:
         template_name = 'auth/login.html'
-        extra_context = {}
 
     res = django_login(request,
                        template_name=template_name,
