@@ -1,15 +1,20 @@
+import hashlib
+
 from django.contrib.auth.models import AnonymousUser
 
 from keystoneclient.v2_0 import client as keystone_client
 from keystoneclient import exceptions as keystone_exceptions
 
-from .utils import check_token_expiration
+from .utils import check_token_expiration, is_ans1_token
 
 
 def set_session_from_user(request, user):
     request.session['serviceCatalog'] = user.service_catalog
     request.session['tenant'] = user.tenant_name
     request.session['tenant_id'] = user.tenant_id
+    if is_ans1_token(user.token.id):
+        hashed_token = hashlib.md5(user.token.id).hexdigest()
+        user.token._info['token']['id'] = hashed_token
     request.session['token'] = user.token._info
     request.session['username'] = user.username
     request.session['user_id'] = user.id
