@@ -1,5 +1,6 @@
 """ Module defining the Django auth backend class for the Keystone API. """
 
+import hashlib
 import logging
 
 from django.utils.translation import ugettext as _
@@ -10,7 +11,7 @@ from keystoneclient.v2_0.tokens import Token, TokenManager
 
 from .exceptions import KeystoneAuthException
 from .user import create_user_from_token
-from .utils import check_token_expiration
+from .utils import check_token_expiration, is_ans1_token
 
 
 LOG = logging.getLogger(__name__)
@@ -113,6 +114,9 @@ class KeystoneBackend(object):
         user = create_user_from_token(request, token, client.management_url)
 
         if request is not None:
+            if is_ans1_token(unscoped_token.id):
+                hashed_token = hashlib.md5(unscoped_token.id).hexdigest()
+                unscoped_token._info['token']['id'] = hashed_token
             request.session['unscoped_token'] = unscoped_token.id
             request.user = user
 
