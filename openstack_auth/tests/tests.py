@@ -198,5 +198,5 @@ class OpenStackAuthTests(test.TestCase):
         response = self.client.get(url, form_data)
 
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
-        self.assertEqual(self.client.session['tenant_id'],
+        self.assertEqual(self.client.session['token']['token']['tenant']['id'],
                          scoped.tenant['id'])

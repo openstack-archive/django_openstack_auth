@@ -66,7 +66,9 @@ class KeystoneBackend(object):
             unscoped_token = Token(TokenManager(None),
                                    unscoped_token_data,
                                    loaded=True)
-        except keystone_exceptions.Unauthorized:
+        except (keystone_exceptions.Unauthorized,
+                keystone_exceptions.Forbidden,
+                keystone_exceptions.NotFound):
             msg = _('Invalid user name or password.')
             raise KeystoneAuthException(msg)
         except (keystone_exceptions.ClientException,
