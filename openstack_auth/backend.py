@@ -97,6 +97,9 @@ class KeystoneBackend(object):
         while tenants:
             tenant = tenants.pop()
             try:
+                client = keystone_client.Client(tenant_id=tenant.id,
+                                                token=unscoped_token.id,
+                                                auth_url=auth_url)
                 token = client.tokens.authenticate(username=username,
                                                    token=unscoped_token.id,
                                                    tenant_id=tenant.id)
@@ -113,7 +116,9 @@ class KeystoneBackend(object):
         self.check_auth_expiry(token)
 
         # If we made it here we succeeded. Create our User!
-        user = create_user_from_token(request, token, client.management_url)
+        user = create_user_from_token(request,
+                                      token,
+                                      client.service_catalog.url_for())
 
         if request is not None:
             if is_ans1_token(unscoped_token.id):

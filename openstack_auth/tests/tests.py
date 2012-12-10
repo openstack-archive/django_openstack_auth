@@ -41,6 +41,10 @@ class OpenStackAuthTests(test.TestCase):
                       username=user.name,
                       tenant_id=None).AndReturn(self.keystone_client)
         self.keystone_client.tenants.list().AndReturn(tenants)
+        client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                      tenant_id=self.data.tenant_two.id,
+                      token=sc.get_token()['id']) \
+                .AndReturn(self.keystone_client)
         self.keystone_client.tokens.authenticate(tenant_id=tenants[1].id,
                                                  token=sc.get_token()['id'],
                                                  username=user.name) \
@@ -172,7 +176,12 @@ class OpenStackAuthTests(test.TestCase):
                                                  username=user.name) \
                             .AndReturn(scoped)
 
-        client.Client(endpoint=settings.OPENSTACK_KEYSTONE_URL) \
+        client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                      tenant_id=self.data.tenant_two.id,
+                      token=sc.get_token()['id']) \
+                .AndReturn(self.keystone_client)
+
+        client.Client(endpoint=sc.url_for()) \
                 .AndReturn(self.keystone_client)
 
         self.keystone_client.tokens.authenticate(tenant_id=tenant.id,

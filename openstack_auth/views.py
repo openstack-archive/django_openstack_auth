@@ -55,8 +55,9 @@ def login(request):
     # will erase it if we set it earlier.
     if request.user.is_authenticated():
         set_session_from_user(request, request.user)
+        regions = dict(Login.get_region_choices())
         region = request.user.endpoint
-        region_name = dict(Login.get_region_choices()).get(region)
+        region_name = regions.get(region)
         request.session['region_endpoint'] = region
         request.session['region_name'] = region_name
     return res

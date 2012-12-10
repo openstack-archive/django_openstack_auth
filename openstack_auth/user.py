@@ -1,4 +1,5 @@
 import hashlib
+import logging
 
 from django.contrib.auth.models import AnonymousUser
 
@@ -6,6 +7,9 @@ from keystoneclient.v2_0 import client as keystone_client
 from keystoneclient import exceptions as keystone_exceptions
 
 from .utils import check_token_expiration, is_ans1_token
+
+
+LOG = logging.getLogger(__name__)
 
 
 def set_session_from_user(request, user):
@@ -117,11 +121,10 @@ class User(AnonymousUser):
                 client = keystone_client.Client(username=self.username,
                                                 auth_url=endpoint,
                                                 token=token.id)
-                authd = client.tenants.list()
+                self._authorized_tenants = client.tenants.list()
             except (keystone_exceptions.ClientException,
                     keystone_exceptions.AuthorizationFailure):
-                authd = []
-            self._authorized_tenants = authd
+                LOG.exception('Unable to retrieve tenant list.')
         return self._authorized_tenants or []
 
     @authorized_tenants.setter

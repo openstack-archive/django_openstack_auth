@@ -43,7 +43,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'django >= 1.4',
-        'python-keystoneclient'
+        'python-keystoneclient >= 0.2'
     ],
     tests_require=[
         'mox',
