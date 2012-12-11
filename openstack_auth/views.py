@@ -1,5 +1,7 @@
 import logging
 
+from threading import Thread
+
 from django import shortcuts
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -64,8 +66,24 @@ def login(request):
 
 
 def logout(request):
+    if 'token_list' in request.session:
+        t = Thread(target=delete_all_tokens,
+                   args=(list(request.session['token_list']),))
+        t.start()
     """ Securely logs a user out. """
     return django_logout(request)
+
+
+def delete_all_tokens(token_list):
+    for token_tuple in token_list:
+        try:
+            endpoint = token_tuple[0]
+            token = token_tuple[1]
+            client = keystone_client.Client(endpoint=endpoint)
+            client.tokens.delete(token=token)
+        except keystone_exceptions.ClientException as e:
+            LOG.error('Could not delete token for user "%s" at the endpoint'
+                      ' "%s".' % (request.user.username, endpoint))
 
 
 @login_required

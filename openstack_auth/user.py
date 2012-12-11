@@ -16,6 +16,10 @@ def set_session_from_user(request, user):
     if is_ans1_token(user.token.id):
         hashed_token = hashlib.md5(user.token.id).hexdigest()
         user.token._info['token']['id'] = hashed_token
+    if 'token_list' not in request.session:
+        request.session['token_list'] = []
+    token_tuple = (user.endpoint, user.token.id)
+    request.session['token_list'].append(token_tuple)
     request.session['token'] = user.token._info
     request.session['user_id'] = user.id
     request.session['region_endpoint'] = user.endpoint
