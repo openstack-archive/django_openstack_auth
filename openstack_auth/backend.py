@@ -3,6 +3,7 @@
 import hashlib
 import logging
 
+from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from keystoneclient.v2_0 import client as keystone_client
@@ -57,24 +58,29 @@ class KeystoneBackend(object):
         """ Authenticates a user via the Keystone Identity API. """
         LOG.debug('Beginning user authentication for user "%s".' % username)
 
+        insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
+
         try:
             client = keystone_client.Client(username=username,
                                             password=password,
                                             tenant_id=tenant,
-                                            auth_url=auth_url)
+                                            auth_url=auth_url,
+                                            insecure=insecure)
             unscoped_token_data = {"token": client.service_catalog.get_token()}
             unscoped_token = Token(TokenManager(None),
                                    unscoped_token_data,
                                    loaded=True)
         except (keystone_exceptions.Unauthorized,
                 keystone_exceptions.Forbidden,
-                keystone_exceptions.NotFound):
+                keystone_exceptions.NotFound) as exc:
             msg = _('Invalid user name or password.')
+            LOG.debug(exc.message)
             raise KeystoneAuthException(msg)
         except (keystone_exceptions.ClientException,
-                keystone_exceptions.AuthorizationFailure):
+                keystone_exceptions.AuthorizationFailure) as exc:
             msg = _("An error occurred authenticating. "
                     "Please try again later.")
+            LOG.debug(exc.message)
             raise KeystoneAuthException(msg)
 
         # Check expiry for our unscoped token.
@@ -99,7 +105,8 @@ class KeystoneBackend(object):
             try:
                 client = keystone_client.Client(tenant_id=tenant.id,
                                                 token=unscoped_token.id,
-                                                auth_url=auth_url)
+                                                auth_url=auth_url,
+                                                insecure=insecure)
                 token = client.tokens.authenticate(username=username,
                                                    token=unscoped_token.id,
                                                    tenant_id=tenant.id)
