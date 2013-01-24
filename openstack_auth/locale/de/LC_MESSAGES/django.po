@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Matthias Runge <mrunge@redhat.com>, 2013
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-24 10:22+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Matthias Runge <mrunge@redhat.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: backend.py:30
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "Das Authentifizierungs-Token ist abgelaufen."
+
+#: backend.py:76
+msgid "Invalid user name or password."
+msgstr "Ungültiger Benutzername oder ungültiges Passwort."
+
+#: backend.py:81
+msgid "An error occurred authenticating. Please try again later."
+msgstr ""
+"Während der Authentifizierung ist ein Fehler aufgetreten"
+"Bitte versuchen Sie es später noch einmal"
+
+#: backend.py:95
+msgid "Unable to retrieve authorized projects."
+msgstr ""
+
+#: backend.py:100
+msgid "You are not authorized for any projects."
+msgstr "Sie sind für kein Projekt berechtigt."
+
+#: backend.py:119
+msgid "Unable to authenticate to any available projects."
+msgstr ""
+
+#: forms.py:20
+msgid "Region"
+msgstr "Region"
+
+#: forms.py:21
+msgid "User Name"
+msgstr "Benutzername"
+
+#: forms.py:22
+msgid "Password"
+msgstr "Passwort"
