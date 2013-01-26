@@ -82,8 +82,7 @@ def delete_all_tokens(token_list):
             client = keystone_client.Client(endpoint=endpoint)
             client.tokens.delete(token=token)
         except keystone_exceptions.ClientException as e:
-            LOG.error('Could not delete token for user "%s" at the endpoint'
-                      ' "%s".' % (request.user.username, endpoint))
+            LOG.error('Could not delete token')
 
 
 @login_required
