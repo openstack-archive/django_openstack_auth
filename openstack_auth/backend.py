@@ -4,7 +4,7 @@ import hashlib
 import logging
 
 from django.conf import settings
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from keystoneclient.v2_0 import client as keystone_client
 from keystoneclient import exceptions as keystone_exceptions
