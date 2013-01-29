@@ -79,7 +79,8 @@ def delete_all_tokens(token_list):
         try:
             endpoint = token_tuple[0]
             token = token_tuple[1]
-            client = keystone_client.Client(endpoint=endpoint)
+            client = keystone_client.Client(endpoint=endpoint,
+                                            token=token)
             client.tokens.delete(token=token)
         except keystone_exceptions.ClientException as e:
             LOG.error('Could not delete token')
