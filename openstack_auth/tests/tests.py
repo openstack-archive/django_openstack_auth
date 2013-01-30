@@ -39,10 +39,12 @@ class OpenStackAuthTests(test.TestCase):
         client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
                       password=user.password,
                       username=user.name,
+                      insecure=False,
                       tenant_id=None).AndReturn(self.keystone_client)
         self.keystone_client.tenants.list().AndReturn(tenants)
         client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
                       tenant_id=self.data.tenant_two.id,
+                      insecure=False,
                       token=sc.get_token()['id']) \
                 .AndReturn(self.keystone_client)
         self.keystone_client.tokens.authenticate(tenant_id=tenants[1].id,
@@ -75,6 +77,7 @@ class OpenStackAuthTests(test.TestCase):
         client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
                       password=user.password,
                       username=user.name,
+                      insecure=False,
                       tenant_id=None).AndReturn(self.keystone_client)
         self.keystone_client.tenants.list().AndReturn([])
 
@@ -105,6 +108,7 @@ class OpenStackAuthTests(test.TestCase):
         client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
                       password="invalid",
                       username=user.name,
+                      insecure=False,
                       tenant_id=None).AndRaise(exc)
 
         self.mox.ReplayAll()
@@ -133,6 +137,7 @@ class OpenStackAuthTests(test.TestCase):
         client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
                       password=user.password,
                       username=user.name,
+                      insecure=False,
                       tenant_id=None).AndRaise(exc)
 
         self.mox.ReplayAll()
@@ -169,6 +174,7 @@ class OpenStackAuthTests(test.TestCase):
         client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
                       password=user.password,
                       username=user.name,
+                      insecure=False,
                       tenant_id=None).AndReturn(self.keystone_client)
         self.keystone_client.tenants.list().AndReturn(tenants)
         self.keystone_client.tokens.authenticate(tenant_id=tenants[1].id,
@@ -178,6 +184,7 @@ class OpenStackAuthTests(test.TestCase):
 
         client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
                       tenant_id=self.data.tenant_two.id,
+                      insecure=False,
                       token=sc.get_token()['id']) \
                 .AndReturn(self.keystone_client)
 
