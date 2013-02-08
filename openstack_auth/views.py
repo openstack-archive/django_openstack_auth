@@ -83,7 +83,7 @@ def delete_all_tokens(token_list):
                                             token=token)
             client.tokens.delete(token=token)
         except keystone_exceptions.ClientException as e:
-            LOG.error('Could not delete token')
+            LOG.info('Could not delete token')
 
 
 @login_required
