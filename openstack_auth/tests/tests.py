@@ -1,5 +1,6 @@
 from django import test
 from django.conf import settings
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
 
 from keystoneclient import exceptions as keystone_exceptions
@@ -156,7 +157,7 @@ class OpenStackAuthTests(test.TestCase):
                             ("An error occurred authenticating. Please try "
                              "again later."))
 
-    def test_switch(self):
+    def test_switch(self, next=None):
         tenant = self.data.tenant_two
         tenants = [self.data.tenant_one, self.data.tenant_two]
         user = self.data.user
@@ -211,8 +212,19 @@ class OpenStackAuthTests(test.TestCase):
         sc.catalog['token']['id'] = self.data.tenant_two.id
 
         form_data['tenant_id'] = tenant.id
+
+        if next:
+            form_data.update({REDIRECT_FIELD_NAME: next})
+
         response = self.client.get(url, form_data)
 
-        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+        if next:
+            expected_url = 'http://testserver%s' % next
+            self.assertEqual(response['location'], expected_url)
+        else:
+            self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
         self.assertEqual(self.client.session['token']['token']['tenant']['id'],
                          scoped.tenant['id'])
+
+    def test_switch_with_next(self):
+        self.test_switch(next='/next_url')
