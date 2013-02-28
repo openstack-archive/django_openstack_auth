@@ -10,6 +10,7 @@ from django.contrib.auth.views import (login as django_login,
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.functional import curry
+from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
@@ -87,7 +88,7 @@ def delete_all_tokens(token_list):
 
 
 @login_required
-def switch(request, tenant_id):
+def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     """ Switches an authenticated user from one tenant to another. """
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
@@ -99,7 +100,14 @@ def switch(request, tenant_id):
     except keystone_exceptions.ClientException:
         token = None
         LOG.exception('An error occurred while switching sessions.')
+
+    # Ensure the user-originating redirection url is safe.
+    # Taken from django.contrib.auth.views.login()
+    redirect_to = request.REQUEST.get(redirect_field_name, '')
+    if not is_safe_url(url=redirect_to, host=request.get_host()):
+        redirect_to = settings.LOGIN_REDIRECT_URL
+
     if token:
         user = create_user_from_token(request, token, endpoint)
         set_session_from_user(request, user)
-    return shortcuts.redirect(settings.LOGIN_REDIRECT_URL)
+    return shortcuts.redirect(redirect_to)
