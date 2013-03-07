@@ -142,3 +142,53 @@ class User(AnonymousUser):
     def delete(*args, **kwargs):
         # Presume we can't write to Keystone.
         pass
+
+    # Check for OR'd permission rules, check that user has one of the
+    # required permission.
+    def has_a_matching_perm(self, perm_list, obj=None):
+        """
+        Returns True if the user has one of the specified permissions. If
+        object is passed, it checks if the user has any of the required perms
+        for this object.
+        """
+        # If there are no permissions to check, just return true
+        if not perm_list:
+            return True
+        # Check that user has at least one of the required permissions.
+        for perm in perm_list:
+            if self.has_perm(perm, obj):
+                return True
+        return False
+
+    # Override the default has_perms method. Allowing for more
+    # complex combinations of permissions.  Will check for logical AND of
+    # all top level permissions.  Will use logical OR for all first level
+    # tuples (check that use has one permissions in the tuple)
+    #
+    # Examples:
+    #   Checks for all required permissions
+    #   ('openstack.roles.admin', 'openstack.roles.L3-support')
+    #
+    #   Checks for admin AND (L2 or L3)
+    #   ('openstack.roles.admin', ('openstack.roles.L3-support',
+    #                              'openstack.roles.L2-support'),)
+    def has_perms(self, perm_list, obj=None):
+        """
+        Returns True if the user has all of the specified permissions.
+        Tuples in the list will possess the required permissions if
+        the user has a permissions matching one of the elements of
+        that tuple
+        """
+        # If there are no permissions to check, just return true
+        if not perm_list:
+            return True
+        for perm in perm_list:
+            if isinstance(perm, basestring):
+                # check that the permission matches
+                if not self.has_perm(perm, obj):
+                    return False
+            else:
+                # check that a permission in the tuple matches
+                if not self.has_a_matching_perm(perm, obj):
+                    return False
+        return True
