@@ -1,3 +1,5 @@
+import urlparse
+
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import AnonymousUser
@@ -103,3 +105,19 @@ def is_ans1_token(token):
     therefore, we will check for MII only and ignore the case of larger tokens
     '''
     return token[:3] == PKI_ANS1_PREFIX
+
+
+# From django.contrib.auth.views
+# Added in Django 1.4.3, 1.5b2
+# Vendored here for compatibility with old Django versions.
+def is_safe_url(url, host=None):
+    """
+    Return ``True`` if the url is a safe redirection (i.e. it doesn't point to
+    a different host).
+
+    Always returns ``False`` on an empty url.
+    """
+    if not url:
+        return False
+    netloc = urlparse.urlparse(url)[1]
+    return not netloc or netloc == host

@@ -10,9 +10,13 @@ from django.contrib.auth.views import (login as django_login,
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.functional import curry
-from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+
+try:
+    from django.utils.http import is_safe_url
+except ImportError:
+    from .utils import is_safe_url
 
 from keystoneclient.v2_0 import client as keystone_client
 from keystoneclient import exceptions as keystone_exceptions
