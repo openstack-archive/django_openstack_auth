@@ -68,6 +68,7 @@ class User(AnonymousUser):
                     service_catalog=None, tenant_name=None, roles=None,
                     authorized_tenants=None, endpoint=None, enabled=False):
         self.id = id
+        self.pk = id
         self.token = token
         self.username = user
         self.tenant_id = tenant_id
