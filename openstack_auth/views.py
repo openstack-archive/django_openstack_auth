@@ -80,12 +80,14 @@ def logout(request):
 
 
 def delete_all_tokens(token_list):
+    insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     for token_tuple in token_list:
         try:
             endpoint = token_tuple[0]
             token = token_tuple[1]
             client = keystone_client.Client(endpoint=endpoint,
-                                            token=token)
+                                            token=token,
+                                            insecure=insecure)
             client.tokens.delete(token=token)
         except keystone_exceptions.ClientException as e:
             LOG.info('Could not delete token')
@@ -96,8 +98,10 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     """ Switches an authenticated user from one tenant to another. """
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
+    insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     endpoint = request.user.endpoint
-    client = keystone_client.Client(endpoint=endpoint)
+    client = keystone_client.Client(endpoint=endpoint,
+                                    insecure=insecure)
     try:
         token = client.tokens.authenticate(tenant_id=tenant_id,
                                         token=request.user.token.id)
