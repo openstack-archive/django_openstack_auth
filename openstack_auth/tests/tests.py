@@ -189,7 +189,8 @@ class OpenStackAuthTests(test.TestCase):
                       token=sc.get_token()['id']) \
                 .AndReturn(self.keystone_client)
 
-        client.Client(endpoint=sc.url_for()) \
+        client.Client(endpoint=sc.url_for(),
+                      insecure=False) \
                 .AndReturn(self.keystone_client)
 
         self.keystone_client.tokens.authenticate(tenant_id=tenant.id,
