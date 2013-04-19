@@ -2,6 +2,7 @@ import hashlib
 import logging
 
 from django.contrib.auth.models import AnonymousUser
+from django.conf import settings
 
 from keystoneclient.v2_0 import client as keystone_client
 from keystoneclient import exceptions as keystone_exceptions
@@ -118,13 +119,16 @@ class User(AnonymousUser):
     @property
     def authorized_tenants(self):
         """ Returns a memoized list of tenants this user may access. """
+        insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
+
         if self.is_authenticated() and self._authorized_tenants is None:
             endpoint = self.endpoint
             token = self.token
             try:
                 client = keystone_client.Client(username=self.username,
                                                 auth_url=endpoint,
-                                                token=token.id)
+                                                token=token.id,
+                                                insecure=insecure)
                 self._authorized_tenants = client.tenants.list()
             except (keystone_exceptions.ClientException,
                     keystone_exceptions.AuthorizationFailure):
