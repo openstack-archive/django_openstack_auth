@@ -1,3 +1,5 @@
+import logging
+
 from django import forms
 from django.conf import settings
 from django.contrib.auth import authenticate
@@ -6,6 +8,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_variables
 
 from .exceptions import KeystoneAuthException
+
+
+LOG = logging.getLogger(__name__)
 
 
 class Login(AuthenticationForm):
@@ -55,7 +60,13 @@ class Login(AuthenticationForm):
                                            password=password,
                                            tenant=tenant,
                                            auth_url=region)
+            msg = 'Login successful for user "%(username)s".' % \
+                {'username': username}
+            LOG.info(msg)
         except KeystoneAuthException as exc:
+            msg = 'Login failed for user "%(username)s".' % \
+                {'username': username}
+            LOG.warning(msg)
             self.request.session.flush()
             raise forms.ValidationError(exc)
         self.check_for_test_cookie()
