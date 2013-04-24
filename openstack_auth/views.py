@@ -71,6 +71,7 @@ def login(request):
 
 
 def logout(request):
+    LOG.info('User logging out.')
     if 'token_list' in request.session:
         t = Thread(target=delete_all_tokens,
                    args=(list(request.session['token_list']),))
@@ -105,7 +106,9 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     try:
         token = client.tokens.authenticate(tenant_id=tenant_id,
                                         token=request.user.token.id)
+        LOG.info('Token rescoping successful.')
     except keystone_exceptions.ClientException:
+        LOG.warning('Token rescoping failed.')
         token = None
         LOG.exception('An error occurred while switching sessions.')
 
