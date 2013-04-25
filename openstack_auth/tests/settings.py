@@ -24,4 +24,4 @@ ROOT_URLCONF = 'openstack_auth.tests.urls'
 
 LOGIN_REDIRECT_URL = '/'
 
-SECERT_KEY = 'badcafe'
+SECRET_KEY = 'badcafe'
