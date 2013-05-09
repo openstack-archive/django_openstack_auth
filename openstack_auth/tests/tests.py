@@ -229,3 +229,69 @@ class OpenStackAuthTests(test.TestCase):
 
     def test_switch_with_next(self):
         self.test_switch(next='/next_url')
+
+    def test_switch_region(self, next=None):
+        tenant = self.data.tenant_one
+        tenants = [self.data.tenant_one, self.data.tenant_two]
+        user = self.data.user
+        scoped = self.data.scoped_token
+        sc = self.data.service_catalog
+
+        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
+                     'username': user.name,
+                     'password': user.password}
+
+        self.mox.StubOutWithMock(client, "Client")
+        self.mox.StubOutWithMock(self.keystone_client.tenants, "list")
+        self.mox.StubOutWithMock(self.keystone_client.tokens, "authenticate")
+
+        client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                      password=user.password,
+                      username=user.name,
+                      insecure=False,
+                      tenant_id=None).AndReturn(self.keystone_client)
+        self.keystone_client.tenants.list().AndReturn(tenants)
+        self.keystone_client.tokens.authenticate(tenant_id=tenants[1].id,
+                                                 token=sc.get_token()['id'],
+                                                 username=user.name) \
+                            .AndReturn(scoped)
+
+        client.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                      tenant_id=self.data.tenant_two.id,
+                      insecure=False,
+                      token=sc.get_token()['id']) \
+                .AndReturn(self.keystone_client)
+
+        self.mox.ReplayAll()
+
+        url = reverse('login')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        old_region = sc.get_endpoints()['compute'][0]['region']
+        self.assertEqual(self.client.session['services_region'], old_region)
+
+        region = sc.get_endpoints()['compute'][1]['region']
+        url = reverse('switch_services_region', args=[region])
+
+        form_data['region_name'] = region
+
+        if next:
+            form_data.update({REDIRECT_FIELD_NAME: next})
+
+        response = self.client.get(url, form_data)
+
+        if next:
+            expected_url = 'http://testserver%s' % next
+            self.assertEqual(response['location'], expected_url)
+        else:
+            self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        self.assertEqual(self.client.session['services_region'], region)
+
+    def test_switch_region_with_next(self, next=None):
+        self.test_switch_region(next='/next_url')

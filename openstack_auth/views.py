@@ -122,3 +122,21 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
         user = create_user_from_token(request, token, endpoint)
         set_session_from_user(request, user)
     return shortcuts.redirect(redirect_to)
+
+
+def switch_region(request, region_name,
+                  redirect_field_name=REDIRECT_FIELD_NAME):
+    """
+    Switches the non-identity services region that is being managed
+    for the scoped project.
+    """
+    if region_name in request.user.available_services_regions:
+        request.session['services_region'] = region_name
+        LOG.debug('Switching services region to %s for user "%s".'
+                  % (region_name, request.user.username))
+
+    redirect_to = request.REQUEST.get(redirect_field_name, '')
+    if not is_safe_url(url=redirect_to, host=request.get_host()):
+        redirect_to = settings.LOGIN_REDIRECT_URL
+
+    return shortcuts.redirect(redirect_to)

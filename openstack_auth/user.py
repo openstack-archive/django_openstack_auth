@@ -24,9 +24,10 @@ def set_session_from_user(request, user):
     request.session['token'] = user.token._info
     request.session['user_id'] = user.id
     request.session['region_endpoint'] = user.endpoint
+    request.session['services_region'] = user.services_region
 
 
-def create_user_from_token(request, token, endpoint):
+def create_user_from_token(request, token, endpoint, services_region=None):
     return User(id=token.user['id'],
                 token=token,
                 user=token.user['name'],
@@ -35,7 +36,8 @@ def create_user_from_token(request, token, endpoint):
                 enabled=True,
                 service_catalog=token.serviceCatalog,
                 roles=token.user['roles'],
-                endpoint=endpoint)
+                endpoint=endpoint,
+                services_region=services_region)
 
 
 class User(AnonymousUser):
@@ -66,8 +68,9 @@ class User(AnonymousUser):
         by Keystone.
     """
     def __init__(self, id=None, token=None, user=None, tenant_id=None,
-                    service_catalog=None, tenant_name=None, roles=None,
-                    authorized_tenants=None, endpoint=None, enabled=False):
+                 service_catalog=None, tenant_name=None, roles=None,
+                 authorized_tenants=None, endpoint=None, enabled=False,
+                 services_region=None):
         self.id = id
         self.pk = id
         self.token = token
@@ -75,6 +78,8 @@ class User(AnonymousUser):
         self.tenant_id = tenant_id
         self.tenant_name = tenant_name
         self.service_catalog = service_catalog
+        self._services_region = services_region or \
+                                    self.default_services_region()
         self.roles = roles or []
         self.endpoint = endpoint
         self.enabled = enabled
@@ -139,6 +144,42 @@ class User(AnonymousUser):
     @authorized_tenants.setter
     def authorized_tenants(self, tenant_list):
         self._authorized_tenants = tenant_list
+
+    def default_services_region(self):
+        """
+        Returns the first endpoint region for first non-identity service
+        in the service catalog
+        """
+        if self.service_catalog:
+            for service in self.service_catalog:
+                if service['type'] == 'identity':
+                    continue
+                for endpoint in service['endpoints']:
+                    return endpoint['region']
+        return None
+
+    @property
+    def services_region(self):
+        return self._services_region
+
+    @services_region.setter
+    def services_region(self, region):
+        self._services_region = region
+
+    @property
+    def available_services_regions(self):
+        """
+        Returns list of unique region name values found in service catalog
+        """
+        regions = []
+        if self.service_catalog:
+            for service in self.service_catalog:
+                if service['type'] == 'identity':
+                    continue
+                for endpoint in service['endpoints']:
+                    if not endpoint['region'] in regions:
+                        regions.append(endpoint['region'])
+        return regions
 
     def save(*args, **kwargs):
         # Presume we can't write to Keystone.

@@ -59,6 +59,32 @@ def generate_test_data():
                                   tenant_dict_2,
                                   loaded=True)
 
+    nova_service = {
+        'type': 'compute',
+        'name': 'nova',
+        'endpoint_links': [],
+        'endpoints': [
+            {
+                'region': 'RegionOne',
+                'adminURL': 'http://nova-admin.localhost:8774/v2.0/%s' \
+                            % (tenant_dict_1['id']),
+                'internalURL': 'http://nova-internal.localhost:8774/v2.0/%s' \
+                               % (tenant_dict_1['id']),
+                'publicURL': 'http://nova-public.localhost:8774/v2.0/%s' \
+                             % (tenant_dict_1['id'])
+            },
+            {
+                'region': 'RegionTwo',
+                'adminURL': 'http://nova2-admin.localhost:8774/v2.0/%s' \
+                            % (tenant_dict_1['id']),
+                'internalURL': 'http://nova2-internal.localhost:8774/v2.0/%s' \
+                               % (tenant_dict_1['id']),
+                'publicURL': 'http://nova2-public.localhost:8774/v2.0/%s' \
+                             % (tenant_dict_1['id'])
+            }
+        ]
+    }
+
     # Roles
     role_dict = {'id': uuid.uuid4().hex,
                  'name': 'Member'}
@@ -78,7 +104,7 @@ def generate_test_data():
             'id': user_dict['id'],
             'name': user_dict['name'],
             'roles': [role_dict]},
-        'serviceCatalog': [keystone_service]
+        'serviceCatalog': [keystone_service, nova_service]
     }
     test_data.scoped_token = Token(TokenManager(None),
                                    scoped_token_dict,
@@ -100,7 +126,7 @@ def generate_test_data():
 
     # Service Catalog
     test_data.service_catalog = ServiceCatalog({
-        'serviceCatalog': [keystone_service],
+        'serviceCatalog': [keystone_service, nova_service],
         'token': {
             'id': scoped_token_dict['token']['id'],
             'expires': scoped_token_dict['token']['expires'],
