@@ -49,7 +49,9 @@ class KeystoneBackend(object):
                           self.request.session['token'],
                           loaded=True)
             endpoint = self.request.session['region_endpoint']
-            return create_user_from_token(self.request, token, endpoint)
+            services_region = self.request.session['services_region']
+            return create_user_from_token(self.request, token, endpoint,
+                                          services_region)
         else:
             return None
 
