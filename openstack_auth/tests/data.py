@@ -9,6 +9,7 @@ from keystoneclient.v2_0.tenants import Tenant, TenantManager
 from keystoneclient.v2_0.tokens import Token, TokenManager
 from keystoneclient.v2_0.users import User, UserManager
 from keystoneclient.service_catalog import ServiceCatalog
+from keystoneclient import access
 
 
 class TestDataContainer(object):
@@ -134,5 +135,7 @@ def generate_test_data():
             'tenant_id': tenant_dict_1['id']
         }
     })
+
+    test_data.access_info = access.AccessInfo(scoped_token_dict)
 
     return test_data

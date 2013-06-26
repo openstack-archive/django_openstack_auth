@@ -16,9 +16,11 @@ class OpenStackAuthTests(test.TestCase):
         super(OpenStackAuthTests, self).setUp()
         self.mox = mox.Mox()
         self.data = generate_test_data()
-        endpoint = settings.OPENSTACK_KEYSTONE_URL
-        self.keystone_client = client.Client(endpoint=endpoint)
-        self.keystone_client.service_catalog = self.data.service_catalog
+        endpoint = conf.settings.OPENSTACK_KEYSTONE_URL
+        self.keystone_client = client.Client(endpoint=endpoint,
+                                             auth_ref=self.data.access_info)
+        if not hasattr(self.keystone_client, 'service_catalog'):
+            self.keystone_client.service_catalog = self.data.service_catalog
 
     def tearDown(self):
         self.mox.UnsetStubs()
