@@ -16,7 +16,7 @@ class OpenStackAuthTests(test.TestCase):
         super(OpenStackAuthTests, self).setUp()
         self.mox = mox.Mox()
         self.data = generate_test_data()
-        endpoint = conf.settings.OPENSTACK_KEYSTONE_URL
+        endpoint = settings.OPENSTACK_KEYSTONE_URL
         self.keystone_client = client.Client(endpoint=endpoint,
                                              auth_ref=self.data.access_info)
         if not hasattr(self.keystone_client, 'service_catalog'):

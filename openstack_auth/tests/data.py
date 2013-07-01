@@ -126,7 +126,7 @@ def generate_test_data():
                                      loaded=True)
 
     # Service Catalog
-    test_data.service_catalog = ServiceCatalog({
+    test_data.service_catalog = ServiceCatalog.factory({
         'serviceCatalog': [keystone_service, nova_service],
         'token': {
             'id': scoped_token_dict['token']['id'],
@@ -136,6 +136,9 @@ def generate_test_data():
         }
     })
 
-    test_data.access_info = access.AccessInfo(scoped_token_dict)
+    versioned_scoped_toked_dict = scoped_token_dict
+    versioned_scoped_toked_dict['version'] = 'v2.0'
+
+    test_data.access_info = access.AccessInfo(versioned_scoped_toked_dict)
 
     return test_data
