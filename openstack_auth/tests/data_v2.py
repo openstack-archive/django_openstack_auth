@@ -4,12 +4,11 @@ from datetime import timedelta
 
 from django.utils import datetime_safe
 
+from keystoneclient.access import AccessInfo
+from keystoneclient.service_catalog import ServiceCatalog
 from keystoneclient.v2_0.roles import Role, RoleManager
 from keystoneclient.v2_0.tenants import Tenant, TenantManager
-from keystoneclient.v2_0.tokens import Token, TokenManager
 from keystoneclient.v2_0.users import User, UserManager
-from keystoneclient.service_catalog import ServiceCatalog
-from keystoneclient import access
 
 
 class TestDataContainer(object):
@@ -18,7 +17,7 @@ class TestDataContainer(object):
 
 
 def generate_test_data():
-    ''' Builds a set of test_data data as returned by Keystone. '''
+    ''' Builds a set of test_data data as returned by Keystone V2. '''
     test_data = TestDataContainer()
 
     keystone_service = {
@@ -96,49 +95,49 @@ def generate_test_data():
     expiration = datetime_safe.datetime.isoformat(tomorrow)
 
     scoped_token_dict = {
-        'token': {
-            'id': uuid.uuid4().hex,
-            'expires': expiration,
-            'tenant': tenant_dict_1,
-            'tenants': [tenant_dict_1, tenant_dict_2]},
-        'user': {
-            'id': user_dict['id'],
-            'name': user_dict['name'],
-            'roles': [role_dict]},
-        'serviceCatalog': [keystone_service, nova_service]
+        'access': {
+            'token': {
+                'id': uuid.uuid4().hex,
+                'expires': expiration,
+                'tenant': tenant_dict_1,
+                'tenants': [tenant_dict_1, tenant_dict_2]},
+            'user': {
+                'id': user_dict['id'],
+                'name': user_dict['name'],
+                'roles': [role_dict]},
+            'serviceCatalog': [keystone_service, nova_service]
+        }
     }
-    test_data.scoped_token = Token(TokenManager(None),
-                                   scoped_token_dict,
-                                   loaded=True)
+
+    test_data.scoped_access_info = AccessInfo.factory(
+        resp=None,
+        body=scoped_token_dict)
 
     unscoped_token_dict = {
-        'token': {
-            'id': uuid.uuid4().hex,
-            'expires': expiration},
-        'user': {
-            'id': user_dict['id'],
-            'name': user_dict['name'],
-            'roles': [role_dict]},
-        'serviceCatalog': [keystone_service]
+        'access': {
+            'token': {
+                'id': uuid.uuid4().hex,
+                'expires': expiration},
+            'user': {
+                     'id': user_dict['id'],
+                     'name': user_dict['name'],
+                     'roles': [role_dict]},
+            'serviceCatalog': [keystone_service]
+        }
     }
-    test_data.unscoped_token = Token(TokenManager(None),
-                                     unscoped_token_dict,
-                                     loaded=True)
+    test_data.unscoped_access_info = AccessInfo.factory(
+        resp=None,
+        body=unscoped_token_dict)
 
     # Service Catalog
     test_data.service_catalog = ServiceCatalog.factory({
         'serviceCatalog': [keystone_service, nova_service],
         'token': {
-            'id': scoped_token_dict['token']['id'],
-            'expires': scoped_token_dict['token']['expires'],
+            'id': scoped_token_dict['access']['token']['id'],
+            'expires': scoped_token_dict['access']['token']['expires'],
             'user_id': user_dict['id'],
             'tenant_id': tenant_dict_1['id']
         }
     })
-
-    versioned_scoped_toked_dict = scoped_token_dict
-    versioned_scoped_toked_dict['version'] = 'v2.0'
-
-    test_data.access_info = access.AccessInfo(versioned_scoped_toked_dict)
 
     return test_data
