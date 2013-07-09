@@ -25,3 +25,13 @@ ROOT_URLCONF = 'openstack_auth.tests.urls'
 LOGIN_REDIRECT_URL = '/'
 
 SECRET_KEY = 'badcafe'
+
+OPENSTACK_API_VERSIONS = {
+    "identity": 2.0
+}
+
+USE_TZ = True
+
+OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = False
+
+OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'domain'

@@ -18,11 +18,13 @@ try:
 except ImportError:
     from .utils import is_safe_url
 
-from keystoneclient.v2_0 import client as keystone_client
+from keystoneclient.v2_0 import client as keystone_client_v2
 from keystoneclient import exceptions as keystone_exceptions
 
 from .forms import Login
-from .user import set_session_from_user, create_user_from_token
+from .user import set_session_from_user, create_user_from_token, Token
+from .utils import get_keystone_client
+from .utils import get_keystone_version
 
 
 LOG = logging.getLogger(__name__)
@@ -88,34 +90,45 @@ def delete_all_tokens(token_list):
         try:
             endpoint = token_tuple[0]
             token = token_tuple[1]
-            client = keystone_client.Client(endpoint=endpoint,
-                                            token=token,
-                                            insecure=insecure)
-            client.tokens.delete(token=token)
+            if get_keystone_version() < 3:
+                client = keystone_client_v2.Client(endpoint=endpoint,
+                                                token=token,
+                                                insecure=insecure,
+                                                debug=settings.DEBUG)
+                client.tokens.delete(token=token)
+            else:
+                # FIXME: KS-client does not have delete token available
+                # Need to add this later when it is exposed.
+                pass
         except keystone_exceptions.ClientException as e:
             LOG.info('Could not delete token')
 
 
 @login_required
 def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
-    """ Switches an authenticated user from one tenant to another. """
+    """ Switches an authenticated user from one project to another. """
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     endpoint = request.user.endpoint
-    client = keystone_client.Client(endpoint=endpoint,
-                                    insecure=insecure)
     try:
-        token = client.tokens.authenticate(tenant_id=tenant_id,
-                                        token=request.user.token.id)
-        msg = 'Tenant switch successful for user "%(username)s".' % \
+        if get_keystone_version() >= 3:
+            endpoint = endpoint.replace('v2.0', 'v3')
+
+        client = get_keystone_client().Client(tenant_id=tenant_id,
+                                              token=request.user.token.id,
+                                              auth_url=endpoint,
+                                              insecure=insecure,
+                                              debug=settings.DEBUG)
+        auth_ref = client.auth_ref
+        msg = 'Project switch successful for user "%(username)s".' % \
             {'username': request.user.username}
         LOG.info(msg)
     except keystone_exceptions.ClientException:
-        msg = 'Tenant switch failed for user "%(username)s".' % \
+        msg = 'Project switch failed for user "%(username)s".' % \
             {'username': request.user.username}
         LOG.warning(msg)
-        token = None
+        auth_ref = None
         LOG.exception('An error occurred while switching sessions.')
 
     # Ensure the user-originating redirection url is safe.
@@ -124,8 +137,8 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     if not is_safe_url(url=redirect_to, host=request.get_host()):
         redirect_to = settings.LOGIN_REDIRECT_URL
 
-    if token:
-        user = create_user_from_token(request, token, endpoint)
+    if auth_ref:
+        user = create_user_from_token(request, Token(auth_ref), endpoint)
         set_session_from_user(request, user)
     return shortcuts.redirect(redirect_to)
 

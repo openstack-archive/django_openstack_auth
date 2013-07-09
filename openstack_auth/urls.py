@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
 from .utils import patch_middleware_get_user
-from .views import switch_region
 
 patch_middleware_get_user()
 
