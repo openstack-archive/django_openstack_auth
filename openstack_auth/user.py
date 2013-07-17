@@ -262,7 +262,7 @@ class User(AnonymousUser):
                 if service['type'] == 'identity':
                     continue
                 for endpoint in service['endpoints']:
-                    if not endpoint['region'] in regions:
+                    if endpoint['region'] not in regions:
                         regions.append(endpoint['region'])
         return regions
 

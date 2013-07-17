@@ -164,7 +164,8 @@ class KeystoneBackend(object):
         """
         if user.is_anonymous() or obj is not None:
             return set()
-        # TODO: Integrate policy-driven RBAC when supported by Keystone.
+        # TODO(gabrielhurley): Integrate policy-driven RBAC
+        #                      when supported by Keystone.
         role_perms = set(["openstack.roles.%s" % role['name'].lower()
                           for role in user.roles])
         service_perms = set(["openstack.services.%s" % service['type'].lower()

@@ -62,8 +62,8 @@ def generate_test_data():
                 'id': uuid.uuid4().hex
             },
             {
-                'url':'http://public.localhost:5000/v3',
-                'region':'RegionOne',
+                'url': 'http://public.localhost:5000/v3',
+                'region': 'RegionOne',
                 'interface': 'public',
                  'id': uuid.uuid4().hex
             }
@@ -129,9 +129,9 @@ def generate_test_data():
                 'id': uuid.uuid4().hex
             },
             {
-                'url':'http://nova-public.localhost:8774/v2.0/%s' \
+                'url': 'http://nova-public.localhost:8774/v2.0/%s' \
                        % (project_dict_1['id']),
-                'region':'RegionOne',
+                'region': 'RegionOne',
                 'interface': 'public',
                  'id': uuid.uuid4().hex
             },
@@ -150,9 +150,9 @@ def generate_test_data():
                 'id': uuid.uuid4().hex
             },
             {
-                'url':'http://nova2-public.localhost:8774/v2.0/%s' \
+                'url': 'http://nova2-public.localhost:8774/v2.0/%s' \
                        % (project_dict_1['id']),
-                'region':'RegionTwo',
+                'region': 'RegionTwo',
                 'interface': 'public',
                  'id': uuid.uuid4().hex
             }
