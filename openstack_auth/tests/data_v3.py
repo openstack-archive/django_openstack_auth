@@ -213,7 +213,6 @@ def generate_test_data():
                     'name': domain_dict['name']
                 }
             },
-            'roles': [role_dict],
             'catalog': [keystone_service]
         }
     }

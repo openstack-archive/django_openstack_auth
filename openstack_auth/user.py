@@ -77,9 +77,9 @@ class Token(object):
         self.domain = domain
 
         if auth_ref.version == 'v2.0':
-            self.roles = auth_ref['user']['roles']
+            self.roles = auth_ref['user'].get('roles', [])
         else:
-            self.roles = auth_ref['roles']
+            self.roles = auth_ref.get('roles', [])
 
         if get_keystone_version() < 3:
             self.serviceCatalog = auth_ref.get('serviceCatalog', [])
