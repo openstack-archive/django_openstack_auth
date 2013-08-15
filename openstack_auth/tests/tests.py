@@ -74,6 +74,105 @@ class OpenStackAuthTestsV2(test.TestCase):
         response = self.client.post(url, form_data)
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
+    def test_login_with_disabled_tenants(self):
+        # Test to validate that authentication will try to get
+        # scoped token if the first project is disabled.
+        tenants = [self.data.tenant_one, self.data.tenant_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
+                     'domain': DEFAULT_DOMAIN,
+                     'password': user.password,
+                     'username': user.name}
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
+
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     password=user.password,
+                                     username=user.name,
+                                     user_domain_name=DEFAULT_DOMAIN,
+                                     insecure=False,
+                                     debug=False)\
+                .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
+        exc = keystone_exceptions.AuthorizationFailure
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.tenant_two.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndRaise(exc)
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.tenant_one.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndReturn(self.keystone_client_scoped)
+
+        self.mox.ReplayAll()
+
+        url = reverse('login')
+
+        # GET the page to set the test cookie.
+        response = self.client.get(url, form_data)
+        self.assertEqual(response.status_code, 200)
+
+        # POST to the page to log in.
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+    def test_no_enabled_tenants(self):
+        tenants = [self.data.tenant_one, self.data.tenant_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
+                     'domain': DEFAULT_DOMAIN,
+                     'password': user.password,
+                     'username': user.name}
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
+
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     password=user.password,
+                                     username=user.name,
+                                     user_domain_name=DEFAULT_DOMAIN,
+                                     insecure=False,
+                                     debug=False)\
+                .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
+        exc = keystone_exceptions.AuthorizationFailure
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.tenant_two.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndRaise(exc)
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.tenant_one.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndRaise(exc)
+
+        self.mox.ReplayAll()
+
+        url = reverse('login')
+
+        # GET the page to set the test cookie.
+        response = self.client.get(url, form_data)
+        self.assertEqual(response.status_code, 200)
+
+        # POST to the page to log in.
+        response = self.client.post(url, form_data)
+        self.assertTemplateUsed(response, 'auth/login.html')
+        self.assertContains(response,
+                            'Unable to authenticate to any available'
+                            ' projects.')
+
     def test_no_tenants(self):
         user = self.data.user
 
@@ -243,7 +342,6 @@ class OpenStackAuthTestsV2(test.TestCase):
         self.test_switch(next='/next_url')
 
     def test_switch_region(self, next=None):
-        tenant = self.data.tenant_one
         tenants = [self.data.tenant_one, self.data.tenant_two]
         user = self.data.user
         unscoped = self.data.unscoped_access_info
@@ -369,7 +467,108 @@ class OpenStackAuthTestsV3(test.TestCase):
         response = self.client.post(url, form_data)
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
-    def test_no_tenants(self):
+    def test_login_with_disabled_projects(self):
+        projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
+                     'domain': DEFAULT_DOMAIN,
+                     'password': user.password,
+                     'username': user.name}
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
+                                 "list")
+
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     password=user.password,
+                                     username=user.name,
+                                     user_domain_name=DEFAULT_DOMAIN,
+                                     insecure=False,
+                                     debug=False)\
+                .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.projects.list(user=user.id) \
+                .AndReturn(projects)
+        exc = keystone_exceptions.AuthorizationFailure
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.project_two.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndRaise(exc)
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.project_one.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndReturn(self.keystone_client_scoped)
+
+        self.mox.ReplayAll()
+
+        url = reverse('login')
+
+        # GET the page to set the test cookie.
+        response = self.client.get(url, form_data)
+        self.assertEqual(response.status_code, 200)
+
+        # POST to the page to log in.
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+    def test_no_enabled_projects(self):
+        projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
+                     'domain': DEFAULT_DOMAIN,
+                     'password': user.password,
+                     'username': user.name}
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
+                                 "list")
+
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     password=user.password,
+                                     username=user.name,
+                                     user_domain_name=DEFAULT_DOMAIN,
+                                     insecure=False,
+                                     debug=False)\
+                .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.projects.list(user=user.id) \
+                .AndReturn(projects)
+        exc = keystone_exceptions.AuthorizationFailure
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.project_two.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndRaise(exc)
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=self.data.project_one.id,
+                                     insecure=False,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+                .AndRaise(exc)
+
+        self.mox.ReplayAll()
+
+        url = reverse('login')
+
+        # GET the page to set the test cookie.
+        response = self.client.get(url, form_data)
+        self.assertEqual(response.status_code, 200)
+
+        # POST to the page to log in.
+        response = self.client.post(url, form_data)
+        self.assertTemplateUsed(response, 'auth/login.html')
+        self.assertContains(response,
+                            'Unable to authenticate to any available'
+                            ' projects.')
+
+    def test_no_projects(self):
         user = self.data.user
 
         form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
@@ -541,7 +740,6 @@ class OpenStackAuthTestsV3(test.TestCase):
         self.test_switch(next='/next_url')
 
     def test_switch_region(self, next=None):
-
         projects = [self.data.project_one, self.data.project_two]
         user = self.data.user
         unscoped = self.data.unscoped_access_info

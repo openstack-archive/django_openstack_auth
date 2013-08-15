@@ -126,10 +126,9 @@ class KeystoneBackend(object):
                         keystone_exceptions.AuthorizationFailure):
                     auth_ref = None
 
-                if auth_ref is None:
-                    msg = _("Unable to authenticate to any available"
-                            " projects.")
-                    raise KeystoneAuthException(msg)
+            if auth_ref is None:
+                msg = _("Unable to authenticate to any available projects.")
+                raise KeystoneAuthException(msg)
 
         # Check expiry for our new scoped token.
         self.check_auth_expiry(auth_ref)
