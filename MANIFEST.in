@@ -1,6 +1,6 @@
-recursive-include docs *.rst *.py *.bat Makefile
-recursive-include openstack_auth/locale *
-recursive-include openstack_auth/tests/templates *.html
+include AUTHORS
+include ChangeLog
+exclude .gitignore
+exclude .gitreview
 
-include LICENSE
-include README.rst
+global-exclude *.pyc
