@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-08 18:01-0500\n"
+"POT-Creation-Date: 2013-09-11 13:43+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,38 +17,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: backend.py:28
+#: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
 
-#: backend.py:69
+#: backend.py:92
 msgid "Invalid user name or password."
 msgstr ""
 
-#: backend.py:72
+#: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 
-#: backend.py:84
+#: backend.py:119
 msgid "Unable to retrieve authorized projects."
 msgstr ""
 
-#: backend.py:89
+#: backend.py:124
 msgid "You are not authorized for any projects."
 msgstr ""
 
-#: backend.py:103
+#: backend.py:143
 msgid "Unable to authenticate to any available projects."
 msgstr ""
 
-#: forms.py:20
+#: forms.py:48
 msgid "Region"
 msgstr ""
 
-#: forms.py:21
+#: forms.py:49
 msgid "User Name"
 msgstr ""
 
-#: forms.py:22
+#: forms.py:50
 msgid "Password"
+msgstr ""
+
+#: forms.py:59
+msgid "Domain"
 msgstr ""
