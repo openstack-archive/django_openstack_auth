@@ -13,8 +13,6 @@
 
 import logging
 
-from threading import Thread
-
 from django import shortcuts
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -89,32 +87,34 @@ def logout(request):
     msg = 'Logging out user "%(username)s".' % \
         {'username': request.user.username}
     LOG.info(msg)
-    if 'token_list' in request.session:
-        t = Thread(target=delete_all_tokens,
-                   args=(list(request.session['token_list']),))
-        t.start()
+    endpoint = request.session.get('region_endpoint')
+    token = request.session.get('token')
+    if token and endpoint:
+        delete_token(endpoint=endpoint, token_id=token.id)
     """ Securely logs a user out. """
     return django_logout(request)
 
 
-def delete_all_tokens(token_list):
+def delete_token(endpoint, token_id):
+    """Delete a token."""
+
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
-    for token_tuple in token_list:
-        try:
-            endpoint = token_tuple[0]
-            token = token_tuple[1]
-            if get_keystone_version() < 3:
-                client = keystone_client_v2.Client(endpoint=endpoint,
-                                                token=token,
-                                                insecure=insecure,
-                                                debug=settings.DEBUG)
-                client.tokens.delete(token=token)
-            else:
-                # FIXME: KS-client does not have delete token available
-                # Need to add this later when it is exposed.
-                pass
-        except keystone_exceptions.ClientException as e:
-            LOG.info('Could not delete token')
+    try:
+        if get_keystone_version() < 3:
+            client = keystone_client_v2.Client(
+                endpoint=endpoint,
+                token=token_id,
+                insecure=insecure,
+                debug=settings.DEBUG
+            )
+            client.tokens.delete(token=token_id)
+            LOG.info('Deleted token %s' % token_id)
+        else:
+            # FIXME: KS-client does not have delete token available
+            # Need to add this later when it is exposed.
+            pass
+    except keystone_exceptions.ClientException as e:
+        LOG.info('Could not delete token')
 
 
 @login_required
@@ -127,7 +127,6 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     try:
         if get_keystone_version() >= 3:
             endpoint = endpoint.replace('v2.0', 'v3')
-
         client = get_keystone_client().Client(tenant_id=tenant_id,
                                               token=request.user.token.id,
                                               auth_url=endpoint,
@@ -151,6 +150,10 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
         redirect_to = settings.LOGIN_REDIRECT_URL
 
     if auth_ref:
+        old_endpoint = request.session.get('region_endpoint')
+        old_token = request.session.get('token')
+        if old_token and old_endpoint and old_token.id != auth_ref.auth_token:
+            delete_token(endpoint=old_endpoint, token_id=old_token.id)
         user = create_user_from_token(request, Token(auth_ref), endpoint)
         set_session_from_user(request, user)
     return shortcuts.redirect(redirect_to)

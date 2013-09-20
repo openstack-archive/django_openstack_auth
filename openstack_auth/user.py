@@ -30,10 +30,6 @@ LOG = logging.getLogger(__name__)
 
 def set_session_from_user(request, user):
     request.session['token'] = user.token
-    if 'token_list' not in request.session:
-        request.session['token_list'] = []
-    token_tuple = (user.endpoint, user.token.id)
-    request.session['token_list'].append(token_tuple)
     request.session['user_id'] = user.id
     request.session['region_endpoint'] = user.endpoint
     request.session['services_region'] = user.services_region
