@@ -24,6 +24,7 @@ from keystoneclient.v3 import client as client_v3
 
 from .data_v2 import generate_test_data as data_v2
 from .data_v3 import generate_test_data as data_v3
+import copy
 
 
 DEFAULT_DOMAIN = settings.OPENSTACK_KEYSTONE_DEFAULT_DOMAIN
@@ -292,6 +293,7 @@ class OpenStackAuthTestsV2(test.TestCase):
         unscoped = self.data.unscoped_access_info
         scoped = self.data.scoped_access_info
         sc = self.data.service_catalog
+        et = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
 
         form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
                      'domain': DEFAULT_DOMAIN,
@@ -316,7 +318,7 @@ class OpenStackAuthTestsV2(test.TestCase):
                                      debug=False) \
                 .AndReturn(self.keystone_client_scoped)
 
-        self.ks_client_module.Client(auth_url=sc.url_for(),
+        self.ks_client_module.Client(auth_url=sc.url_for(endpoint_type=et),
                                      tenant_id=tenant.id,
                                      token=scoped.auth_token,
                                      insecure=False,
@@ -416,6 +418,48 @@ class OpenStackAuthTestsV2(test.TestCase):
 
     def test_switch_region_with_next(self, next=None):
         self.test_switch_region(next='/next_url')
+
+
+def EndpointMetaFactory(endpoint_type):
+    def endpoint_wrapper(func):
+        def new_func(*args, **kwargs):
+            _endpoint_type = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', None)
+            # set settings.OPENSTACK_ENDPOINT_TYPE to given value
+            setattr(settings, 'OPENSTACK_ENDPOINT_TYPE', endpoint_type)
+            # ensure that ret won't be touched by del/setattr below
+            ret = copy.deepcopy(func(*args, **kwargs))
+            # and restore it
+            if _endpoint_type is None:
+                del settings.OPENSTACK_ENDPOINT_TYPE
+            else:
+                setattr(settings, 'OPENSTACK_ENDPOINT_TYPE', _endpoint_type)
+            return ret
+        return new_func
+
+    class EndPointMeta(type):
+        # wrap each test with OPENSTACK_ENDPOINT_TYPE parameter set/restore
+        def __new__(cls, name, bases, attrs):
+            base, = bases
+            for k, v in base.__dict__.iteritems():
+                if not k.startswith('__') and getattr(v, '__call__', None):
+                    attrs[k] = endpoint_wrapper(v)
+            return super(EndPointMeta, cls).__new__(cls, name, bases, attrs)
+    return EndPointMeta
+
+
+class OpenStackAuthTestsV2WithPublicURL(OpenStackAuthTestsV2):
+    """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'publicURL'."""
+    __metaclass__ = EndpointMetaFactory('publicURL')
+
+
+class OpenStackAuthTestsV2WithInternalURL(OpenStackAuthTestsV2):
+    """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'internalURL'."""
+    __metaclass__ = EndpointMetaFactory('internalURL')
+
+
+class OpenStackAuthTestsV2WithAdminURL(OpenStackAuthTestsV2):
+    """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'adminURL'."""
+    __metaclass__ = EndpointMetaFactory('adminURL')
 
 
 class OpenStackAuthTestsV3(test.TestCase):
@@ -689,6 +733,7 @@ class OpenStackAuthTestsV3(test.TestCase):
         unscoped = self.data.unscoped_access_info
         scoped = self.data.scoped_access_info
         sc = self.data.service_catalog
+        et = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
 
         form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
                      'domain': DEFAULT_DOMAIN,
@@ -714,7 +759,7 @@ class OpenStackAuthTestsV3(test.TestCase):
                                      token=unscoped.auth_token,
                                      debug=False) \
                 .AndReturn(self.keystone_client_scoped)
-        self.ks_client_module.Client(auth_url=sc.url_for(),
+        self.ks_client_module.Client(auth_url=sc.url_for(endpoint_type=et),
                                      tenant_id=project.id,
                                      token=scoped.auth_token,
                                      insecure=False,
@@ -816,3 +861,18 @@ class OpenStackAuthTestsV3(test.TestCase):
 
     def test_switch_region_with_next(self, next=None):
         self.test_switch_region(next='/next_url')
+
+
+class OpenStackAuthTestsV3WithPublicURL(OpenStackAuthTestsV3):
+    """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'publicURL'."""
+    __metaclass__ = EndpointMetaFactory('publicURL')
+
+
+class OpenStackAuthTestsV3WithInternalURL(OpenStackAuthTestsV3):
+    """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'internalURL'."""
+    __metaclass__ = EndpointMetaFactory('internalURL')
+
+
+class OpenStackAuthTestsV3WithAdminURL(OpenStackAuthTestsV3):
+    """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'adminURL'."""
+    __metaclass__ = EndpointMetaFactory('adminURL')
