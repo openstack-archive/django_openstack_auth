@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# kamelia <kamelia.benchekroun@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Horizon\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-11 13:43+0800\n"
+"PO-Revision-Date: 2013-09-14 21:13+0000\n"
+"Last-Translator: kamelia <kamelia.benchekroun@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/openstack/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: backend.py:44
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "انتهت صلاحية الرمز الموثوق الصادر عن خدمة الهوية"
+
+#: backend.py:92
+msgid "Invalid user name or password."
+msgstr "اسم المستخدم أو كلمة المرور غير صالحين"
+
+#: backend.py:97
+msgid "An error occurred authenticating. Please try again later."
+msgstr "حدث خطأ أثناء المصادقة , يرجى اعادة المحاولة لاحقا."
+
+#: backend.py:119
+msgid "Unable to retrieve authorized projects."
+msgstr "لايمكن اظهار المشاريع المتاحة."
+
+#: backend.py:124
+msgid "You are not authorized for any projects."
+msgstr "لايوجد لديك تصريح لدخول أي مشروع."
+
+#: backend.py:143
+msgid "Unable to authenticate to any available projects."
+msgstr "لايمكن المصادقة لولوج أيٍّ من المشاريع المتاحة."
+
+#: forms.py:48
+msgid "Region"
+msgstr "المجال"
+
+#: forms.py:49
+msgid "User Name"
+msgstr "اسم المستخدم"
+
+#: forms.py:50
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: forms.py:59
+msgid "Domain"
+msgstr "نطاق"

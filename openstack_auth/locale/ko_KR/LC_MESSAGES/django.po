@@ -3,58 +3,57 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Matthias Runge <mrunge@redhat.com>, 2013
-# saschpe, 2013
+# ujuc Gang <potopro@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Horizon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-11 13:43+0800\n"
-"PO-Revision-Date: 2013-09-17 08:42+0000\n"
-"Last-Translator: saschpe\n"
-"Language-Team: German (http://www.transifex.com/projects/p/openstack/language/de/)\n"
+"PO-Revision-Date: 2013-09-12 10:00+0000\n"
+"Last-Translator: daisy.ycguo <daisy.ycguo@gmail.com>\n"
+"Language-Team: Korean (Korea) (http://www.transifex.com/projects/p/openstack/language/ko_KR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "Das Authentifizierungs-Token ist abgelaufen."
+msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니다."
 
 #: backend.py:92
 msgid "Invalid user name or password."
-msgstr "Ungültiger Benutzername oder ungültiges Passwort."
+msgstr "사용자 이름이나 비밀 번호가 잘못되었습니다."
 
 #: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
-msgstr "Während der Authentifizierung ist ein Fehler aufgetretenBitte versuchen Sie es später noch einmal"
+msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세요."
 
 #: backend.py:119
 msgid "Unable to retrieve authorized projects."
-msgstr "Außerstande autorisierte Projekte abzurufen."
+msgstr "프로젝트 권한을 찾을 수 없습니다."
 
 #: backend.py:124
 msgid "You are not authorized for any projects."
-msgstr "Sie sind für kein Projekt berechtigt."
+msgstr "당신은 어떤 프로젝트에도 권한이 없습니다."
 
 #: backend.py:143
 msgid "Unable to authenticate to any available projects."
-msgstr "Außerstande bei irgendeinem verfügbaren Projekt zu authentisieren."
+msgstr "사용 가능한 프로젝트에 인증 할 수 없습니다."
 
 #: forms.py:48
 msgid "Region"
-msgstr "Region"
+msgstr "지역"
 
 #: forms.py:49
 msgid "User Name"
-msgstr "Benutzername"
+msgstr "사용자 이름"
 
 #: forms.py:50
 msgid "Password"
-msgstr "Passwort"
+msgstr "비밀번호"
 
 #: forms.py:59
 msgid "Domain"
-msgstr "Domäne"
+msgstr "도메인"

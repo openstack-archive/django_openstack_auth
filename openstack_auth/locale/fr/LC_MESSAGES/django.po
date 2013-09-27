@@ -3,58 +3,58 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Matthias Runge <mrunge@redhat.com>, 2013
-# saschpe, 2013
+# François Bureau <francois.bureau@cloudwatt.com>, 2013
+# jftalta <jftalta@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Horizon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-11 13:43+0800\n"
-"PO-Revision-Date: 2013-09-17 08:42+0000\n"
-"Last-Translator: saschpe\n"
-"Language-Team: German (http://www.transifex.com/projects/p/openstack/language/de/)\n"
+"PO-Revision-Date: 2013-09-26 11:16+0000\n"
+"Last-Translator: jftalta <jftalta@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/openstack/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "Das Authentifizierungs-Token ist abgelaufen."
+msgstr "Le jeton d'authentification délivré par le service d'Identité a expiré."
 
 #: backend.py:92
 msgid "Invalid user name or password."
-msgstr "Ungültiger Benutzername oder ungültiges Passwort."
+msgstr "Nom d'utilisateur ou mot de passe invalide."
 
 #: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
-msgstr "Während der Authentifizierung ist ein Fehler aufgetretenBitte versuchen Sie es später noch einmal"
+msgstr "Une erreur s'est produite durant l'authentification. Veuillez recommencer plus tard."
 
 #: backend.py:119
 msgid "Unable to retrieve authorized projects."
-msgstr "Außerstande autorisierte Projekte abzurufen."
+msgstr "Impossible de récupérer les projets autorisés."
 
 #: backend.py:124
 msgid "You are not authorized for any projects."
-msgstr "Sie sind für kein Projekt berechtigt."
+msgstr "Vous n'êtes autorisé sur aucun projet."
 
 #: backend.py:143
 msgid "Unable to authenticate to any available projects."
-msgstr "Außerstande bei irgendeinem verfügbaren Projekt zu authentisieren."
+msgstr "Authentification impossible quel que soit le projet."
 
 #: forms.py:48
 msgid "Region"
-msgstr "Region"
+msgstr "Région"
 
 #: forms.py:49
 msgid "User Name"
-msgstr "Benutzername"
+msgstr "Nom d'Utilisateur"
 
 #: forms.py:50
 msgid "Password"
-msgstr "Passwort"
+msgstr "Mot de Passe"
 
 #: forms.py:59
 msgid "Domain"
-msgstr "Domäne"
+msgstr "Domaine"

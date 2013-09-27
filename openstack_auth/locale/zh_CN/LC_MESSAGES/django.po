@@ -1,55 +1,59 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# daisy.ycguo <daisy.ycguo@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Horizon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-25 13:41+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2013-09-11 13:43+0800\n"
+"PO-Revision-Date: 2013-09-17 08:40+0000\n"
+"Last-Translator: daisy.ycguo <daisy.ycguo@gmail.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: backend.py:30
+#: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "身份验证已过期。"
+msgstr "身份认证令牌已过期。"
 
-#: backend.py:76
+#: backend.py:92
 msgid "Invalid user name or password."
 msgstr "无效的用户名或密码。"
 
-#: backend.py:81
+#: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
-msgstr "验证发生错误。请稍后再试一次。"
-
-#: backend.py:95
-msgid "Unable to retrieve authorized projects."
-msgstr "无法检索授权的项目。"
-
-#: backend.py:100
-msgid "You are not authorized for any projects."
-msgstr "您未被任何项目授权。"
+msgstr "认证发生错误。请稍后再试一次。"
 
 #: backend.py:119
+msgid "Unable to retrieve authorized projects."
+msgstr "无法获取授权的项目。"
+
+#: backend.py:124
+msgid "You are not authorized for any projects."
+msgstr "您未被授权访问任何项目。"
+
+#: backend.py:143
 msgid "Unable to authenticate to any available projects."
 msgstr "无法跟可用的项目验证通过。"
 
-#: forms.py:20
+#: forms.py:48
 msgid "Region"
-msgstr ""
+msgstr "域"
 
-#: forms.py:21
+#: forms.py:49
 msgid "User Name"
 msgstr "用户名"
 
-#: forms.py:22
+#: forms.py:50
 msgid "Password"
 msgstr "密码"
+
+#: forms.py:59
+msgid "Domain"
+msgstr "域"
