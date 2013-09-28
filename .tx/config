@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[horizon.djangopo]
+file_filter = openstack_auth/locale/<lang>/LC_MESSAGES/django.po
+source_file = openstack_auth/locale/openstack_auth.pot
+source_lang = en
