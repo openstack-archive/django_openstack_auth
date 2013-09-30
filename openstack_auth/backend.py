@@ -57,7 +57,8 @@ class KeystoneBackend(object):
         Note: this required monkey-patching the ``contrib.auth`` middleware
         to make the ``request`` object available to the auth backend class.
         """
-        if user_id == self.request.session["user_id"]:
+        if (hasattr(self, 'request') and
+                user_id == self.request.session["user_id"]):
             token = self.request.session['token']
             endpoint = self.request.session['region_endpoint']
             services_region = self.request.session['services_region']
