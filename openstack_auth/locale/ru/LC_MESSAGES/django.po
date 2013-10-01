@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# orkon <alexei.rudenko@gmail.com>, 2013
+# adiantum <ilyaalekseyev@acm.org>, 2013
+# Stas Maksimov <maksimov@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Horizon\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-11 13:43+0800\n"
+"PO-Revision-Date: 2013-09-17 08:28+0000\n"
+"Last-Translator: adiantum <ilyaalekseyev@acm.org>\n"
+"Language-Team: Russian <openstack-russia@lists.launchpad.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: backend.py:44
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "Время действия токена, выданного сервисом идентификации, истекло."
+
+#: backend.py:92
+msgid "Invalid user name or password."
+msgstr "Неверное имя пользователя или пароль"
+
+#: backend.py:97
+msgid "An error occurred authenticating. Please try again later."
+msgstr "Произошла ошибка аутентификации. Пожалуйста, повторите попытку позже."
+
+#: backend.py:119
+msgid "Unable to retrieve authorized projects."
+msgstr "Невозможно получить авторизованные проекты"
+
+#: backend.py:124
+msgid "You are not authorized for any projects."
+msgstr "Вы не авторизованы ни в одном проекте."
+
+#: backend.py:143
+msgid "Unable to authenticate to any available projects."
+msgstr "Невозможно аутентифицировать ни в одном доступном проекте"
+
+#: forms.py:48
+msgid "Region"
+msgstr "Регион"
+
+#: forms.py:49
+msgid "User Name"
+msgstr "Имя пользователя"
+
+#: forms.py:50
+msgid "Password"
+msgstr "Пароль"
+
+#: forms.py:59
+msgid "Domain"
+msgstr "Домен"

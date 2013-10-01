@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# coolsvap <swapnilkulkarni2608@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Horizon\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-11 13:43+0800\n"
+"PO-Revision-Date: 2013-09-12 10:00+0000\n"
+"Last-Translator: coolsvap <swapnilkulkarni2608@gmail.com>\n"
+"Language-Team: Hindi (http://www.transifex.com/projects/p/openstack/language/hi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: backend.py:44
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "पहचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त हो गया है."
+
+#: backend.py:92
+msgid "Invalid user name or password."
+msgstr "अमान्य उपयोगकर्ता नाम या पासवर्ड."
+
+#: backend.py:97
+msgid "An error occurred authenticating. Please try again later."
+msgstr "पहचान सेवा में त्रुटि. बाद में पुन: प्रयास करें."
+
+#: backend.py:119
+msgid "Unable to retrieve authorized projects."
+msgstr "अधिकृत परियोजनाओं को पुनः प्राप्त करने में असमर्थ."
+
+#: backend.py:124
+msgid "You are not authorized for any projects."
+msgstr "आप किसी भी परियोजनाओं के लिए अधिकृत नहीं हैं."
+
+#: backend.py:143
+msgid "Unable to authenticate to any available projects."
+msgstr "किसी भी उपलब्ध परियोजनाओं को प्रमाणित करने में असमर्थ."
+
+#: forms.py:48
+msgid "Region"
+msgstr "क्षेत्र"
+
+#: forms.py:49
+msgid "User Name"
+msgstr "उपयोगकर्ता"
+
+#: forms.py:50
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: forms.py:59
+msgid "Domain"
+msgstr "अनुक्षेत्र"

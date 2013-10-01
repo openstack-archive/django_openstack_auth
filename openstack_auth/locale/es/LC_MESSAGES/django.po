@@ -1,59 +1,60 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# aloga <aloga@ifca.unican.es>, 2013
+# mariantb <marian.tort@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Horizon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-08 18:01-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2013-09-11 13:43+0800\n"
+"PO-Revision-Date: 2013-09-18 12:20+0000\n"
+"Last-Translator: mariantb <marian.tort@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/openstack/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: backend.py:28
+#: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
-msgstr ""
-"El token de autenticación emitido por el servicio de la Identidad ha "
-"expirado."
+msgstr "El token de autenticación emitido por el servicio de la Identidad ha expirado."
 
-#: backend.py:69
+#: backend.py:92
 msgid "Invalid user name or password."
 msgstr "Nombre de usuario o contraseña no válidos."
 
-#: backend.py:72
+#: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
-msgstr ""
-"Se produjo un error de autenticación. Por favor, inténtelo de nuevo más "
-"tarde."
+msgstr "Se produjo un error de autenticación. Inténtelo de nuevo más tarde."
 
-#: backend.py:84
+#: backend.py:119
 msgid "Unable to retrieve authorized projects."
-msgstr "No se puede obtener los proyectos autorizados."
+msgstr "No ha sido posible obtener los proyectos autorizados."
 
-#: backend.py:89
+#: backend.py:124
 msgid "You are not authorized for any projects."
-msgstr "Usted no está autorizado para cualquier proyecto."
+msgstr "No está autorizado para ningún proyecto."
 
-#: backend.py:103
+#: backend.py:143
 msgid "Unable to authenticate to any available projects."
 msgstr "No se puede autenticar a los proyectos disponibles."
 
-#: forms.py:20
+#: forms.py:48
 msgid "Region"
 msgstr "Región"
 
-#: forms.py:21
+#: forms.py:49
 msgid "User Name"
 msgstr "Nombre de usuario"
 
-#: forms.py:22
+#: forms.py:50
 msgid "Password"
 msgstr "Contraseña"
+
+#: forms.py:59
+msgid "Domain"
+msgstr "Dominio"
