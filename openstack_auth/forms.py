@@ -46,7 +46,9 @@ class Login(AuthenticationForm):
     class for added security features.
     """
     region = forms.ChoiceField(label=_("Region"), required=False)
-    username = forms.CharField(label=_("User Name"))
+    username = forms.CharField(
+        label=_("User Name"),
+        widget=forms.TextInput(attrs={"autofocus": "autofocus"}))
     password = forms.CharField(label=_("Password"),
                                widget=forms.PasswordInput(render_value=False))
 
