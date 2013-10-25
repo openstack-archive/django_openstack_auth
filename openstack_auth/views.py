@@ -99,12 +99,14 @@ def delete_token(endpoint, token_id):
     """Delete a token."""
 
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
+    ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
     try:
         if get_keystone_version() < 3:
             client = keystone_client_v2.Client(
                 endpoint=endpoint,
                 token=token_id,
                 insecure=insecure,
+                cacert=ca_cert,
                 debug=settings.DEBUG
             )
             client.tokens.delete(token=token_id)
@@ -123,6 +125,7 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
+    ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
     endpoint = request.user.endpoint
     try:
         if get_keystone_version() >= 3:
@@ -131,6 +134,7 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
                                               token=request.user.token.id,
                                               auth_url=endpoint,
                                               insecure=insecure,
+                                              cacert=ca_cert,
                                               debug=settings.DEBUG)
         auth_ref = client.auth_ref
         msg = 'Project switch successful for user "%(username)s".' % \

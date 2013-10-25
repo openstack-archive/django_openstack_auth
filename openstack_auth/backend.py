@@ -74,6 +74,7 @@ class KeystoneBackend(object):
         LOG.debug('Beginning user authentication for user "%s".' % username)
 
         insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
+        ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
         endpoint_type = getattr(
             settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
 
@@ -85,6 +86,7 @@ class KeystoneBackend(object):
                 password=password,
                 auth_url=auth_url,
                 insecure=insecure,
+                cacert=ca_cert,
                 debug=settings.DEBUG)
 
             unscoped_auth_ref = client.auth_ref
@@ -135,6 +137,7 @@ class KeystoneBackend(object):
                         token=unscoped_auth_ref.auth_token,
                         auth_url=auth_url,
                         insecure=insecure,
+                        cacert=ca_cert,
                         debug=settings.DEBUG)
                     auth_ref = client.auth_ref
                     break
