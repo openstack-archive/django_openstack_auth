@@ -33,6 +33,9 @@ def set_session_from_user(request, user):
     request.session['user_id'] = user.id
     request.session['region_endpoint'] = user.endpoint
     request.session['services_region'] = user.services_region
+    # Update the user object cached in the request
+    request._cached_user = user
+    request.user = user
 
 
 def create_user_from_token(request, token, endpoint, services_region=None):
