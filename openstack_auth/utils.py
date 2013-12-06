@@ -154,10 +154,13 @@ def get_keystone_client():
 def get_project_list(*args, **kwargs):
     if get_keystone_version() < 3:
         client = get_keystone_client().Client(*args, **kwargs)
-        return client.tenants.list()
+        projects = client.tenants.list()
     else:
         auth_url = kwargs.get('auth_url', '').replace('v2.0', 'v3')
         kwargs['auth_url'] = auth_url
         client = get_keystone_client().Client(*args, **kwargs)
         client.management_url = auth_url
-        return client.projects.list(user=kwargs.get('user_id'))
+        projects = client.projects.list(user=kwargs.get('user_id'))
+
+    projects.sort(key=lambda project: project.name.lower())
+    return projects

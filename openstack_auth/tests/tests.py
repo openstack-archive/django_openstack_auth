@@ -11,6 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import copy
+
 import mox
 
 from django import test
@@ -22,9 +24,9 @@ from keystoneclient import exceptions as keystone_exceptions
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 
-from .data_v2 import generate_test_data as data_v2
-from .data_v3 import generate_test_data as data_v3
-import copy
+from openstack_auth.tests.data_v2 import generate_test_data as data_v2
+from openstack_auth.tests.data_v3 import generate_test_data as data_v3
+from openstack_auth.utils import get_project_list
 
 
 DEFAULT_DOMAIN = settings.OPENSTACK_KEYSTONE_DEFAULT_DOMAIN
@@ -434,6 +436,35 @@ class OpenStackAuthTestsV2(test.TestCase):
 
     def test_switch_region_with_next(self, next=None):
         self.test_switch_region(next='/next_url')
+
+    def test_tenant_sorting(self):
+        tenants = [self.data.tenant_two, self.data.tenant_one]
+        expected_tenants = [self.data.tenant_one, self.data.tenant_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
+
+        self.ks_client_module.Client(user_id=user.id,
+                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     token=unscoped.auth_token,
+                                     insecure=False,
+                                     cacert=None,
+                                     debug=False)\
+                .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
+
+        self.mox.ReplayAll()
+
+        tenant_list = get_project_list(
+            user_id=user.id,
+            auth_url=settings.OPENSTACK_KEYSTONE_URL,
+            token=unscoped.auth_token,
+            insecure=False,
+            cacert=None,
+            debug=False)
+        self.assertEqual(tenant_list, expected_tenants)
 
 
 def EndpointMetaFactory(endpoint_type):
@@ -893,6 +924,36 @@ class OpenStackAuthTestsV3(test.TestCase):
 
     def test_switch_region_with_next(self, next=None):
         self.test_switch_region(next='/next_url')
+
+    def test_tenant_sorting(self):
+        projects = [self.data.project_two, self.data.project_one]
+        expected_projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects, "list")
+
+        self.ks_client_module.Client(user_id=user.id,
+                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     token=unscoped.auth_token,
+                                     insecure=False,
+                                     cacert=None,
+                                     debug=False)\
+                .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.projects.list(user=user.id) \
+                .AndReturn(projects)
+
+        self.mox.ReplayAll()
+
+        project_list = get_project_list(
+            user_id=user.id,
+            auth_url=settings.OPENSTACK_KEYSTONE_URL,
+            token=unscoped.auth_token,
+            insecure=False,
+            cacert=None,
+            debug=False)
+        self.assertEqual(project_list, expected_projects)
 
 
 class OpenStackAuthTestsV3WithPublicURL(OpenStackAuthTestsV3):

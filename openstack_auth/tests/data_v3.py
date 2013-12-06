@@ -107,7 +107,7 @@ def generate_test_data():
                      'domain_id': domain_dict['id'],
                      'enabled': True}
     project_dict_2 = {'id': uuid.uuid4().hex,
-                     'name': '',
+                     'name': 'tenant_two',
                      'description': '',
                      'domain_id': domain_dict['id'],
                      'enabled': False}

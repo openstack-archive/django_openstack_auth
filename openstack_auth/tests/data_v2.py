@@ -62,7 +62,7 @@ def generate_test_data():
                      'description': '',
                      'enabled': True}
     tenant_dict_2 = {'id': uuid.uuid4().hex,
-                     'name': '',
+                     'name': 'tenant_two',
                      'description': '',
                      'enabled': False}
     test_data.tenant_one = Tenant(TenantManager(None),
