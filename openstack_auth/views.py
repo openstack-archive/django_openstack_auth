@@ -170,6 +170,7 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     return shortcuts.redirect(redirect_to)
 
 
+@login_required
 def switch_region(request, region_name,
                   redirect_field_name=REDIRECT_FIELD_NAME):
     """
