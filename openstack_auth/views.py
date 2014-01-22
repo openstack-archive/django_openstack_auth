@@ -136,7 +136,8 @@ def switch(request, tenant_id, redirect_field_name=REDIRECT_FIELD_NAME):
     endpoint = request.user.endpoint
     try:
         if get_keystone_version() >= 3:
-            endpoint = endpoint.replace('v2.0', 'v3')
+            if 'v3' not in endpoint:
+                endpoint = endpoint.replace('v2.0', 'v3')
         client = get_keystone_client().Client(tenant_id=tenant_id,
                                               token=request.user.token.id,
                                               auth_url=endpoint,
