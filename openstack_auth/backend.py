@@ -99,13 +99,13 @@ class KeystoneBackend(object):
                 keystone_exceptions.Forbidden,
                 keystone_exceptions.NotFound) as exc:
             msg = _('Invalid user name or password.')
-            LOG.debug(exc.message)
+            LOG.debug(str(exc))
             raise KeystoneAuthException(msg)
         except (keystone_exceptions.ClientException,
                 keystone_exceptions.AuthorizationFailure) as exc:
             msg = _("An error occurred authenticating. "
                     "Please try again later.")
-            LOG.debug(exc.message)
+            LOG.debug(str(exc))
             raise KeystoneAuthException(msg)
 
         # Check expiry for our unscoped auth ref.
