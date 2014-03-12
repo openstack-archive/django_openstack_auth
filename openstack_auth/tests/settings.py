@@ -31,7 +31,7 @@ MIDDLEWARE_CLASSES = [
 
 AUTHENTICATION_BACKENDS = ['openstack_auth.backend.KeystoneBackend']
 
-OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v2.0"
+OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v3"
 
 ROOT_URLCONF = 'openstack_auth.tests.urls'
 
@@ -40,7 +40,7 @@ LOGIN_REDIRECT_URL = '/'
 SECRET_KEY = 'badcafe'
 
 OPENSTACK_API_VERSIONS = {
-    "identity": 2.0
+    "identity": 3
 }
 
 USE_TZ = True

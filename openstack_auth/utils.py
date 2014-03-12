@@ -141,7 +141,7 @@ def is_safe_url(url, host=None):
 # Helper for figuring out keystone version
 # Implementation will change when API version discovery is available
 def get_keystone_version():
-    return getattr(settings, 'OPENSTACK_API_VERSIONS', {}).get('identity', 2.0)
+    return getattr(settings, 'OPENSTACK_API_VERSIONS', {}).get('identity', 3)
 
 
 def get_keystone_client():
@@ -153,6 +153,8 @@ def get_keystone_client():
 
 def get_project_list(*args, **kwargs):
     if get_keystone_version() < 3:
+        auth_url = kwargs.get('auth_url', '').replace('v3', 'v2.0')
+        kwargs['auth_url'] = auth_url
         client = get_keystone_client().Client(*args, **kwargs)
         projects = client.tenants.list()
     else:

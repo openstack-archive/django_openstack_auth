@@ -18,7 +18,7 @@ Installing is quick and easy:
 
 #. Configure your API endpoint(s) in ``settings.py``::
 
-        OPENSTACK_KEYSTONE_URL = "http://example.com:5000/v2.0"
+        OPENSTACK_KEYSTONE_URL = "http://example.com:5000/v3"
 
 #. Include ``'keystone_auth.urls'`` somewhere in your ``urls.py`` file.
 

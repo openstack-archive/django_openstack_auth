@@ -45,6 +45,8 @@ class OpenStackAuthTestsV2(test.TestCase):
         self.keystone_client_scoped = self.ks_client_module.Client(
             endpoint=endpoint,
             auth_ref=self.data.scoped_access_info)
+        settings.OPENSTACK_API_VERSIONS['identity'] = 2.0
+        settings.OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v2.0"
 
     def tearDown(self):
         self.mox.UnsetStubs()
