@@ -141,7 +141,7 @@ def is_safe_url(url, host=None):
 # Helper for figuring out keystone version
 # Implementation will change when API version discovery is available
 def get_keystone_version():
-    return getattr(settings, 'OPENSTACK_API_VERSIONS', {}).get('identity', 3)
+    return getattr(settings, 'OPENSTACK_API_VERSIONS', {}).get('identity', 2.0)
 
 
 def get_keystone_client():
