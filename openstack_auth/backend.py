@@ -77,6 +77,10 @@ class KeystoneBackend(object):
 
         # keystone client v3 does not support logging in on the v2 url any more
         if utils.get_keystone_version() >= 3:
+            if auth_url.find("v2.0") >= 0:
+                LOG.warning("The settings.py file points to a v2.0 keystone "
+                            "endpoint, but v3 is specified as the API version "
+                            "to use. Using v3 endpoint for authentication.")
             auth_url = auth_url.replace('v2.0', 'v3')
 
         keystone_client = utils.get_keystone_client()
