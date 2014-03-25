@@ -11,49 +11,49 @@ msgstr ""
 "POT-Creation-Date: 2013-09-11 13:43+0800\n"
 "PO-Revision-Date: 2014-03-21 08:11+0000\n"
 "Last-Translator: daisy.ycguo <daisy.ycguo@gmail.com>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/openstack/language/zh_TW/)\n"
+"Language-Team: Slovenian (Slovenia) (http://www.transifex.com/projects/p/openstack/language/sl_SI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_TW\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: sl_SI\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "認證伺服器發佈的憑證已經過期。"
+msgstr "Dostopovni žeton, ki ga uporablja Keystone, je potekel."
 
 #: backend.py:92
 msgid "Invalid user name or password."
-msgstr "無效的使用者名稱或密碼。"
+msgstr "Neveljavno uporabniško ime ali geslo."
 
 #: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
-msgstr "認證發生錯誤。請稍後再試。"
+msgstr "Pri avtentikaciji je prišlo do napake. Poskusite znova kasneje."
 
 #: backend.py:119
 msgid "Unable to retrieve authorized projects."
-msgstr "無法取回已授權的專案。"
+msgstr "Seznama avtoriziranih projektov ni bilo mogoče prikazati."
 
 #: backend.py:124
 msgid "You are not authorized for any projects."
-msgstr "您沒有被授權任何的專案。"
+msgstr "Za nobenega od projektov nimate ustreznih uporabniških pravic."
 
 #: backend.py:143
 msgid "Unable to authenticate to any available projects."
-msgstr "無法認證到任何可用的專案。"
+msgstr "Prijava v razpoložljive projekte ni uspela."
 
 #: forms.py:48
 msgid "Region"
-msgstr "區域"
+msgstr "Regija"
 
 #: forms.py:49
 msgid "User Name"
-msgstr "使用者名稱"
+msgstr "Uporabniško ime"
 
 #: forms.py:50
 msgid "Password"
-msgstr "密碼"
+msgstr "Geslo"
 
 #: forms.py:59
 msgid "Domain"
-msgstr "地域"
+msgstr "Domena"

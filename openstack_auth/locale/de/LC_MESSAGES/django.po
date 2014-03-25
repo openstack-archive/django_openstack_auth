@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Matthias Runge <mrunge@redhat.com>, 2013
-# saschpe, 2013
+# Translators:
+# jaegerandi <jaegerandi@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Horizon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-11 13:43+0800\n"
-"PO-Revision-Date: 2013-09-17 08:42+0000\n"
-"Last-Translator: saschpe\n"
+"PO-Revision-Date: 2014-03-21 14:38+0000\n"
+"Last-Translator: jaegerandi <jaegerandi@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/openstack/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "Das Authentifizierungs-Token ist abgelaufen."
+msgstr "Das vom Identitätsdienst ausgegebene Authentifizierungs-Token ist abgelaufen."
 
 #: backend.py:92
 msgid "Invalid user name or password."
@@ -29,11 +29,11 @@ msgstr "Ungültiger Benutzername oder ungültiges Passwort."
 
 #: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
-msgstr "Während der Authentifizierung ist ein Fehler aufgetretenBitte versuchen Sie es später noch einmal"
+msgstr "Während der Authentifizierung ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal."
 
 #: backend.py:119
 msgid "Unable to retrieve authorized projects."
-msgstr "Außerstande autorisierte Projekte abzurufen."
+msgstr "Autorisierte Projekte können nicht abgerufen werden."
 
 #: backend.py:124
 msgid "You are not authorized for any projects."
@@ -41,7 +41,7 @@ msgstr "Sie sind für kein Projekt berechtigt."
 
 #: backend.py:143
 msgid "Unable to authenticate to any available projects."
-msgstr "Außerstande bei irgendeinem verfügbaren Projekt zu authentisieren."
+msgstr "Außerstande bei irgendeinem verfügbaren Projekt zu authentifizieren."
 
 #: forms.py:48
 msgid "Region"

@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# belmoreira <belmiro.moreira@cern.ch>, 2013
+# Translators:
+# alfalb_mansil <manuela.silva@sky.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Horizon\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-11 13:43+0800\n"
-"PO-Revision-Date: 2013-09-13 21:02+0000\n"
-"Last-Translator: belmoreira <belmiro.moreira@cern.ch>\n"
+"PO-Revision-Date: 2014-03-21 12:10+0000\n"
+"Last-Translator: alfalb_mansil <manuela.silva@sky.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/projects/p/openstack/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,27 +21,27 @@ msgstr ""
 
 #: backend.py:44
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "O token de autenticação expirou."
+msgstr "A senha de autenticação gerada pelo serviço de identidade expirou."
 
 #: backend.py:92
 msgid "Invalid user name or password."
-msgstr "Utilizador ou password inválida."
+msgstr "Nome de utilizador ou senha inválida."
 
 #: backend.py:97
 msgid "An error occurred authenticating. Please try again later."
-msgstr "Ocorreu um erro de autenticação. Por favor, tente novamente."
+msgstr "Ocorreu um erro de autenticação. Por favor, tente de novo mais tarde."
 
 #: backend.py:119
 msgid "Unable to retrieve authorized projects."
-msgstr "Não foi possível obter os projetos."
+msgstr "Não foi possível obter os projetos autorizados."
 
 #: backend.py:124
 msgid "You are not authorized for any projects."
-msgstr "Não possui autorização para nenhum projeto."
+msgstr "Não não está autorizado para quaisquer projetos."
 
 #: backend.py:143
 msgid "Unable to authenticate to any available projects."
-msgstr "Não foi possível autenticar em nenhum projeto."
+msgstr "Não foi possível autenticar qualquer projeto disponível."
 
 #: forms.py:48
 msgid "Region"
@@ -48,11 +49,11 @@ msgstr "Região"
 
 #: forms.py:49
 msgid "User Name"
-msgstr "Nome do Utilizador"
+msgstr "Nome de Utilizador"
 
 #: forms.py:50
 msgid "Password"
-msgstr "Password"
+msgstr "Senha"
 
 #: forms.py:59
 msgid "Domain"
