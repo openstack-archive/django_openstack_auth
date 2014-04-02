@@ -192,7 +192,7 @@ class KeystoneBackend(object):
         role_perms = set(["openstack.roles.%s" % role['name'].lower()
                           for role in user.roles])
         service_perms = set(["openstack.services.%s" % service['type'].lower()
-                          for service in user.service_catalog])
+                             for service in user.service_catalog])
         return role_perms | service_perms
 
     def has_perm(self, user, perm, obj=None):

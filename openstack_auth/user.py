@@ -170,8 +170,8 @@ class User(AnonymousUser):
         self.project_id = project_id or tenant_id
         self.project_name = project_name or tenant_name
         self.service_catalog = service_catalog
-        self._services_region = services_region or \
-                                    self.default_services_region()
+        self._services_region = (services_region or
+                                 self.default_services_region())
         self.roles = roles or []
         self.endpoint = endpoint
         self.enabled = enabled

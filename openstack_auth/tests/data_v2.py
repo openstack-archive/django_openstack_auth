@@ -132,9 +132,9 @@ def generate_test_data():
                 'id': uuid.uuid4().hex,
                 'expires': expiration},
             'user': {
-                     'id': user_dict['id'],
-                     'name': user_dict['name'],
-                     'roles': [role_dict]},
+                'id': user_dict['id'],
+                'name': user_dict['name'],
+                'roles': [role_dict]},
             'serviceCatalog': [keystone_service]
         }
     }

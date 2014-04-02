@@ -78,7 +78,7 @@ def generate_test_data():
                 'url': 'http://public.localhost:5000/v3',
                 'region': 'RegionOne',
                 'interface': 'public',
-                 'id': uuid.uuid4().hex
+                'id': uuid.uuid4().hex
             }
         ]
     }
@@ -102,21 +102,21 @@ def generate_test_data():
 
     # Projects
     project_dict_1 = {'id': uuid.uuid4().hex,
-                     'name': 'tenant_one',
-                     'description': '',
-                     'domain_id': domain_dict['id'],
-                     'enabled': True}
+                      'name': 'tenant_one',
+                      'description': '',
+                      'domain_id': domain_dict['id'],
+                      'enabled': True}
     project_dict_2 = {'id': uuid.uuid4().hex,
-                     'name': 'tenant_two',
-                     'description': '',
-                     'domain_id': domain_dict['id'],
-                     'enabled': False}
+                      'name': 'tenant_two',
+                      'description': '',
+                      'domain_id': domain_dict['id'],
+                      'enabled': False}
     test_data.project_one = Project(ProjectManager(None),
-                                  project_dict_1,
-                                  loaded=True)
+                                    project_dict_1,
+                                    loaded=True)
     test_data.project_two = Project(ProjectManager(None),
-                                  project_dict_2,
-                                  loaded=True)
+                                    project_dict_2,
+                                    loaded=True)
 
     # Roles
     role_dict = {'id': uuid.uuid4().hex,
@@ -146,7 +146,7 @@ def generate_test_data():
                        % (project_dict_1['id']),
                 'region': 'RegionOne',
                 'interface': 'public',
-                 'id': uuid.uuid4().hex
+                'id': uuid.uuid4().hex
             },
             {
                 'url': 'http://nova2-admin.localhost:8774/v2.0/%s' \
@@ -167,7 +167,7 @@ def generate_test_data():
                        % (project_dict_1['id']),
                 'region': 'RegionTwo',
                 'interface': 'public',
-                 'id': uuid.uuid4().hex
+                'id': uuid.uuid4().hex
             }
         ]
     }

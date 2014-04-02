@@ -57,7 +57,7 @@ class Login(AuthenticationForm):
         self.fields.keyOrder = ['username', 'password', 'region']
         if getattr(settings,
                    'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT',
-                    False):
+                   False):
             self.fields['domain'] = forms.CharField(label=_("Domain"),
                                                     required=True)
             self.fields.keyOrder = ['domain', 'username', 'password', 'region']
