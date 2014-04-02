@@ -128,43 +128,43 @@ def generate_test_data():
         'id': uuid.uuid4().hex,
         'endpoints': [
             {
-                'url': 'http://nova-admin.localhost:8774/v2.0/%s' \
-                       % (project_dict_1['id']),
+                'url': ('http://nova-admin.localhost:8774/v2.0/%s'
+                        % (project_dict_1['id'])),
                 'region': 'RegionOne',
                 'interface': 'admin',
                 'id': uuid.uuid4().hex,
             },
             {
-                'url': 'http://nova-internal.localhost:8774/v2.0/%s' \
-                       % (project_dict_1['id']),
+                'url': ('http://nova-internal.localhost:8774/v2.0/%s'
+                        % (project_dict_1['id'])),
                 'region': 'RegionOne',
                 'interface': 'internal',
                 'id': uuid.uuid4().hex
             },
             {
-                'url': 'http://nova-public.localhost:8774/v2.0/%s' \
-                       % (project_dict_1['id']),
+                'url': ('http://nova-public.localhost:8774/v2.0/%s'
+                        % (project_dict_1['id'])),
                 'region': 'RegionOne',
                 'interface': 'public',
                 'id': uuid.uuid4().hex
             },
             {
-                'url': 'http://nova2-admin.localhost:8774/v2.0/%s' \
-                       % (project_dict_1['id']),
+                'url': ('http://nova2-admin.localhost:8774/v2.0/%s'
+                        % (project_dict_1['id'])),
                 'region': 'RegionTwo',
                 'interface': 'admin',
                 'id': uuid.uuid4().hex,
             },
             {
-                'url': 'http://nova2-internal.localhost:8774/v2.0/%s' \
-                       % (project_dict_1['id']),
+                'url': ('http://nova2-internal.localhost:8774/v2.0/%s'
+                        % (project_dict_1['id'])),
                 'region': 'RegionTwo',
                 'interface': 'internal',
                 'id': uuid.uuid4().hex
             },
             {
-                'url': 'http://nova2-public.localhost:8774/v2.0/%s' \
-                       % (project_dict_1['id']),
+                'url': ('http://nova2-public.localhost:8774/v2.0/%s'
+                        % (project_dict_1['id'])),
                 'region': 'RegionTwo',
                 'interface': 'public',
                 'id': uuid.uuid4().hex

@@ -79,21 +79,21 @@ def generate_test_data():
         'endpoints': [
             {
                 'region': 'RegionOne',
-                'adminURL': 'http://nova-admin.localhost:8774/v2.0/%s' \
-                            % (tenant_dict_1['id']),
-                'internalURL': 'http://nova-internal.localhost:8774/v2.0/%s' \
-                               % (tenant_dict_1['id']),
-                'publicURL': 'http://nova-public.localhost:8774/v2.0/%s' \
-                             % (tenant_dict_1['id'])
+                'adminURL': ('http://nova-admin.localhost:8774/v2.0/%s'
+                             % (tenant_dict_1['id'])),
+                'internalURL': ('http://nova-internal.localhost:8774/v2.0/%s'
+                                % (tenant_dict_1['id'])),
+                'publicURL': ('http://nova-public.localhost:8774/v2.0/%s'
+                              % (tenant_dict_1['id']))
             },
             {
                 'region': 'RegionTwo',
-                'adminURL': 'http://nova2-admin.localhost:8774/v2.0/%s' \
-                            % (tenant_dict_1['id']),
-                'internalURL': 'http://nova2-internal.localhost:8774/v2.0/%s' \
-                               % (tenant_dict_1['id']),
-                'publicURL': 'http://nova2-public.localhost:8774/v2.0/%s' \
-                             % (tenant_dict_1['id'])
+                'adminURL': ('http://nova2-admin.localhost:8774/v2.0/%s'
+                             % (tenant_dict_1['id'])),
+                'internalURL': ('http://nova2-internal.localhost:8774/v2.0/%s'
+                                % (tenant_dict_1['id'])),
+                'publicURL': ('http://nova2-public.localhost:8774/v2.0/%s'
+                              % (tenant_dict_1['id']))
             }
         ]
     }
