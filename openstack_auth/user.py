@@ -14,8 +14,8 @@
 import hashlib
 import logging
 
-from django.contrib.auth.models import AnonymousUser
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 
 from keystoneclient import exceptions as keystone_exceptions
 
