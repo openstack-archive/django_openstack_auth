@@ -14,19 +14,19 @@
 import logging
 
 from django.conf import settings
-from django.contrib.auth import authenticate
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate  # noqa
+from django.contrib.auth import forms as django_auth_forms
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.debug import sensitive_variables
+from django.views.decorators.debug import sensitive_variables  # noqa
 
-from .exceptions import KeystoneAuthException
+from openstack_auth import exceptions
 
 
 LOG = logging.getLogger(__name__)
 
 
-class Login(AuthenticationForm):
+class Login(django_auth_forms.AuthenticationForm):
     """ Form used for logging in a user.
 
     Handles authentication with Keystone by providing the domain name, username
@@ -94,7 +94,7 @@ class Login(AuthenticationForm):
             msg = 'Login successful for user "%(username)s".' % \
                 {'username': username}
             LOG.info(msg)
-        except KeystoneAuthException as exc:
+        except exceptions.KeystoneAuthException as exc:
             msg = 'Login failed for user "%(username)s".' % \
                 {'username': username}
             LOG.warning(msg)

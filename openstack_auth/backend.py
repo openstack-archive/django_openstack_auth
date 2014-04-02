@@ -20,12 +20,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from keystoneclient import exceptions as keystone_exceptions
 
-from .exceptions import KeystoneAuthException
-from .user import create_user_from_token
-from .user import Token
-from .utils import check_token_expiration
-from .utils import get_keystone_client
-from .utils import get_keystone_version
+from openstack_auth import exceptions
+from openstack_auth import user as auth_user
+from openstack_auth import utils
 
 
 LOG = logging.getLogger(__name__)
@@ -40,14 +37,14 @@ class KeystoneBackend(object):
     """
 
     def check_auth_expiry(self, auth_ref):
-        if not check_token_expiration(auth_ref):
+        if not utils.check_token_expiration(auth_ref):
             msg = _("The authentication token issued by the Identity service "
                     "has expired.")
             LOG.warning("The authentication token issued by the Identity "
                         "service appears to have expired before it was "
                         "issued. This may indicate a problem with either your "
                         "server or client configuration.")
-            raise KeystoneAuthException(msg)
+            raise exceptions.KeystoneAuthException(msg)
         return True
 
     def get_user(self, user_id):
@@ -62,8 +59,8 @@ class KeystoneBackend(object):
             token = self.request.session['token']
             endpoint = self.request.session['region_endpoint']
             services_region = self.request.session['services_region']
-            user = create_user_from_token(self.request, token, endpoint,
-                                          services_region)
+            user = auth_user.create_user_from_token(self.request, token,
+                                                    endpoint, services_region)
             return user
         else:
             return None
@@ -79,10 +76,10 @@ class KeystoneBackend(object):
             settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
 
         # keystone client v3 does not support logging in on the v2 url any more
-        if get_keystone_version() >= 3:
+        if utils.get_keystone_version() >= 3:
             auth_url = auth_url.replace('v2.0', 'v3')
 
-        keystone_client = get_keystone_client()
+        keystone_client = utils.get_keystone_client()
         try:
             client = keystone_client.Client(
                 user_domain_name=user_domain_name,
@@ -94,19 +91,19 @@ class KeystoneBackend(object):
                 debug=settings.DEBUG)
 
             unscoped_auth_ref = client.auth_ref
-            unscoped_token = Token(auth_ref=unscoped_auth_ref)
+            unscoped_token = auth_user.Token(auth_ref=unscoped_auth_ref)
         except (keystone_exceptions.Unauthorized,
                 keystone_exceptions.Forbidden,
                 keystone_exceptions.NotFound) as exc:
             msg = _('Invalid user name or password.')
             LOG.debug(str(exc))
-            raise KeystoneAuthException(msg)
+            raise exceptions.KeystoneAuthException(msg)
         except (keystone_exceptions.ClientException,
                 keystone_exceptions.AuthorizationFailure) as exc:
             msg = _("An error occurred authenticating. "
                     "Please try again later.")
             LOG.debug(str(exc))
-            raise KeystoneAuthException(msg)
+            raise exceptions.KeystoneAuthException(msg)
 
         # Check expiry for our unscoped auth ref.
         self.check_auth_expiry(unscoped_auth_ref)
@@ -117,7 +114,7 @@ class KeystoneBackend(object):
         else:
             # For now we list all the user's projects and iterate through.
             try:
-                if get_keystone_version() < 3:
+                if utils.get_keystone_version() < 3:
                     projects = client.tenants.list()
                 else:
                     client.management_url = auth_url
@@ -126,12 +123,12 @@ class KeystoneBackend(object):
             except (keystone_exceptions.ClientException,
                     keystone_exceptions.AuthorizationFailure) as exc:
                 msg = _('Unable to retrieve authorized projects.')
-                raise KeystoneAuthException(msg)
+                raise exceptions.KeystoneAuthException(msg)
 
             # Abort if there are no projects for this user
             if not projects:
                 msg = _('You are not authorized for any projects.')
-                raise KeystoneAuthException(msg)
+                raise exceptions.KeystoneAuthException(msg)
 
             while projects:
                 project = projects.pop()
@@ -151,15 +148,15 @@ class KeystoneBackend(object):
 
             if auth_ref is None:
                 msg = _("Unable to authenticate to any available projects.")
-                raise KeystoneAuthException(msg)
+                raise exceptions.KeystoneAuthException(msg)
 
         # Check expiry for our new scoped token.
         self.check_auth_expiry(auth_ref)
 
         # If we made it here we succeeded. Create our User!
-        user = create_user_from_token(
+        user = auth_user.create_user_from_token(
             request,
-            Token(auth_ref),
+            auth_user.Token(auth_ref),
             client.service_catalog.url_for(endpoint_type=endpoint_type))
 
         if request is not None:

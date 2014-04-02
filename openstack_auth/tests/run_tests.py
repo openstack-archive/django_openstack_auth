@@ -19,7 +19,7 @@ import sys
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'openstack_auth.tests.settings'
 
-from django.test.simple import DjangoTestSuiteRunner
+from django.test import simple as test_simple
 
 
 def run(*test_args):
@@ -31,7 +31,7 @@ def run(*test_args):
         "..",
     )
     sys.path.insert(0, parent)
-    failures = DjangoTestSuiteRunner().run_tests(test_args)
+    failures = test_simple.DjangoTestSuiteRunner().run_tests(test_args)
     sys.exit(failures)
 
 
