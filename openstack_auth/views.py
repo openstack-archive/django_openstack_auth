@@ -49,7 +49,7 @@ LOG = logging.getLogger(__name__)
 @csrf_protect
 @never_cache
 def login(request):
-    """ Logs a user in using the :class:`~openstack_auth.forms.Login` form. """
+    """Logs a user in using the :class:`~openstack_auth.forms.Login` form."""
     # If the user is already authenticated, redirect them to the
     # dashboard straight away, unless the 'next' parameter is set as it
     # usually indicates requesting access to a page that requires different
@@ -140,7 +140,7 @@ def delete_token(endpoint, token_id):
 
 @login_required
 def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
-    """ Switches an authenticated user from one project to another. """
+    """Switches an authenticated user from one project to another."""
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
@@ -188,9 +188,10 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
 @login_required
 def switch_region(request, region_name,
                   redirect_field_name=auth.REDIRECT_FIELD_NAME):
-    """
-    Switches the non-identity services region that is being managed
-    for the scoped project.
+    """Switches the user's region for all services except Identity service.
+
+    The region will be switched if the given region is one of the regions
+    available for the scoped project. Otherwise the region is not switched.
     """
     if region_name in request.user.available_services_regions:
         request.session['services_region'] = region_name

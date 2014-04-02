@@ -67,7 +67,7 @@ class KeystoneBackend(object):
 
     def authenticate(self, request=None, username=None, password=None,
                      user_domain_name=None, auth_url=None):
-        """Authenticates a user via the Keystone Identity API. """
+        """Authenticates a user via the Keystone Identity API."""
         LOG.debug('Beginning user authentication for user "%s".' % username)
 
         insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
@@ -170,7 +170,7 @@ class KeystoneBackend(object):
         return user
 
     def get_group_permissions(self, user, obj=None):
-        """Returns an empty set since Keystone doesn't support "groups". """
+        """Returns an empty set since Keystone doesn't support "groups"."""
         # Keystone V3 added "groups". The Auth token response includes the
         # roles from the user's Group assignment. It should be fine just
         # returning an empty set here.
@@ -196,7 +196,7 @@ class KeystoneBackend(object):
         return role_perms | service_perms
 
     def has_perm(self, user, perm, obj=None):
-        """Returns True if the given user has the specified permission. """
+        """Returns True if the given user has the specified permission."""
         if not user.is_active:
             return False
         return perm in self.get_all_permissions(user, obj)

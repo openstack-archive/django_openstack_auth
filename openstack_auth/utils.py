@@ -60,7 +60,7 @@ def patch_middleware_get_user():
 
 
 def check_token_expiration(token):
-    """ Timezone-aware checking of the auth token's expiration timestamp.
+    """Timezone-aware checking of the auth token's expiration timestamp.
 
     Returns ``True`` if the token has not yet expired, otherwise ``False``.
     """
@@ -80,10 +80,9 @@ def check_token_expiration(token):
 # Added in Django 1.4.3, 1.5b2
 # Vendored here for compatibility with old Django versions.
 def is_safe_url(url, host=None):
-    """
-    Return ``True`` if the url is a safe redirection (i.e. it doesn't point to
-    a different host).
+    """Return ``True`` if the url is a safe redirection.
 
+    The safe redirection means that it doesn't point to a different host.
     Always returns ``False`` on an empty url.
     """
     if not url:

@@ -185,7 +185,8 @@ class User(models.AnonymousUser):
         return "<%s: %s>" % (self.__class__.__name__, self.username)
 
     def is_token_expired(self):
-        """
+        """Determine if the token is expired.
+
         Returns ``True`` if the token is expired, ``False`` if not, and
         ``None`` if there is no token set.
         """
@@ -194,13 +195,14 @@ class User(models.AnonymousUser):
         return not utils.check_token_expiration(self.token)
 
     def is_authenticated(self):
-        """ Checks for a valid token that has not yet expired. """
+        """Checks for a valid token that has not yet expired."""
         return (self.token is not None and
                 utils.check_token_expiration(self.token))
 
     def is_anonymous(self):
-        """
-        Returns ``True`` if the user is not authenticated,``False`` otherwise.
+        """Return if the user is not authenticated.
+
+        Returns ``True`` if not authenticated,``False`` otherwise.
         """
         return not self.is_authenticated()
 
@@ -210,15 +212,15 @@ class User(models.AnonymousUser):
 
     @property
     def is_superuser(self):
-        """
-        Evaluates whether this user has admin privileges. Returns
-        ``True`` or ``False``.
+        """Evaluates whether this user has admin privileges.
+
+        Returns ``True`` or ``False``.
         """
         return 'admin' in [role['name'].lower() for role in self.roles]
 
     @property
     def authorized_tenants(self):
-        """ Returns a memoized list of tenants this user may access. """
+        """Returns a memoized list of tenants this user may access."""
         insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
         ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
 
@@ -243,9 +245,9 @@ class User(models.AnonymousUser):
         self._authorized_tenants = tenant_list
 
     def default_services_region(self):
-        """
-        Returns the first endpoint region for first non-identity service
-        in the service catalog
+        """Returns the first endpoint region for first non-identity service.
+
+        Extracted from the service catalog.
         """
         if self.service_catalog:
             for service in self.service_catalog:
@@ -265,9 +267,7 @@ class User(models.AnonymousUser):
 
     @property
     def available_services_regions(self):
-        """
-        Returns list of unique region name values found in service catalog
-        """
+        """Returns list of unique region name values in service catalog."""
         regions = []
         if self.service_catalog:
             for service in self.service_catalog:
@@ -289,10 +289,10 @@ class User(models.AnonymousUser):
     # Check for OR'd permission rules, check that user has one of the
     # required permission.
     def has_a_matching_perm(self, perm_list, obj=None):
-        """
-        Returns True if the user has one of the specified permissions. If
-        object is passed, it checks if the user has any of the required perms
-        for this object.
+        """Returns True if the user has one of the specified permissions.
+
+        If object is passed, it checks if the user has any of the required
+        perms for this object.
         """
         # If there are no permissions to check, just return true
         if not perm_list:
@@ -316,8 +316,8 @@ class User(models.AnonymousUser):
     #   ('openstack.roles.admin', ('openstack.roles.L3-support',
     #                              'openstack.roles.L2-support'),)
     def has_perms(self, perm_list, obj=None):
-        """
-        Returns True if the user has all of the specified permissions.
+        """Returns True if the user has all of the specified permissions.
+
         Tuples in the list will possess the required permissions if
         the user has a permissions matching one of the elements of
         that tuple

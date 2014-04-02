@@ -27,13 +27,15 @@ from keystoneclient.v3 import users
 
 
 class TestDataContainer(object):
-    """ Arbitrary holder for test data in an object-oriented fashion. """
+    """Arbitrary holder for test data in an object-oriented fashion."""
     pass
 
 
 class TestResponse(requests.Response):
-    """ Class used to wrap requests.Response and provide some
-        convenience to initialize with a dict """
+    """Class used to wrap requests.Response.
+
+    It also provides some convenience to initialize with a dict.
+    """
 
     def __init__(self, data):
         self._text = None
@@ -55,7 +57,7 @@ class TestResponse(requests.Response):
 
 
 def generate_test_data():
-    ''' Builds a set of test_data data as returned by Keystone V2. '''
+    '''Builds a set of test_data data as returned by Keystone V2.'''
     test_data = TestDataContainer()
 
     keystone_service = {

@@ -27,7 +27,7 @@ LOG = logging.getLogger(__name__)
 
 
 class Login(django_auth_forms.AuthenticationForm):
-    """ Form used for logging in a user.
+    """Form used for logging in a user.
 
     Handles authentication with Keystone by providing the domain name, username
     and password. A scoped token is fetched after successful authentication.

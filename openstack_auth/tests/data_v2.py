@@ -24,12 +24,12 @@ from keystoneclient.v2_0 import users
 
 
 class TestDataContainer(object):
-    """ Arbitrary holder for test data in an object-oriented fashion. """
+    """Arbitrary holder for test data in an object-oriented fashion."""
     pass
 
 
 def generate_test_data():
-    ''' Builds a set of test_data data as returned by Keystone V2. '''
+    '''Builds a set of test_data data as returned by Keystone V2.'''
     test_data = TestDataContainer()
 
     keystone_service = {
