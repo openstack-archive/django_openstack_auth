@@ -13,7 +13,7 @@
 
 import copy
 
-import mox
+from mox3 import mox
 
 from django import test
 from django.conf import settings
