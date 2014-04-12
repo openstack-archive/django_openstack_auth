@@ -22,7 +22,7 @@ from keystoneclient import exceptions as keystone_exceptions
 from .utils import check_token_expiration
 from .utils import get_keystone_version
 from .utils import get_project_list
-from .utils import is_ans1_token
+from .utils import is_asn1_token
 
 
 LOG = logging.getLogger(__name__)
@@ -71,7 +71,7 @@ class Token(object):
 
         #Token-related attributes
         self.id = auth_ref.auth_token
-        if is_ans1_token(self.id):
+        if is_asn1_token(self.id):
             self.id = hashlib.md5(self.id).hexdigest()
         self.expires = auth_ref.expires
 

@@ -77,10 +77,10 @@ def check_token_expiration(token):
 
 
 # Copied from Keystone's keystone/common/cms.py file.
-PKI_ANS1_PREFIX = 'MII'
+PKI_ASN1_PREFIX = 'MII'
 
 
-def is_ans1_token(token):
+def is_asn1_token(token):
     '''
     thx to ayoung for sorting this out.
 
@@ -119,7 +119,7 @@ def is_ans1_token(token):
     It's not practical to support a token of this length or greater in http
     therefore, we will check for MII only and ignore the case of larger tokens
     '''
-    return token[:3] == PKI_ANS1_PREFIX
+    return token[:3] == PKI_ASN1_PREFIX
 
 
 # From django.contrib.auth.views
