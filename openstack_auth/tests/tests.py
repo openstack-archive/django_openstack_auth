@@ -52,7 +52,7 @@ class OpenStackAuthTestsV2(test.TestCase):
         self.mox.UnsetStubs()
         self.mox.VerifyAll()
 
-    def test_login(self):
+    def _login(self):
         tenants = [self.data.tenant_one, self.data.tenant_two]
         user = self.data.user
         unscoped = self.data.unscoped_access_info
@@ -93,6 +93,9 @@ class OpenStackAuthTestsV2(test.TestCase):
         # POST to the page to log in.
         response = self.client.post(url, form_data)
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+    def test_login(self):
+        self._login()
 
     def test_login_with_disabled_tenants(self):
         # Test to validate that authentication will try to get
@@ -300,6 +303,24 @@ class OpenStackAuthTestsV2(test.TestCase):
         self.assertContains(response,
                             ("An error occurred authenticating. Please try "
                              "again later."))
+
+    def test_redirect_when_already_logged_in(self):
+        self._login()
+
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 302)
+        self.assertNotIn(reverse('login'), response['location'])
+
+    def test_dont_redirect_when_already_logged_in_if_next_is_set(self):
+        self._login()
+
+        expected_url = "%s?%s=/%s/" % (reverse('login'),
+                                       REDIRECT_FIELD_NAME,
+                                       'special')
+
+        response = self.client.get(expected_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'auth/login.html')
 
     def test_switch(self, next=None):
         tenant = self.data.tenant_two
