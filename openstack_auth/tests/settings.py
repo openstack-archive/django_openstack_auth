@@ -49,5 +49,6 @@ OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = False
 
 OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'domain'
 
-# NOTE(saschpe): The openstack_auth.user.Token object isn't JSON-serializable ATM
+# NOTE(saschpe): The openstack_auth.user.Token object isn't
+# JSON-serializable ATM
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

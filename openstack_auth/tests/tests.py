@@ -934,7 +934,8 @@ class OpenStackAuthTestsV3(test.TestCase):
         unscoped = self.data.unscoped_access_info
 
         self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects, "list")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
+                                 "list")
 
         self.ks_client_module.Client(user_id=user.id,
                                      auth_url=settings.OPENSTACK_KEYSTONE_URL,

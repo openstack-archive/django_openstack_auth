@@ -122,7 +122,7 @@ def delete_token(endpoint, token_id):
             # FIXME: KS-client does not have delete token available
             # Need to add this later when it is exposed.
             pass
-    except keystone_exceptions.ClientException as e:
+    except keystone_exceptions.ClientException:
         LOG.info('Could not delete token')
 
 
