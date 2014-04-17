@@ -14,24 +14,24 @@
 import logging
 
 import django
-from django import shortcuts
 from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.views import (login as django_login,
-                                       logout_then_login as django_logout)
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.debug import sensitive_post_parameters
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.views import login as django_login
+from django.contrib.auth.views import logout_then_login as django_logout
+from django import shortcuts
 from django.utils.functional import curry
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 
 try:
     from django.utils.http import is_safe_url
 except ImportError:
     from .utils import is_safe_url
 
-from keystoneclient.v2_0 import client as keystone_client_v2
 from keystoneclient import exceptions as keystone_exceptions
+from keystoneclient.v2_0 import client as keystone_client_v2
 
 from .forms import Login
 from .user import set_session_from_user, create_user_from_token, Token

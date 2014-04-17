@@ -15,10 +15,10 @@ import copy
 
 from mox3 import mox
 
-from django import test
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
+from django import test
 
 from keystoneclient import exceptions as keystone_exceptions
 from keystoneclient.v2_0 import client as client_v2

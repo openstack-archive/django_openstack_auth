@@ -15,8 +15,8 @@ from six.moves.urllib import parse as urlparse
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import middleware
+from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
 
 from keystoneclient.v2_0 import client as client_v2
