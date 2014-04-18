@@ -39,7 +39,7 @@ class TestResponse(requests.Response):
         self._text = None
         super(TestResponse, self)
         if isinstance(data, dict):
-            self.status_code = data.get('status_code', None)
+            self.status_code = data.get('status_code', 200)
             self.headers = data.get('headers', None)
             # Fake the text attribute to streamline Response creation
             self._text = data.get('text', None)
