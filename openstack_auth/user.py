@@ -69,7 +69,7 @@ class Token(object):
         self.user = user
         self.user_domain_id = auth_ref.user_domain_id
 
-        #Token-related attributes
+        # Token-related attributes
         self.id = auth_ref.auth_token
         if is_asn1_token(self.id):
             self.id = hashlib.md5(self.id).hexdigest()
