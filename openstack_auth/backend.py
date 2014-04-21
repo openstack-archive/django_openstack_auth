@@ -78,6 +78,9 @@ class KeystoneBackend(object):
         endpoint_type = getattr(
             settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
 
+        if auth_url is None:
+            auth_url = settings.OPENSTACK_KEYSTONE_URL
+
         # keystone client v3 does not support logging in on the v2 url any more
         if get_keystone_version() >= 3:
             auth_url = auth_url.replace('v2.0', 'v3')
