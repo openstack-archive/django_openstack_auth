@@ -11,17 +11,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
 import uuid
-
-from datetime import timedelta
 
 from django.utils import datetime_safe
 
-from keystoneclient.access import AccessInfo
-from keystoneclient.service_catalog import ServiceCatalog
-from keystoneclient.v2_0.roles import Role, RoleManager
-from keystoneclient.v2_0.tenants import Tenant, TenantManager
-from keystoneclient.v2_0.users import User, UserManager
+from keystoneclient import access
+from keystoneclient import service_catalog
+from keystoneclient.v2_0 import roles
+from keystoneclient.v2_0 import tenants
+from keystoneclient.v2_0 import users
 
 
 class TestDataContainer(object):
@@ -54,7 +53,8 @@ def generate_test_data():
                  'password': 'swordfish',
                  'token': '',
                  'enabled': True}
-    test_data.user = User(UserManager(None), user_dict, loaded=True)
+    test_data.user = users.User(users.UserManager(None),
+                                user_dict, loaded=True)
 
     # Tenants
     tenant_dict_1 = {'id': uuid.uuid4().hex,
@@ -65,12 +65,12 @@ def generate_test_data():
                      'name': 'tenant_two',
                      'description': '',
                      'enabled': False}
-    test_data.tenant_one = Tenant(TenantManager(None),
-                                  tenant_dict_1,
-                                  loaded=True)
-    test_data.tenant_two = Tenant(TenantManager(None),
-                                  tenant_dict_2,
-                                  loaded=True)
+    test_data.tenant_one = tenants.Tenant(tenants.TenantManager(None),
+                                          tenant_dict_1,
+                                          loaded=True)
+    test_data.tenant_two = tenants.Tenant(tenants.TenantManager(None),
+                                          tenant_dict_2,
+                                          loaded=True)
 
     nova_service = {
         'type': 'compute',
@@ -101,10 +101,10 @@ def generate_test_data():
     # Roles
     role_dict = {'id': uuid.uuid4().hex,
                  'name': 'Member'}
-    test_data.role = Role(RoleManager, role_dict)
+    test_data.role = roles.Role(roles.RoleManager, role_dict)
 
     # Tokens
-    tomorrow = datetime_safe.datetime.now() + timedelta(days=1)
+    tomorrow = datetime_safe.datetime.now() + datetime.timedelta(days=1)
     expiration = datetime_safe.datetime.isoformat(tomorrow)
 
     scoped_token_dict = {
@@ -122,7 +122,7 @@ def generate_test_data():
         }
     }
 
-    test_data.scoped_access_info = AccessInfo.factory(
+    test_data.scoped_access_info = access.AccessInfo.factory(
         resp=None,
         body=scoped_token_dict)
 
@@ -138,12 +138,12 @@ def generate_test_data():
             'serviceCatalog': [keystone_service]
         }
     }
-    test_data.unscoped_access_info = AccessInfo.factory(
+    test_data.unscoped_access_info = access.AccessInfo.factory(
         resp=None,
         body=unscoped_token_dict)
 
     # Service Catalog
-    test_data.service_catalog = ServiceCatalog.factory({
+    test_data.service_catalog = service_catalog.ServiceCatalog.factory({
         'serviceCatalog': [keystone_service, nova_service],
         'token': {
             'id': scoped_token_dict['access']['token']['id'],

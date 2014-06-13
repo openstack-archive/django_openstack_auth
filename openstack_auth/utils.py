@@ -16,7 +16,7 @@ from six.moves.urllib import parse as urlparse
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import middleware
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth import models
 from django.utils import timezone
 
 from keystoneclient.v2_0 import client as client_v2
@@ -45,9 +45,9 @@ def get_user(request):
         backend_path = request.session[auth.BACKEND_SESSION_KEY]
         backend = auth.load_backend(backend_path)
         backend.request = request
-        user = backend.get_user(user_id) or AnonymousUser()
+        user = backend.get_user(user_id) or models.AnonymousUser()
     except KeyError:
-        user = AnonymousUser()
+        user = models.AnonymousUser()
     return user
 
 
