@@ -68,7 +68,7 @@ class Token(object):
 
         # Token-related attributes
         self.id = auth_ref.auth_token
-        if utils.is_asn1_token(self.id):
+        if len(self.id) > 32:
             self.id = hashlib.md5(self.id).hexdigest()
         self.expires = auth_ref.expires
 
