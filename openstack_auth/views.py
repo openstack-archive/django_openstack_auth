@@ -107,7 +107,7 @@ def logout(request):
     if token and endpoint:
         delete_token(endpoint=endpoint, token_id=token.id)
     """ Securely logs a user out. """
-    return django_auth_views.logout(request)
+    return django_auth_views.logout_then_login(request)
 
 
 def delete_token(endpoint, token_id):
