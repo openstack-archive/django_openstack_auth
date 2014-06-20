@@ -36,8 +36,8 @@ class KeystoneBackend(object):
       ``django.contrib.auth``.
     """
 
-    def check_auth_expiry(self, auth_ref):
-        if not utils.check_token_expiration(auth_ref):
+    def check_auth_expiry(self, auth_ref, margin=None):
+        if not utils.is_token_valid(auth_ref, margin):
             msg = _("The authentication token issued by the Identity service "
                     "has expired.")
             LOG.warning("The authentication token issued by the Identity "

@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
 import functools
 
 from six.moves.urllib import parse as urlparse
@@ -28,6 +29,7 @@ from keystoneclient.v3 import client as client_v3
 
 _PROJECT_CACHE = {}
 
+_TOKEN_TIMEOUT_MARGIN = getattr(settings, 'TOKEN_TIMEOUT_MARGIN', 0)
 
 """
 We need the request object to get the user, so we'll slightly modify the
@@ -65,21 +67,36 @@ def patch_middleware_get_user():
 """ End Monkey-Patching. """
 
 
-def check_token_expiration(token):
+def is_token_valid(token, margin=None):
     """Timezone-aware checking of the auth token's expiration timestamp.
 
     Returns ``True`` if the token has not yet expired, otherwise ``False``.
+
+    .. param:: token
+
+       The openstack_auth.user.Token instance to check
+
+    .. param:: margin
+
+       A time margin in seconds to subtract from the real token's validity.
+       An example usage is that the token can be valid once the middleware
+       passed, and invalid (timed-out) during a view rendering and this
+       generates authorization errors during the view rendering.
+       A default margin can be set by the TOKEN_TIMEOUT_MARGIN in the
+       django settings.
     """
     expiration = token.expires
+    # In case we get an unparseable expiration timestamp, return False
+    # so you can't have a "forever" token just by breaking the expires param.
+    if expiration is None:
+        return False
+    if margin is None:
+        margin = getattr(settings, 'TOKEN_TIMEOUT_MARGIN', 0)
+    expiration = expiration - datetime.timedelta(seconds=margin)
     if settings.USE_TZ and timezone.is_naive(expiration):
         # Presumes that the Keystone is using UTC.
         expiration = timezone.make_aware(expiration, timezone.utc)
-    # In case we get an unparseable expiration timestamp, return False
-    # so you can't have a "forever" token just by breaking the expires param.
-    if expiration:
-        return expiration > timezone.now()
-    else:
-        return False
+    return expiration > timezone.now()
 
 
 # From django.contrib.auth.views

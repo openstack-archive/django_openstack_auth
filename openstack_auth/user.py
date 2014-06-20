@@ -194,27 +194,56 @@ class User(models.AnonymousUser):
     def __repr__(self):
         return "<%s: %s>" % (self.__class__.__name__, self.username)
 
-    def is_token_expired(self):
+    def is_token_expired(self, margin=None):
         """Determine if the token is expired.
 
         Returns ``True`` if the token is expired, ``False`` if not, and
         ``None`` if there is no token set.
+
+        .. param:: margin
+
+           A security time margin in seconds before real expiration.
+           Will return ``True`` if the token expires in less than ``margin``
+           seconds of time.
+           A default margin can be set by the TOKEN_TIMEOUT_MARGIN in the
+           django settings.
+
         """
         if self.token is None:
             return None
-        return not utils.check_token_expiration(self.token)
+        return not utils.is_token_valid(self.token, margin)
 
-    def is_authenticated(self):
-        """Checks for a valid token that has not yet expired."""
+    def is_authenticated(self, margin=None):
+        """Checks for a valid authentication.
+
+        .. param:: margin
+
+           A security time margin in seconds before end of authentication.
+           Will return ``False`` if authentication ends in less than ``margin``
+           seconds of time.
+           A default margin can be set by the TOKEN_TIMEOUT_MARGIN in the
+           django settings.
+
+        """
         return (self.token is not None and
-                utils.check_token_expiration(self.token))
+                utils.is_token_valid(self.token, margin))
 
-    def is_anonymous(self):
+    def is_anonymous(self, margin=None):
         """Return if the user is not authenticated.
 
         Returns ``True`` if not authenticated,``False`` otherwise.
+
+        .. param:: margin
+
+           A security time margin in seconds before end of an eventual
+           authentication.
+           Will return ``True`` even if authenticated but that authentication
+           ends in less than ``margin`` seconds of time.
+           A default margin can be set by the TOKEN_TIMEOUT_MARGIN in the
+           django settings.
+
         """
-        return not self.is_authenticated()
+        return not self.is_authenticated(margin)
 
     @property
     def is_active(self):

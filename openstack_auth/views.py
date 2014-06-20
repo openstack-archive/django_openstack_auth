@@ -48,7 +48,7 @@ LOG = logging.getLogger(__name__)
 @sensitive_post_parameters()
 @csrf_protect
 @never_cache
-def login(request):
+def login(request, template_name=None, extra_context=None, **kwargs):
     """Logs a user in using the :class:`~openstack_auth.forms.Login` form."""
     # If the user is already authenticated, redirect them to the
     # dashboard straight away, unless the 'next' parameter is set as it
@@ -78,18 +78,21 @@ def login(request):
     else:
         form = functional.curry(forms.Login, initial=initial)
 
-    extra_context = {'redirect_field_name': auth.REDIRECT_FIELD_NAME}
+    if extra_context is None:
+        extra_context = {'redirect_field_name': auth.REDIRECT_FIELD_NAME}
 
-    if request.is_ajax():
-        template_name = 'auth/_login.html'
-        extra_context['hide'] = True
-    else:
-        template_name = 'auth/login.html'
+    if not template_name:
+        if request.is_ajax():
+            template_name = 'auth/_login.html'
+            extra_context['hide'] = True
+        else:
+            template_name = 'auth/login.html'
 
     res = django_auth_views.login(request,
                                   template_name=template_name,
                                   authentication_form=form,
-                                  extra_context=extra_context)
+                                  extra_context=extra_context,
+                                  **kwargs)
     # Set the session data here because django's session key rotation
     # will erase it if we set it earlier.
     if request.user.is_authenticated():
@@ -102,7 +105,17 @@ def login(request):
     return res
 
 
-def logout(request):
+def logout(request, login_url=None, **kwargs):
+    """Logs out the user if he is logged in. Then redirects to the log-in page.
+
+    .. param:: login_url
+
+       Once logged out, defines the URL where to redirect after login
+
+    .. param:: kwargs
+       see django.contrib.auth.views.logout_then_login extra parameters.
+
+    """
     msg = 'Logging out user "%(username)s".' % \
         {'username': request.user.username}
     LOG.info(msg)
@@ -111,7 +124,8 @@ def logout(request):
     if token and endpoint:
         delete_token(endpoint=endpoint, token_id=token.id)
     """ Securely logs a user out. """
-    return django_auth_views.logout_then_login(request)
+    return django_auth_views.logout_then_login(request, login_url=login_url,
+                                               **kwargs)
 
 
 def delete_token(endpoint, token_id):
