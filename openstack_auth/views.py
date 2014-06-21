@@ -29,6 +29,10 @@ from keystoneclient import exceptions as keystone_exceptions
 from keystoneclient.v2_0 import client as keystone_client_v2
 
 from openstack_auth import forms
+# This is historic and is added back in to not break older versions of
+# Horizon, fix to Horizon to remove this requirement was committed in
+# Juno
+from openstack_auth.forms import Login  # noqa
 from openstack_auth import user as auth_user
 from openstack_auth import utils
 
