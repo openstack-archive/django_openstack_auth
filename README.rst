@@ -21,10 +21,10 @@ Installing is quick and easy:
 
 #. Add ``openstack_auth`` to ``settings.INSTALLED_APPS``.
 
-#. Add ``'keystone_auth.backend.KeystoneBackend'`` to your
+#. Add ``'openstack_auth.backend.KeystoneBackend'`` to your
    ``settings.AUTHENTICATION_BACKENDS``, e.g.::
 
-        AUTHENTICATION_BACKENDS = ('keystone_auth.backend.KeystoneBackend',)
+        AUTHENTICATION_BACKENDS = ('openstack_auth.backend.KeystoneBackend',)
 
 #. Configure your API endpoint(s) in ``settings.py``::
 
