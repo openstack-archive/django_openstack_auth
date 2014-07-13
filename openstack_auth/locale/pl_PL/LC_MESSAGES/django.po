@@ -1,59 +1,61 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
-# Łukasz Jernaś <deejay1@srem.org>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: Horizon\n"
+"Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-11 13:43+0800\n"
-"PO-Revision-Date: 2013-09-14 21:02+0000\n"
-"Last-Translator: Łukasz Jernaś <deejay1@srem.org>\n"
-"Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/openstack/language/pl_PL/)\n"
+"POT-Creation-Date: 2014-07-13 06:01+0000\n"
+"PO-Revision-Date: 2014-03-21 08:11+0000\n"
+"Last-Translator: daisy.ycguo <daisy.ycguo@gmail.com>\n"
+"Language-Team: Polish (Poland) "
+"(http://www.transifex.com/projects/p/horizon/language/pl_PL/)\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl_PL\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 1.3\n"
 
-#: backend.py:44
+#: openstack_auth/backend.py:41
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Tonek uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
 
-#: backend.py:92
+#: openstack_auth/backend.py:98
 msgid "Invalid user name or password."
 msgstr "Nieprawidłowa nazwa użytkownika lub hasło."
 
-#: backend.py:97
+#: openstack_auth/backend.py:103
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Wystąpił błąd w trakcie uwierzytelniania. Proszę spróbować później."
 
-#: backend.py:119
+#: openstack_auth/backend.py:125
 msgid "Unable to retrieve authorized projects."
 msgstr "Nie można pobrać uwierzytelnionych projektów."
 
-#: backend.py:124
+#: openstack_auth/backend.py:130
 msgid "You are not authorized for any projects."
 msgstr "Nie upoważniono do żadnego projektu."
 
-#: backend.py:143
+#: openstack_auth/backend.py:150
 msgid "Unable to authenticate to any available projects."
 msgstr "Nie można uwierzytelnić do żadnego z istniejących projektów."
 
-#: forms.py:48
+#: openstack_auth/forms.py:48
 msgid "Region"
 msgstr "Region"
 
-#: forms.py:49
+#: openstack_auth/forms.py:50
 msgid "User Name"
 msgstr "Nazwa użytkownika"
 
-#: forms.py:50
+#: openstack_auth/forms.py:52
 msgid "Password"
 msgstr "Hasło"
 
-#: forms.py:59
+#: openstack_auth/forms.py:61
 msgid "Domain"
 msgstr "Domena"
+
