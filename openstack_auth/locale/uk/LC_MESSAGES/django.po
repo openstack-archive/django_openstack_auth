@@ -1,15 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Ukrainian translations for django_openstack_auth.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the
+# django_openstack_auth project.
 #
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-13 06:01+0000\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-07-16 06:06+0000\n"
 "PO-Revision-Date: 2014-03-21 08:11+0000\n"
-"Last-Translator: daisy.ycguo <daisy.ycguo@gmail.com>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Ukrainian "
 "(http://www.transifex.com/projects/p/horizon/language/uk/)\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "

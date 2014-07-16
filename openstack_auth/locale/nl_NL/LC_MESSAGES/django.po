@@ -1,13 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Dutch (Netherlands) translations for django_openstack_auth.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the
+# django_openstack_auth project.
 #
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-13 06:01+0000\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-07-16 06:06+0000\n"
 "PO-Revision-Date: 2014-04-02 12:02+0000\n"
 "Last-Translator: Tom Verdaat <tom@server.biz>\n"
 "Language-Team: Dutch (Netherlands) "

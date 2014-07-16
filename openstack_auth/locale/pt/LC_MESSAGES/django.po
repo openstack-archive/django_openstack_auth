@@ -1,14 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Portuguese translations for django_openstack_auth.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the
+# django_openstack_auth project.
 #
 # Translators:
 # Manuela Silva <manuela.silva@sky.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-13 06:01+0000\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-07-16 06:06+0000\n"
 "PO-Revision-Date: 2014-03-21 12:10+0000\n"
 "Last-Translator: Manuela Silva <manuela.silva@sky.com>\n"
 "Language-Team: Portuguese "
