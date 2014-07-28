@@ -53,8 +53,7 @@ def generate_test_data():
                  'password': 'swordfish',
                  'token': '',
                  'enabled': True}
-    test_data.user = users.User(users.UserManager(None),
-                                user_dict, loaded=True)
+    test_data.user = users.User(None, user_dict, loaded=True)
 
     # Tenants
     tenant_dict_1 = {'id': uuid.uuid4().hex,
@@ -65,12 +64,8 @@ def generate_test_data():
                      'name': 'tenant_two',
                      'description': '',
                      'enabled': False}
-    test_data.tenant_one = tenants.Tenant(tenants.TenantManager(None),
-                                          tenant_dict_1,
-                                          loaded=True)
-    test_data.tenant_two = tenants.Tenant(tenants.TenantManager(None),
-                                          tenant_dict_2,
-                                          loaded=True)
+    test_data.tenant_one = tenants.Tenant(None, tenant_dict_1, loaded=True)
+    test_data.tenant_two = tenants.Tenant(None, tenant_dict_2, loaded=True)
 
     nova_service = {
         'type': 'compute',
