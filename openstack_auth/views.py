@@ -119,6 +119,7 @@ def delete_token(endpoint, token_id):
 
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
+    utils.remove_project_cache(token_id)
     try:
         if utils.get_keystone_version() < 3:
             client = keystone_client_v2.Client(

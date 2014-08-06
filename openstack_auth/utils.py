@@ -11,16 +11,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import functools
+
 from six.moves.urllib import parse as urlparse
 
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import middleware
 from django.contrib.auth import models
+from django.utils import decorators
 from django.utils import timezone
 
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
+
+
+_PROJECT_CACHE = {}
 
 
 """
@@ -91,6 +97,37 @@ def is_safe_url(url, host=None):
     return not netloc or netloc == host
 
 
+def memoize_by_keyword_arg(cache, kw_keys):
+    """Memoize a function using the list of keyword argument name as its key.
+
+    Wrap a function so that results for any keyword argument tuple are stored
+    in 'cache'. Note that the keyword args to the function must be usable as
+    dictionary keys.
+
+    :param cache: Dictionary object to store the results.
+    :param kw_keys: List of keyword arguments names. The values are used
+                    for generating the key in the cache.
+    """
+    def _decorator(func):
+        @functools.wraps(func, assigned=decorators.available_attrs(func))
+        def wrapper(*args, **kwargs):
+            mem_args = [kwargs[key] for key in kw_keys if key in kwargs]
+            mem_args = '__'.join(str(mem_arg) for mem_arg in mem_args)
+            if not mem_args:
+                return func(*args, **kwargs)
+            if mem_args in cache:
+                return cache[mem_args]
+            result = func(*args, **kwargs)
+            cache[mem_args] = result
+            return result
+        return wrapper
+    return _decorator
+
+
+def remove_project_cache(token):
+    _PROJECT_CACHE.pop(token, None)
+
+
 # Helper for figuring out keystone version
 # Implementation will change when API version discovery is available
 def get_keystone_version():
@@ -104,6 +141,7 @@ def get_keystone_client():
         return client_v3
 
 
+@memoize_by_keyword_arg(_PROJECT_CACHE, ('token', ))
 def get_project_list(*args, **kwargs):
     if get_keystone_version() < 3:
         auth_url = kwargs.get('auth_url', '').replace('v3', 'v2.0')

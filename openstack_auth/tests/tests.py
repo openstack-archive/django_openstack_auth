@@ -489,6 +489,51 @@ class OpenStackAuthTestsV2(test.TestCase):
             debug=False)
         self.assertEqual(tenant_list, expected_tenants)
 
+    def test_tenant_list_caching(self):
+        tenants = [self.data.tenant_two, self.data.tenant_one]
+        expected_tenants = [self.data.tenant_one, self.data.tenant_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
+
+        self.ks_client_module.Client(user_id=user.id,
+                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     token=unscoped.auth_token,
+                                     insecure=False,
+                                     cacert=None,
+                                     debug=False)\
+            .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
+
+        self.mox.ReplayAll()
+
+        tenant_list = utils.get_project_list(
+            user_id=user.id,
+            auth_url=settings.OPENSTACK_KEYSTONE_URL,
+            token=unscoped.auth_token,
+            insecure=False,
+            cacert=None,
+            debug=False)
+        self.assertEqual(tenant_list, expected_tenants)
+
+        # Test to validate that requesting the project list again results
+        # to using the cache and will not make a Keystone call.
+        self.assertEqual(utils._PROJECT_CACHE.get(unscoped.auth_token),
+                         expected_tenants)
+        tenant_list = utils.get_project_list(
+            user_id=user.id,
+            auth_url=settings.OPENSTACK_KEYSTONE_URL,
+            token=unscoped.auth_token,
+            insecure=False,
+            cacert=None,
+            debug=False)
+        self.assertEqual(tenant_list, expected_tenants)
+
+        utils.remove_project_cache(unscoped.auth_token)
+        self.assertIsNone(utils._PROJECT_CACHE.get(unscoped.auth_token))
+
 
 def EndpointMetaFactory(endpoint_type):
     def endpoint_wrapper(func):
@@ -978,6 +1023,53 @@ class OpenStackAuthTestsV3(test.TestCase):
             cacert=None,
             debug=False)
         self.assertEqual(project_list, expected_projects)
+
+    def test_tenant_list_caching(self):
+        projects = [self.data.project_two, self.data.project_one]
+        expected_projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
+                                 "list")
+
+        self.ks_client_module.Client(user_id=user.id,
+                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     token=unscoped.auth_token,
+                                     insecure=False,
+                                     cacert=None,
+                                     debug=False)\
+            .AndReturn(self.keystone_client_unscoped)
+        self.keystone_client_unscoped.projects.list(user=user.id) \
+            .AndReturn(projects)
+
+        self.mox.ReplayAll()
+
+        project_list = utils.get_project_list(
+            user_id=user.id,
+            auth_url=settings.OPENSTACK_KEYSTONE_URL,
+            token=unscoped.auth_token,
+            insecure=False,
+            cacert=None,
+            debug=False)
+        self.assertEqual(project_list, expected_projects)
+
+        # Test to validate that requesting the project list again results
+        # to using the cache and will not make a Keystone call.
+        self.assertEqual(utils._PROJECT_CACHE.get(unscoped.auth_token),
+                         expected_projects)
+        project_list = utils.get_project_list(
+            user_id=user.id,
+            auth_url=settings.OPENSTACK_KEYSTONE_URL,
+            token=unscoped.auth_token,
+            insecure=False,
+            cacert=None,
+            debug=False)
+        self.assertEqual(project_list, expected_projects)
+
+        utils.remove_project_cache(unscoped.auth_token)
+        self.assertIsNone(utils._PROJECT_CACHE.get(unscoped.auth_token))
 
 
 class OpenStackAuthTestsV3WithPublicURL(OpenStackAuthTestsV3):
