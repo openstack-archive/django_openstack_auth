@@ -68,8 +68,12 @@ class Token(object):
 
         # Token-related attributes
         self.id = auth_ref.auth_token
-        if len(self.id) > 32:
-            self.id = hashlib.md5(self.id).hexdigest()
+        if len(self.id) > 64:
+            algorithm = getattr(settings, 'OPENSTACK_TOKEN_HASH_ALGORITHM',
+                                'md5')
+            hasher = hashlib.new(algorithm)
+            hasher.update(self.id)
+            self.id = hasher.hexdigest()
         self.expires = auth_ref.expires
 
         # Project-related attributes
