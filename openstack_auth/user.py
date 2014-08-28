@@ -40,6 +40,7 @@ def create_user_from_token(request, token, endpoint, services_region=None):
                 token=token,
                 user=token.user['name'],
                 user_domain_id=token.user_domain_id,
+                user_domain_name=token.user_domain_name,
                 project_id=token.project['id'],
                 project_name=token.project['name'],
                 domain_id=token.domain['id'],
@@ -65,6 +66,7 @@ class Token(object):
         user['name'] = auth_ref.username
         self.user = user
         self.user_domain_id = auth_ref.user_domain_id
+        self.user_domain_name = auth_ref.user_domain_name
 
         # Token-related attributes
         self.id = auth_ref.auth_token
@@ -147,6 +149,10 @@ class User(models.AnonymousUser):
 
         The domain id of the current user.
 
+    .. attribute:: user_domain_name
+
+        The domain name of the current user.
+
     .. attribute:: domain_id
 
         The id of the Keystone domain scoped for the current user/token.
@@ -155,13 +161,15 @@ class User(models.AnonymousUser):
     def __init__(self, id=None, token=None, user=None, tenant_id=None,
                  service_catalog=None, tenant_name=None, roles=None,
                  authorized_tenants=None, endpoint=None, enabled=False,
-                 services_region=None, user_domain_id=None, domain_id=None,
-                 domain_name=None, project_id=None, project_name=None):
+                 services_region=None, user_domain_id=None,
+                 user_domain_name=None, domain_id=None, domain_name=None,
+                 project_id=None, project_name=None):
         self.id = id
         self.pk = id
         self.token = token
         self.username = user
         self.user_domain_id = user_domain_id
+        self.user_domain_name = user_domain_name
         self.domain_id = domain_id
         self.domain_name = domain_name
         self.project_id = project_id or tenant_id
