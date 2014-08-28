@@ -141,15 +141,38 @@ def get_keystone_client():
         return client_v3
 
 
+def has_in_url_path(url, sub):
+    """Test if the `sub` string is in the `url` path."""
+    scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
+    return sub in path
+
+
+def url_path_replace(url, old, new, count=None):
+    """Return a copy of url with replaced path.
+
+    Return a copy of url with all occurrences of old replaced by new in the url
+    path.  If the optional argument count is given, only the first count
+    occurrences are replaced.
+    """
+    args = []
+    scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
+    if count is not None:
+        args.append(count)
+    return urlparse.urlunsplit((
+        scheme, netloc, path.replace(old, new, *args), query, fragment))
+
+
 @memoize_by_keyword_arg(_PROJECT_CACHE, ('token', ))
 def get_project_list(*args, **kwargs):
     if get_keystone_version() < 3:
-        auth_url = kwargs.get('auth_url', '').replace('v3', 'v2.0')
+        auth_url = url_path_replace(
+            kwargs.get('auth_url', ''), '/v3', '/v2.0', 1)
         kwargs['auth_url'] = auth_url
         client = get_keystone_client().Client(*args, **kwargs)
         projects = client.tenants.list()
     else:
-        auth_url = kwargs.get('auth_url', '').replace('v2.0', 'v3')
+        auth_url = url_path_replace(
+            kwargs.get('auth_url', ''), '/v2.0', '/v3', 1)
         kwargs['auth_url'] = auth_url
         client = get_keystone_client().Client(*args, **kwargs)
         client.management_url = auth_url
