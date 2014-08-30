@@ -40,7 +40,9 @@ def create_user_from_token(request, token, endpoint, services_region=None):
                 token=token,
                 user=token.user['name'],
                 user_domain_id=token.user_domain_id,
-                user_domain_name=token.user_domain_name,
+                # We need to consider already logged-in users with an old
+                # version of Token without user_domain_name.
+                user_domain_name=getattr(token, 'user_domain_name', None),
                 project_id=token.project['id'],
                 project_name=token.project['name'],
                 domain_id=token.domain['id'],
