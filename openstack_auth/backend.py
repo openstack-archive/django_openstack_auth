@@ -112,46 +112,63 @@ class KeystoneBackend(object):
         self.check_auth_expiry(unscoped_auth_ref)
 
         # Check if token is automatically scoped to default_project
+        # grab the project from this token, to use as a default
+        # if no recent_project is found in the cookie
+        token_proj_id = None
         if unscoped_auth_ref.project_scoped:
-            auth_ref = unscoped_auth_ref
-        else:
-            # For now we list all the user's projects and iterate through.
+            token_proj_id = unscoped_auth_ref.get('project',
+                                                  {}).get('id')
+
+        # We list all the user's projects
+        try:
+            if utils.get_keystone_version() < 3:
+                projects = client.tenants.list()
+            else:
+                client.management_url = auth_url
+                projects = client.projects.list(
+                    user=unscoped_auth_ref.user_id)
+        except (keystone_exceptions.ClientException,
+                keystone_exceptions.AuthorizationFailure) as exc:
+            msg = _('Unable to retrieve authorized projects.')
+            raise exceptions.KeystoneAuthException(msg)
+
+        # Abort if there are no projects for this user
+        if not projects:
+            msg = _('You are not authorized for any projects.')
+            raise exceptions.KeystoneAuthException(msg)
+
+        # the recent project id a user might have set in a cookie
+        recent_project = None
+        if request:
+            recent_project = request.COOKIES.get('recent_project',
+                                                 token_proj_id)
+
+        # if a most recent project was found, try using it first
+        for pos, project in enumerate(projects):
+            if project.id == recent_project:
+                # move recent project to the beginning
+                projects.pop(pos)
+                projects.insert(0, project)
+                break
+
+        for project in projects:
             try:
-                if utils.get_keystone_version() < 3:
-                    projects = client.tenants.list()
-                else:
-                    client.management_url = auth_url
-                    projects = client.projects.list(
-                        user=unscoped_auth_ref.user_id)
+                client = keystone_client.Client(
+                    tenant_id=project.id,
+                    token=unscoped_auth_ref.auth_token,
+                    auth_url=auth_url,
+                    insecure=insecure,
+                    cacert=ca_cert,
+                    debug=settings.DEBUG)
+                auth_ref = client.auth_ref
+                break
             except (keystone_exceptions.ClientException,
-                    keystone_exceptions.AuthorizationFailure) as exc:
-                msg = _('Unable to retrieve authorized projects.')
-                raise exceptions.KeystoneAuthException(msg)
+                    keystone_exceptions.AuthorizationFailure):
+                auth_ref = None
 
-            # Abort if there are no projects for this user
-            if not projects:
-                msg = _('You are not authorized for any projects.')
-                raise exceptions.KeystoneAuthException(msg)
-
-            while projects:
-                project = projects.pop()
-                try:
-                    client = keystone_client.Client(
-                        tenant_id=project.id,
-                        token=unscoped_auth_ref.auth_token,
-                        auth_url=auth_url,
-                        insecure=insecure,
-                        cacert=ca_cert,
-                        debug=settings.DEBUG)
-                    auth_ref = client.auth_ref
-                    break
-                except (keystone_exceptions.ClientException,
-                        keystone_exceptions.AuthorizationFailure):
-                    auth_ref = None
-
-            if auth_ref is None:
-                msg = _("Unable to authenticate to any available projects.")
-                raise exceptions.KeystoneAuthException(msg)
+        if auth_ref is None:
+            msg = _("Unable to authenticate to any available projects.")
+            raise exceptions.KeystoneAuthException(msg)
 
         # Check expiry for our new scoped token.
         self.check_auth_expiry(auth_ref)

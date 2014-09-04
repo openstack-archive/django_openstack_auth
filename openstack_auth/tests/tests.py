@@ -131,7 +131,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_tenants(user, tenants)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_one.id)
 
         self.mox.ReplayAll()
 
@@ -157,8 +157,8 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_tenants(user, tenants)
-        self._mock_client_token_auth_failure(unscoped, self.data.tenant_two.id)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_one.id)
+        self._mock_client_token_auth_failure(unscoped, self.data.tenant_one.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -171,6 +171,14 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.post(url, form_data)
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
+    def test_login_w_bad_region_cookie(self):
+        self.client.cookies['services_region'] = "bad_region"
+        self._login()
+        self.assertNotEqual("bad_region",
+                            self.client.session['services_region'])
+        self.assertEqual("RegionOne",
+                         self.client.session['services_region'])
+
     def test_no_enabled_tenants(self):
         tenants = [self.data.tenant_one, self.data.tenant_two]
         user = self.data.user
@@ -178,8 +186,8 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_tenants(user, tenants)
-        self._mock_client_token_auth_failure(unscoped, self.data.tenant_two.id)
         self._mock_client_token_auth_failure(unscoped, self.data.tenant_one.id)
+        self._mock_client_token_auth_failure(unscoped, self.data.tenant_two.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -289,7 +297,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         form_data = self.get_form_data(user)
 
         self._mock_unscoped_client_list_tenants(user, tenants)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_one.id)
         self._mock_scoped_client_for_tenant(scoped, tenant.id,
                                             url=sc.url_for(endpoint_type=et))
         self.mox.ReplayAll()
@@ -332,7 +340,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         form_data = self.get_form_data(user)
 
         self._mock_unscoped_client_list_tenants(user, tenants)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_one.id)
 
         self.mox.ReplayAll()
 
@@ -364,6 +372,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
             self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
         self.assertEqual(self.client.session['services_region'], region)
+        self.assertEqual(self.client.cookies['services_region'].value, region)
 
     def test_switch_region_with_next(self, next=None):
         self.test_switch_region(next='/next_url')
@@ -500,7 +509,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_projects(user, projects)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
         self.mox.ReplayAll()
 
@@ -522,8 +531,8 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_projects(user, projects)
         self._mock_client_token_auth_failure(unscoped,
-                                             self.data.project_two.id)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+                                             self.data.project_one.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -545,9 +554,9 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         self._mock_unscoped_client_list_projects(user, projects)
         self._mock_client_token_auth_failure(unscoped,
-                                             self.data.project_two.id)
-        self._mock_client_token_auth_failure(unscoped,
                                              self.data.project_one.id)
+        self._mock_client_token_auth_failure(unscoped,
+                                             self.data.project_two.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -638,7 +647,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         form_data = self.get_form_data(user)
 
         self._mock_unscoped_client_list_projects(user, projects)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
         self._mock_scoped_client_for_tenant(
             unscoped,
             project.id,
@@ -683,7 +692,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_projects(user, projects)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
         self.mox.ReplayAll()
 
