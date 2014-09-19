@@ -100,5 +100,6 @@ class Login(django_auth_forms.AuthenticationForm):
             LOG.warning(msg)
             self.request.session.flush()
             raise forms.ValidationError(exc)
-        self.check_for_test_cookie()
+        if hasattr(self, 'check_for_test_cookie'):  # Dropped in django 1.7
+            self.check_for_test_cookie()
         return self.cleaned_data
