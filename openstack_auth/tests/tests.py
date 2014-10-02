@@ -32,7 +32,76 @@ from openstack_auth import utils
 DEFAULT_DOMAIN = settings.OPENSTACK_KEYSTONE_DEFAULT_DOMAIN
 
 
-class OpenStackAuthTestsV2(test.TestCase):
+class OpenStackAuthTestsMixin(object):
+    '''Common functions for version specific tests.'''
+
+    def tearDown(self):
+        self.mox.UnsetStubs()
+        self.mox.VerifyAll()
+
+    def _mock_unscoped_client(self, user):
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     password=user.password,
+                                     username=user.name,
+                                     user_domain_name=DEFAULT_DOMAIN,
+                                     insecure=False,
+                                     cacert=None,
+                                     debug=False)\
+            .AndReturn(self.keystone_client_unscoped)
+
+    def _mock_unscoped_client_with_token(self, user, unscoped):
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        url = settings.OPENSTACK_KEYSTONE_URL
+        self.ks_client_module.Client(user_id=user.id,
+                                     auth_url=url,
+                                     token=unscoped.auth_token,
+                                     insecure=False,
+                                     cacert=None,
+                                     debug=False)\
+            .AndReturn(self.keystone_client_unscoped)
+
+    def _mock_client_token_auth_failure(self, unscoped, tenant_id):
+        exc = keystone_exceptions.AuthorizationFailure
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     tenant_id=tenant_id,
+                                     insecure=False,
+                                     cacert=None,
+                                     token=unscoped.auth_token,
+                                     debug=False) \
+            .AndRaise(exc)
+
+    def _mock_client_password_auth_failure(self, username, password, exc):
+        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
+                                     password=password,
+                                     username=username,
+                                     user_domain_name=DEFAULT_DOMAIN,
+                                     insecure=False,
+                                     cacert=None,
+                                     debug=False).AndRaise(exc)
+
+    def _mock_scoped_client_for_tenant(self, auth_ref, tenant_id, url=None):
+        if url is None:
+            auth_url = settings.OPENSTACK_KEYSTONE_URL
+        else:
+            auth_url = url
+        self.ks_client_module.Client(auth_url=auth_url,
+                                     tenant_id=tenant_id,
+                                     insecure=False,
+                                     cacert=None,
+                                     token=auth_ref.auth_token,
+                                     debug=False) \
+            .AndReturn(self.keystone_client_scoped)
+
+    def get_form_data(self, user):
+        return {'region': settings.OPENSTACK_KEYSTONE_URL,
+                'domain': DEFAULT_DOMAIN,
+                'password': user.password,
+                'username': user.name}
+
+
+class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
     def setUp(self):
         super(OpenStackAuthTestsV2, self).setUp()
         self.mox = mox.Mox()
@@ -48,39 +117,22 @@ class OpenStackAuthTestsV2(test.TestCase):
         settings.OPENSTACK_API_VERSIONS['identity'] = 2.0
         settings.OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v2.0"
 
-    def tearDown(self):
-        self.mox.UnsetStubs()
-        self.mox.VerifyAll()
+    def _mock_unscoped_list_tenants(self, tenants):
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
+        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
+
+    def _mock_unscoped_client_list_tenants(self, user, tenants):
+        self._mock_unscoped_client(user)
+        self._mock_unscoped_list_tenants(tenants)
 
     def _login(self):
         tenants = [self.data.tenant_one, self.data.tenant_two]
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.tenant_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_tenants(user, tenants)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
 
         self.mox.ReplayAll()
 
@@ -104,39 +156,10 @@ class OpenStackAuthTestsV2(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
-        exc = keystone_exceptions.AuthorizationFailure
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.tenant_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndRaise(exc)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.tenant_one.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
-
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_tenants(user, tenants)
+        self._mock_client_token_auth_failure(unscoped, self.data.tenant_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_one.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -154,39 +177,10 @@ class OpenStackAuthTestsV2(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
-        exc = keystone_exceptions.AuthorizationFailure
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.tenant_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndRaise(exc)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.tenant_one.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndRaise(exc)
-
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_tenants(user, tenants)
+        self._mock_client_token_auth_failure(unscoped, self.data.tenant_two.id)
+        self._mock_client_token_auth_failure(unscoped, self.data.tenant_one.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -205,23 +199,8 @@ class OpenStackAuthTestsV2(test.TestCase):
     def test_no_tenants(self):
         user = self.data.user
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn([])
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_tenants(user, [])
 
         self.mox.ReplayAll()
 
@@ -240,21 +219,11 @@ class OpenStackAuthTestsV2(test.TestCase):
     def test_invalid_credentials(self):
         user = self.data.user
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': "invalid",
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        form_data = self.get_form_data(user)
+        form_data['password'] = "invalid"
 
         exc = keystone_exceptions.Unauthorized(401)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password="invalid",
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False).AndRaise(exc)
+        self._mock_client_password_auth_failure(user.name, "invalid", exc)
 
         self.mox.ReplayAll()
 
@@ -272,22 +241,9 @@ class OpenStackAuthTestsV2(test.TestCase):
     def test_exception(self):
         user = self.data.user
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-
+        form_data = self.get_form_data(user)
         exc = keystone_exceptions.ClientException(500)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False).AndRaise(exc)
-
+        self._mock_client_password_auth_failure(user.name, user.password, exc)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -331,39 +287,12 @@ class OpenStackAuthTestsV2(test.TestCase):
         sc = self.data.service_catalog
         et = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'username': user.name,
-                     'password': user.password}
+        form_data = self.get_form_data(user)
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.tenant_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
-
-        self.ks_client_module.Client(auth_url=sc.url_for(endpoint_type=et),
-                                     tenant_id=tenant.id,
-                                     token=scoped.auth_token,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
-
+        self._mock_unscoped_client_list_tenants(user, tenants)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
+        self._mock_scoped_client_for_tenant(scoped, tenant.id,
+                                            url=sc.url_for(endpoint_type=et))
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -401,30 +330,10 @@ class OpenStackAuthTestsV2(test.TestCase):
         unscoped = self.data.unscoped_access_info
         sc = self.data.service_catalog
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'username': user.name,
-                     'password': user.password}
+        form_data = self.get_form_data(user)
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.tenant_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
+        self._mock_unscoped_client_list_tenants(user, tenants)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
 
         self.mox.ReplayAll()
 
@@ -466,17 +375,8 @@ class OpenStackAuthTestsV2(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(user_id=user.id,
-                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     token=unscoped.auth_token,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
+        self._mock_unscoped_client_with_token(user, unscoped)
+        self._mock_unscoped_list_tenants(tenants)
 
         self.mox.ReplayAll()
 
@@ -495,18 +395,8 @@ class OpenStackAuthTestsV2(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.tenants, "list")
-
-        self.ks_client_module.Client(user_id=user.id,
-                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     token=unscoped.auth_token,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.tenants.list().AndReturn(tenants)
-
+        self._mock_unscoped_list_tenants(tenants)
+        self._mock_unscoped_client_with_token(user, unscoped)
         self.mox.ReplayAll()
 
         tenant_list = utils.get_project_list(
@@ -577,7 +467,18 @@ class OpenStackAuthTestsV2WithAdminURL(OpenStackAuthTestsV2):
     __metaclass__ = EndpointMetaFactory('adminURL')
 
 
-class OpenStackAuthTestsV3(test.TestCase):
+class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
+
+    def _mock_unscoped_client_list_projects(self, user, projects):
+        self._mock_unscoped_client(user)
+        self._mock_unscoped_list_projects(user, projects)
+
+    def _mock_unscoped_list_projects(self, user, projects):
+        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
+                                 "list")
+        self.keystone_client_unscoped.projects.list(user=user.id) \
+            .AndReturn(projects)
+
     def setUp(self):
         super(OpenStackAuthTestsV3, self).setUp()
         self.mox = mox.Mox()
@@ -593,41 +494,14 @@ class OpenStackAuthTestsV3(test.TestCase):
         settings.OPENSTACK_API_VERSIONS['identity'] = 3
         settings.OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v3"
 
-    def tearDown(self):
-        self.mox.UnsetStubs()
-        self.mox.VerifyAll()
-
     def test_login(self):
         projects = [self.data.project_one, self.data.project_two]
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn(projects)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.project_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
 
         self.mox.ReplayAll()
 
@@ -646,41 +520,11 @@ class OpenStackAuthTestsV3(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn(projects)
-        exc = keystone_exceptions.AuthorizationFailure
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.project_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndRaise(exc)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.project_one.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
-
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_client_token_auth_failure(unscoped,
+                                             self.data.project_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -698,41 +542,13 @@ class OpenStackAuthTestsV3(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
+        form_data = self.get_form_data(user)
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn(projects)
-        exc = keystone_exceptions.AuthorizationFailure
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.project_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndRaise(exc)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.project_one.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndRaise(exc)
-
+        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_client_token_auth_failure(unscoped,
+                                             self.data.project_two.id)
+        self._mock_client_token_auth_failure(unscoped,
+                                             self.data.project_one.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -751,26 +567,8 @@ class OpenStackAuthTestsV3(test.TestCase):
     def test_no_projects(self):
         user = self.data.user
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn([])
-
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_projects(user, [])
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -788,21 +586,12 @@ class OpenStackAuthTestsV3(test.TestCase):
     def test_invalid_credentials(self):
         user = self.data.user
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': "invalid",
-                     'username': user.name}
+        form_data = self.get_form_data(user)
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
+        form_data['password'] = "invalid"
 
         exc = keystone_exceptions.Unauthorized(401)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password="invalid",
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False).AndRaise(exc)
+        self._mock_client_password_auth_failure(user.name, "invalid", exc)
 
         self.mox.ReplayAll()
 
@@ -819,23 +608,9 @@ class OpenStackAuthTestsV3(test.TestCase):
 
     def test_exception(self):
         user = self.data.user
-
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'password': user.password,
-                     'username': user.name}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-
+        form_data = self.get_form_data(user)
         exc = keystone_exceptions.ClientException(500)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False).AndRaise(exc)
-
+        self._mock_client_password_auth_failure(user.name, user.password, exc)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -861,39 +636,14 @@ class OpenStackAuthTestsV3(test.TestCase):
         sc = self.data.service_catalog
         et = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'username': user.name,
-                     'password': user.password}
+        form_data = self.get_form_data(user)
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn(projects)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.project_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
-        self.ks_client_module.Client(auth_url=sc.url_for(endpoint_type=et),
-                                     tenant_id=project.id,
-                                     token=scoped.auth_token,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
+        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
+        self._mock_scoped_client_for_tenant(
+            unscoped,
+            project.id,
+            url=sc.url_for(endpoint_type=et))
 
         self.mox.ReplayAll()
 
@@ -932,32 +682,9 @@ class OpenStackAuthTestsV3(test.TestCase):
         unscoped = self.data.unscoped_access_info
         sc = self.data.service_catalog
 
-        form_data = {'region': settings.OPENSTACK_KEYSTONE_URL,
-                     'domain': DEFAULT_DOMAIN,
-                     'username': user.name,
-                     'password': user.password}
-
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     password=user.password,
-                                     username=user.name,
-                                     user_domain_name=DEFAULT_DOMAIN,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn(projects)
-        self.ks_client_module.Client(auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     tenant_id=self.data.project_two.id,
-                                     insecure=False,
-                                     cacert=None,
-                                     token=unscoped.auth_token,
-                                     debug=False) \
-            .AndReturn(self.keystone_client_scoped)
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
 
         self.mox.ReplayAll()
 
@@ -999,20 +726,8 @@ class OpenStackAuthTestsV3(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(user_id=user.id,
-                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     token=unscoped.auth_token,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn(projects)
-
+        self._mock_unscoped_client_with_token(user, unscoped)
+        self._mock_unscoped_list_projects(user, projects)
         self.mox.ReplayAll()
 
         project_list = utils.get_project_list(
@@ -1030,19 +745,8 @@ class OpenStackAuthTestsV3(test.TestCase):
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
-        self.mox.StubOutWithMock(self.ks_client_module, "Client")
-        self.mox.StubOutWithMock(self.keystone_client_unscoped.projects,
-                                 "list")
-
-        self.ks_client_module.Client(user_id=user.id,
-                                     auth_url=settings.OPENSTACK_KEYSTONE_URL,
-                                     token=unscoped.auth_token,
-                                     insecure=False,
-                                     cacert=None,
-                                     debug=False)\
-            .AndReturn(self.keystone_client_unscoped)
-        self.keystone_client_unscoped.projects.list(user=user.id) \
-            .AndReturn(projects)
+        self._mock_unscoped_client_with_token(user, unscoped)
+        self._mock_unscoped_list_projects(user, projects)
 
         self.mox.ReplayAll()
 
