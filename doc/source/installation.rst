@@ -20,7 +20,7 @@ Installing is quick and easy:
 
         OPENSTACK_KEYSTONE_URL = "http://example.com:5000/v3"
 
-#. Include ``'keystone_auth.urls'`` somewhere in your ``urls.py`` file.
+#. Include ``'openstack_auth.urls'`` somewhere in your ``urls.py`` file. (don't forget you need to import it to include it)
 
 #. Use it as you would any other Django auth backend.
 
