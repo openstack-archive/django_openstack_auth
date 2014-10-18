@@ -14,17 +14,15 @@
 import datetime
 import functools
 
-from six.moves.urllib import parse as urlparse
-
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import middleware
 from django.contrib.auth import models
 from django.utils import decorators
 from django.utils import timezone
-
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
+from six.moves.urllib import parse as urlparse
 
 
 _PROJECT_CACHE = {}

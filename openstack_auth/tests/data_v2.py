@@ -15,7 +15,6 @@ import datetime
 import uuid
 
 from django.utils import datetime_safe
-
 from keystoneclient import access
 from keystoneclient import service_catalog
 from keystoneclient.v2_0 import roles

@@ -17,7 +17,6 @@ import logging
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-
 from keystoneclient import exceptions as keystone_exceptions
 
 from openstack_auth import exceptions

@@ -16,7 +16,6 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth import models
-
 from keystoneclient import exceptions as keystone_exceptions
 
 from openstack_auth import utils

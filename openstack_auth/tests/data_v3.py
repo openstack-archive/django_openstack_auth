@@ -14,16 +14,14 @@
 import datetime
 import uuid
 
-import requests
-
 from django.utils import datetime_safe
-
 from keystoneclient import access
 from keystoneclient import service_catalog
 from keystoneclient.v3 import domains
 from keystoneclient.v3 import projects
 from keystoneclient.v3 import roles
 from keystoneclient.v3 import users
+import requests
 
 
 class TestDataContainer(object):

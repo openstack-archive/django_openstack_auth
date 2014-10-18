@@ -19,9 +19,9 @@ import sys
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'openstack_auth.tests.settings'
 
+import django
 from django.test import simple as test_simple
 
-import django
 if hasattr(django, 'setup'):
     django.setup()
 

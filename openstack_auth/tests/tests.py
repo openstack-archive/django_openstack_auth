@@ -13,16 +13,15 @@
 
 import copy
 
-from mox3 import mox
-
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django import test
-
 from keystoneclient import exceptions as keystone_exceptions
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
+from mox3 import mox
+import six
 
 from openstack_auth.tests import data_v2
 from openstack_auth.tests import data_v3
@@ -445,26 +444,26 @@ def EndpointMetaFactory(endpoint_type):
         # wrap each test with OPENSTACK_ENDPOINT_TYPE parameter set/restore
         def __new__(cls, name, bases, attrs):
             base, = bases
-            for k, v in base.__dict__.iteritems():
+            for k, v in six.iteritems(base.__dict__):
                 if not k.startswith('__') and getattr(v, '__call__', None):
                     attrs[k] = endpoint_wrapper(v)
             return super(EndPointMeta, cls).__new__(cls, name, bases, attrs)
     return EndPointMeta
 
 
+@six.add_metaclass(EndpointMetaFactory('publicURL'))
 class OpenStackAuthTestsV2WithPublicURL(OpenStackAuthTestsV2):
     """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'publicURL'."""
-    __metaclass__ = EndpointMetaFactory('publicURL')
 
 
+@six.add_metaclass(EndpointMetaFactory('internalURL'))
 class OpenStackAuthTestsV2WithInternalURL(OpenStackAuthTestsV2):
     """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'internalURL'."""
-    __metaclass__ = EndpointMetaFactory('internalURL')
 
 
+@six.add_metaclass(EndpointMetaFactory('adminURL'))
 class OpenStackAuthTestsV2WithAdminURL(OpenStackAuthTestsV2):
     """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'adminURL'."""
-    __metaclass__ = EndpointMetaFactory('adminURL')
 
 
 class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
@@ -776,16 +775,16 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self.assertIsNone(utils._PROJECT_CACHE.get(unscoped.auth_token))
 
 
+@six.add_metaclass(EndpointMetaFactory('publicURL'))
 class OpenStackAuthTestsV3WithPublicURL(OpenStackAuthTestsV3):
     """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'publicURL'."""
-    __metaclass__ = EndpointMetaFactory('publicURL')
 
 
+@six.add_metaclass(EndpointMetaFactory('internalURL'))
 class OpenStackAuthTestsV3WithInternalURL(OpenStackAuthTestsV3):
     """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'internalURL'."""
-    __metaclass__ = EndpointMetaFactory('internalURL')
 
 
+@six.add_metaclass(EndpointMetaFactory('adminURL'))
 class OpenStackAuthTestsV3WithAdminURL(OpenStackAuthTestsV3):
     """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'adminURL'."""
-    __metaclass__ = EndpointMetaFactory('adminURL')
