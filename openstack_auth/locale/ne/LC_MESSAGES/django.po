@@ -1,0 +1,62 @@
+# Nepali translations for django_openstack_auth.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the
+# django_openstack_auth project.
+#
+# Translators:
+# Surit Aryal <surit_people@hotmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version:  Horizon\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-10-24 06:06+0000\n"
+"PO-Revision-Date: 2014-10-24 02:31+0000\n"
+"Last-Translator: Surit Aryal <surit_people@hotmail.com>\n"
+"Language-Team: Nepali "
+"(http://www.transifex.com/projects/p/horizon/language/ne/)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: openstack_auth/backend.py:40
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "पहिचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त भएको छ।"
+
+#: openstack_auth/backend.py:101
+msgid "Invalid user name or password."
+msgstr "प्रयोगकर्ताको नाम वा पासवर्ड मिलेन । "
+
+#: openstack_auth/backend.py:106
+msgid "An error occurred authenticating. Please try again later."
+msgstr "प्रमाणीकरणमा त्रुटि भयो। पछि फेरि प्रयास गर्नुहोस्।"
+
+#: openstack_auth/backend.py:128
+msgid "Unable to retrieve authorized projects."
+msgstr "अधिकृत परियोजनाहरू प्राप्त गर्न सकिएन।"
+
+#: openstack_auth/backend.py:133
+msgid "You are not authorized for any projects."
+msgstr "तपाईलाई कुनै पनि परियोजनाको अधिकार छैन।"
+
+#: openstack_auth/backend.py:153
+msgid "Unable to authenticate to any available projects."
+msgstr "कुनै पनि उपलब्ध परियोजनाहरु प्रमाणीकरण गर्न असमर्थ।"
+
+#: openstack_auth/forms.py:48
+msgid "Region"
+msgstr "क्षेत्र"
+
+#: openstack_auth/forms.py:50
+msgid "User Name"
+msgstr "प्रयोगकर्ताको नाम"
+
+#: openstack_auth/forms.py:52
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: openstack_auth/forms.py:61
+msgid "Domain"
+msgstr "डोमेन"
+
