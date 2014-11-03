@@ -258,7 +258,12 @@ class User(models.AnonymousUser):
 
         Returns ``True`` or ``False``.
         """
-        return 'admin' in [role['name'].lower() for role in self.roles]
+        admin_roles = [role.lower() for role in getattr(
+            settings,
+            'OPENSTACK_KEYSTONE_ADMIN_ROLES',
+            ['admin'])]
+        user_roles = [role['name'].lower() for role in self.roles]
+        return True if set(admin_roles).intersection(user_roles) else False
 
     @property
     def authorized_tenants(self):
