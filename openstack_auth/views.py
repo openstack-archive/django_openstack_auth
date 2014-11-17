@@ -49,14 +49,15 @@ LOG = logging.getLogger(__name__)
 @never_cache
 def login(request, template_name=None, extra_context=None, **kwargs):
     """Logs a user in using the :class:`~openstack_auth.forms.Login` form."""
-    # If the user is already authenticated, redirect them to the
-    # dashboard straight away, unless the 'next' parameter is set as it
-    # usually indicates requesting access to a page that requires different
-    # permissions.
-    if (request.user.is_authenticated() and
-            auth.REDIRECT_FIELD_NAME not in request.GET and
-            auth.REDIRECT_FIELD_NAME not in request.POST):
-        return shortcuts.redirect(settings.LOGIN_REDIRECT_URL)
+    if not request.is_ajax():
+        # If the user is already authenticated, redirect them to the
+        # dashboard straight away, unless the 'next' parameter is set as it
+        # usually indicates requesting access to a page that requires different
+        # permissions.
+        if (request.user.is_authenticated() and
+                auth.REDIRECT_FIELD_NAME not in request.GET and
+                auth.REDIRECT_FIELD_NAME not in request.POST):
+            return shortcuts.redirect(settings.LOGIN_REDIRECT_URL)
 
     # Get our initial region for the form.
     initial = {}
