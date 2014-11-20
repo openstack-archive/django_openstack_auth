@@ -10,7 +10,6 @@
 # implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import logging
 
 import django
@@ -197,7 +196,10 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
         user = auth_user.create_user_from_token(
             request, auth_user.Token(auth_ref), endpoint)
         auth_user.set_session_from_user(request, user)
-    return shortcuts.redirect(redirect_to)
+    response = shortcuts.redirect(redirect_to)
+    utils.set_response_cookie(response, 'recent_project',
+                              request.user.project_id)
+    return response
 
 
 @login_required
@@ -217,4 +219,7 @@ def switch_region(request, region_name,
     if not is_safe_url(url=redirect_to, host=request.get_host()):
         redirect_to = settings.LOGIN_REDIRECT_URL
 
-    return shortcuts.redirect(redirect_to)
+    response = shortcuts.redirect(redirect_to)
+    utils.set_response_cookie(response, 'services_region',
+                              request.session['services_region'])
+    return response

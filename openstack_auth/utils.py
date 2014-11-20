@@ -13,6 +13,7 @@
 
 import datetime
 import functools
+import logging
 
 from django.conf import settings
 from django.contrib import auth
@@ -24,6 +25,8 @@ from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 from six.moves.urllib import parse as urlparse
 
+
+LOG = logging.getLogger(__name__)
 
 _PROJECT_CACHE = {}
 
@@ -195,3 +198,43 @@ def get_project_list(*args, **kwargs):
 
     projects.sort(key=lambda project: project.name.lower())
     return projects
+
+
+def default_services_region(service_catalog, request=None):
+    """Returns the first endpoint region for first non-identity service.
+
+    Extracted from the service catalog.
+    """
+    if service_catalog:
+        available_regions = [endpoint['region'] for service
+                             in service_catalog for endpoint
+                             in service['endpoints']
+                             if service['type'] != 'identity']
+        if not available_regions:
+            # this is very likely an incomplete keystone setup
+            LOG.warning('No regions could be found excluding identity.')
+            available_regions = [endpoint['region'] for service
+                                 in service_catalog for endpoint
+                                 in service['endpoints']]
+        if not available_regions:
+            # this is a critical problem and it's not clear how this occurs
+            LOG.error('No regions can be found in the service catalog.')
+            return None
+        selected_region = None
+        if request:
+            selected_region = request.COOKIES.get('services_region',
+                                                  available_regions[0])
+        if selected_region not in available_regions:
+            selected_region = available_regions[0]
+        return selected_region
+    return None
+
+
+def set_response_cookie(response, cookie_name, cookie_value):
+    """a common policy of setting cookies for last used project
+    and region, can be reused in other locations.
+    this method will set the cookie to expire in 365 days.
+    """
+    now = timezone.now()
+    expire_date = now + datetime.timedelta(days=365)
+    response.set_cookie(cookie_name, cookie_value, expires=expire_date)

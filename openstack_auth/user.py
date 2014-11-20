@@ -35,6 +35,9 @@ def set_session_from_user(request, user):
 
 
 def create_user_from_token(request, token, endpoint, services_region=None):
+    # if the region is provided, use that, otherwise use the preferred region
+    svc_region = services_region or \
+        utils.default_services_region(token.serviceCatalog, request)
     return User(id=token.user['id'],
                 token=token,
                 user=token.user['name'],
@@ -50,7 +53,7 @@ def create_user_from_token(request, token, endpoint, services_region=None):
                 service_catalog=token.serviceCatalog,
                 roles=token.roles,
                 endpoint=endpoint,
-                services_region=services_region)
+                services_region=svc_region)
 
 
 class Token(object):
@@ -180,8 +183,7 @@ class User(models.AnonymousUser):
         self.project_id = project_id or tenant_id
         self.project_name = project_name or tenant_name
         self.service_catalog = service_catalog
-        self._services_region = (services_region or
-                                 self.default_services_region())
+        self._services_region = services_region
         self.roles = roles or []
         self.endpoint = endpoint
         self.enabled = enabled
@@ -290,19 +292,6 @@ class User(models.AnonymousUser):
     @authorized_tenants.setter
     def authorized_tenants(self, tenant_list):
         self._authorized_tenants = tenant_list
-
-    def default_services_region(self):
-        """Returns the first endpoint region for first non-identity service.
-
-        Extracted from the service catalog.
-        """
-        if self.service_catalog:
-            for service in self.service_catalog:
-                if service['type'] == 'identity':
-                    continue
-                for endpoint in service['endpoints']:
-                    return endpoint['region']
-        return None
 
     @property
     def services_region(self):
