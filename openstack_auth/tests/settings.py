@@ -11,6 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3'}}
 
 INSTALLED_APPS = [
@@ -52,3 +54,10 @@ OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'domain'
 # NOTE(saschpe): The openstack_auth.user.Token object isn't
 # JSON-serializable ATM
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+TEST_DIR = os.path.dirname(os.path.abspath(__file__))
+POLICY_FILES_PATH = os.path.join(TEST_DIR, "conf")
+POLICY_FILES = {
+    'identity': 'keystone_policy.json',
+    'compute': 'nova_policy.json'
+}
