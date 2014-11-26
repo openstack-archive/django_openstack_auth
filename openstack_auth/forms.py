@@ -58,8 +58,11 @@ class Login(django_auth_forms.AuthenticationForm):
         if getattr(settings,
                    'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT',
                    False):
-            self.fields['domain'] = forms.CharField(label=_("Domain"),
-                                                    required=True)
+            self.fields['domain'] = forms.CharField(
+                label=_("Domain"),
+                required=True,
+                widget=forms.TextInput(attrs={"autofocus": "autofocus"}))
+            self.fields['username'].widget = forms.widgets.TextInput()
             self.fields.keyOrder = ['domain', 'username', 'password', 'region']
         self.fields['region'].choices = self.get_region_choices()
         if len(self.fields['region'].choices) == 1:
