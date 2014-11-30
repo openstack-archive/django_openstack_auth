@@ -270,9 +270,6 @@ class User(models.AnonymousUser):
     @property
     def authorized_tenants(self):
         """Returns a memoized list of tenants this user may access."""
-        insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
-        ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
-
         if self.is_authenticated() and self._authorized_tenants is None:
             endpoint = self.endpoint
             token = self.token
@@ -280,10 +277,7 @@ class User(models.AnonymousUser):
                 self._authorized_tenants = utils.get_project_list(
                     user_id=self.id,
                     auth_url=endpoint,
-                    token=token.id,
-                    insecure=insecure,
-                    cacert=ca_cert,
-                    debug=settings.DEBUG)
+                    token=token.id)
             except (keystone_exceptions.ClientException,
                     keystone_exceptions.AuthorizationFailure):
                 LOG.exception('Unable to retrieve project list.')

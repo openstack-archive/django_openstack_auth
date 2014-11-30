@@ -21,6 +21,10 @@ from django.contrib.auth import middleware
 from django.contrib.auth import models
 from django.utils import decorators
 from django.utils import timezone
+from keystoneclient.auth.identity import v2 as v2_auth
+from keystoneclient.auth.identity import v3 as v3_auth
+from keystoneclient.auth import token_endpoint
+from keystoneclient import session
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 from six.moves.urllib import parse as urlparse
@@ -152,6 +156,16 @@ def get_keystone_version():
     return getattr(settings, 'OPENSTACK_API_VERSIONS', {}).get('identity', 2.0)
 
 
+def get_session():
+    insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
+    verify = getattr(settings, 'OPENSTACK_SSL_CACERT', True)
+
+    if insecure:
+        verify = False
+
+    return session.Session(verify=verify)
+
+
 def get_keystone_client():
     if get_keystone_version() < 3:
         return client_v2
@@ -180,20 +194,60 @@ def url_path_replace(url, old, new, count=None):
         scheme, netloc, path.replace(old, new, *args), query, fragment))
 
 
+def fix_auth_url_version(auth_url):
+    """Fix up the auth url if an invalid version prefix was given.
+
+    People still give a v2 auth_url even when they specify that they want v3
+    authentication. Fix the URL to say v3. This should be smarter and take the
+    base, unversioned URL and discovery.
+    """
+    if get_keystone_version() >= 3:
+        if has_in_url_path(auth_url, "/v2.0"):
+            LOG.warning("The settings.py file points to a v2.0 keystone "
+                        "endpoint, but v3 is specified as the API version "
+                        "to use. Using v3 endpoint for authentication.")
+            auth_url = url_path_replace(auth_url, "/v2.0", "/v3", 1)
+
+    return auth_url
+
+
+def get_password_auth_plugin(auth_url, username, password, user_domain_name):
+    if get_keystone_version() >= 3:
+        return v3_auth.Password(auth_url=auth_url,
+                                username=username,
+                                password=password,
+                                user_domain_name=user_domain_name)
+
+    else:
+        return v2_auth.Password(auth_url=auth_url,
+                                username=username,
+                                password=password)
+
+
+def get_token_auth_plugin(auth_url, token, project_id):
+    if get_keystone_version() >= 3:
+        return v3_auth.Token(auth_url=auth_url,
+                             token=token,
+                             project_id=project_id,
+                             reauthenticate=False)
+
+    else:
+        return v2_auth.Token(auth_url=auth_url,
+                             token=token,
+                             tenant_id=project_id,
+                             reauthenticate=False)
+
+
 @memoize_by_keyword_arg(_PROJECT_CACHE, ('token', ))
 def get_project_list(*args, **kwargs):
+    sess = kwargs.get('session') or get_session()
+    auth_url = fix_auth_url_version(kwargs['auth_url'])
+    auth = token_endpoint.Token(auth_url, kwargs['token'])
+    client = get_keystone_client().Client(session=sess, auth=auth)
+
     if get_keystone_version() < 3:
-        auth_url = url_path_replace(
-            kwargs.get('auth_url', ''), '/v3', '/v2.0', 1)
-        kwargs['auth_url'] = auth_url
-        client = get_keystone_client().Client(*args, **kwargs)
         projects = client.tenants.list()
     else:
-        auth_url = url_path_replace(
-            kwargs.get('auth_url', ''), '/v2.0', '/v3', 1)
-        kwargs['auth_url'] = auth_url
-        client = get_keystone_client().Client(*args, **kwargs)
-        client.management_url = auth_url
         projects = client.projects.list(user=kwargs.get('user_id'))
 
     projects.sort(key=lambda project: project.name.lower())

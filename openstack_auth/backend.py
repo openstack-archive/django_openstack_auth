@@ -69,35 +69,22 @@ class KeystoneBackend(object):
         """Authenticates a user via the Keystone Identity API."""
         LOG.debug('Beginning user authentication for user "%s".' % username)
 
-        insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
-        ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
-        endpoint_type = getattr(
-            settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
+        interface = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'public')
 
         if auth_url is None:
             auth_url = settings.OPENSTACK_KEYSTONE_URL
 
-        # keystone client v3 does not support logging in on the v2 url any more
-        if utils.get_keystone_version() >= 3:
-            if utils.has_in_url_path(auth_url, "/v2.0"):
-                LOG.warning("The settings.py file points to a v2.0 keystone "
-                            "endpoint, but v3 is specified as the API version "
-                            "to use. Using v3 endpoint for authentication.")
-                auth_url = utils.url_path_replace(auth_url, "/v2.0", "/v3", 1)
+        session = utils.get_session()
+        keystone_client_class = utils.get_keystone_client().Client
 
-        keystone_client = utils.get_keystone_client()
+        auth_url = utils.fix_auth_url_version(auth_url)
+        unscoped_auth = utils.get_password_auth_plugin(auth_url,
+                                                       username,
+                                                       password,
+                                                       user_domain_name)
+
         try:
-            client = keystone_client.Client(
-                user_domain_name=user_domain_name,
-                username=username,
-                password=password,
-                auth_url=auth_url,
-                insecure=insecure,
-                cacert=ca_cert,
-                debug=settings.DEBUG)
-
-            unscoped_auth_ref = client.auth_ref
-            unscoped_token = auth_user.Token(auth_ref=unscoped_auth_ref)
+            unscoped_auth_ref = unscoped_auth.get_access(session)
         except (keystone_exceptions.Unauthorized,
                 keystone_exceptions.Forbidden,
                 keystone_exceptions.NotFound) as exc:
@@ -114,22 +101,16 @@ class KeystoneBackend(object):
         # Check expiry for our unscoped auth ref.
         self.check_auth_expiry(unscoped_auth_ref)
 
-        # Check if token is automatically scoped to default_project
-        # grab the project from this token, to use as a default
-        # if no recent_project is found in the cookie
-        token_proj_id = None
-        if unscoped_auth_ref.project_scoped:
-            token_proj_id = unscoped_auth_ref.get('project',
-                                                  {}).get('id')
+        unscoped_client = keystone_client_class(session=session,
+                                                auth=unscoped_auth)
 
         # We list all the user's projects
         try:
-            if utils.get_keystone_version() < 3:
-                projects = client.tenants.list()
-            else:
-                client.management_url = auth_url
-                projects = client.projects.list(
+            if utils.get_keystone_version() >= 3:
+                projects = unscoped_client.projects.list(
                     user=unscoped_auth_ref.user_id)
+            else:
+                projects = unscoped_client.tenants.list()
         except (keystone_exceptions.ClientException,
                 keystone_exceptions.AuthorizationFailure) as exc:
             msg = _('Unable to retrieve authorized projects.')
@@ -143,51 +124,55 @@ class KeystoneBackend(object):
         # the recent project id a user might have set in a cookie
         recent_project = None
         if request:
+            # Check if token is automatically scoped to default_project
+            # grab the project from this token, to use as a default
+            # if no recent_project is found in the cookie
             recent_project = request.COOKIES.get('recent_project',
-                                                 token_proj_id)
+                                                 unscoped_auth_ref.project_id)
 
         # if a most recent project was found, try using it first
-        for pos, project in enumerate(projects):
-            if project.id == recent_project:
-                # move recent project to the beginning
-                projects.pop(pos)
-                projects.insert(0, project)
-                break
+        if recent_project:
+            for pos, project in enumerate(projects):
+                if project.id == recent_project:
+                    # move recent project to the beginning
+                    projects.pop(pos)
+                    projects.insert(0, project)
+                    break
 
         for project in projects:
+            token = unscoped_auth_ref.auth_token
+            scoped_auth = utils.get_token_auth_plugin(auth_url,
+                                                      token=token,
+                                                      project_id=project.id)
+
             try:
-                client = keystone_client.Client(
-                    tenant_id=project.id,
-                    token=unscoped_auth_ref.auth_token,
-                    auth_url=auth_url,
-                    insecure=insecure,
-                    cacert=ca_cert,
-                    debug=settings.DEBUG)
-                auth_ref = client.auth_ref
-                break
+                scoped_auth_ref = scoped_auth.get_access(session)
             except (keystone_exceptions.ClientException,
                     keystone_exceptions.AuthorizationFailure):
-                auth_ref = None
-
-        if auth_ref is None:
+                pass
+            else:
+                break
+        else:
             msg = _("Unable to authenticate to any available projects.")
             raise exceptions.KeystoneAuthException(msg)
 
         # Check expiry for our new scoped token.
-        self.check_auth_expiry(auth_ref)
+        self.check_auth_expiry(scoped_auth_ref)
 
         # If we made it here we succeeded. Create our User!
         user = auth_user.create_user_from_token(
             request,
-            auth_user.Token(auth_ref),
-            client.service_catalog.url_for(endpoint_type=endpoint_type))
+            auth_user.Token(scoped_auth_ref),
+            scoped_auth_ref.service_catalog.url_for(endpoint_type=interface))
 
         if request is not None:
-            request.session['unscoped_token'] = unscoped_token.id
+            request.session['unscoped_token'] = unscoped_auth_ref.auth_token
             request.user = user
+            scoped_client = keystone_client_class(session=session,
+                                                  auth=scoped_auth)
 
             # Support client caching to save on auth calls.
-            setattr(request, KEYSTONE_CLIENT_ATTR, client)
+            setattr(request, KEYSTONE_CLIENT_ATTR, scoped_client)
 
         LOG.debug('Authentication completed for user "%s".' % username)
         return user
