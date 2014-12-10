@@ -122,6 +122,22 @@ class KeystoneBackend(object):
         # Check expiry for our unscoped auth ref.
         self.check_auth_expiry(unscoped_auth_ref)
 
+        # domain support can require domain scoped tokens to perform
+        # identity operations depending on the policy files being used
+        # for keystone.
+        domain_auth = None
+        domain_auth_ref = None
+        if utils.get_keystone_version() >= 3 and 'user_domain_name' in kwargs:
+            try:
+                token = unscoped_auth_ref.auth_token
+                domain_auth = utils.get_token_auth_plugin(
+                    auth_url,
+                    token,
+                    domain_name=kwargs['user_domain_name'])
+                domain_auth_ref = domain_auth.get_access(session)
+            except Exception:
+                LOG.debug('Error getting domain scoped token.')
+
         projects = plugin.list_projects(session,
                                         unscoped_auth,
                                         unscoped_auth_ref)
@@ -129,8 +145,10 @@ class KeystoneBackend(object):
         projects = [project for project in projects if project.enabled]
 
         # Abort if there are no projects for this user
-        if not projects:
+        if not projects and not domain_auth_ref:
             msg = _('You are not authorized for any projects.')
+            if utils.get_keystone_version() >= 3:
+                msg = _('You are not authorized for any projects or domains.')
             raise exceptions.KeystoneAuthException(msg)
 
         # the recent project id a user might have set in a cookie
@@ -168,7 +186,12 @@ class KeystoneBackend(object):
                 break
         else:
             msg = _("Unable to authenticate to any available projects.")
-            raise exceptions.KeystoneAuthException(msg)
+            if domain_auth_ref:
+                scoped_auth = domain_auth
+                scoped_auth_ref = domain_auth_ref
+                LOG.info(msg)
+            else:
+                raise exceptions.KeystoneAuthException(msg)
 
         # Check expiry for our new scoped token.
         self.check_auth_expiry(scoped_auth_ref)
@@ -183,7 +206,20 @@ class KeystoneBackend(object):
             scoped_auth_ref.service_catalog.url_for(endpoint_type=interface))
 
         if request is not None:
-            request.session['unscoped_token'] = unscoped_token
+            request.session['unscoped_token'] = unscoped_auth_ref.auth_token
+            if domain_auth_ref:
+                # check django session engine, if using cookies, this will not
+                # work, as it will overflow the cookie so don't add domain
+                # scoped token to the session and put error in the log
+                if utils.using_cookie_backed_sessions():
+                    LOG.error('Using signed cookies as SESSION_ENGINE with '
+                              'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT is '
+                              'enabled. This disables the ability to '
+                              'perform identity operations due to cookie size '
+                              'constraints.')
+                else:
+                    request.session['domain_token'] = domain_auth_ref
+
             request.user = user
             scoped_client = keystone_client_class(session=session,
                                                   auth=scoped_auth)

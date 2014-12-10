@@ -167,9 +167,17 @@ def logout(request, login_url=None, **kwargs):
         {'username': request.user.username}
     LOG.info(msg)
     endpoint = request.session.get('region_endpoint')
+
+    # delete the project scoped token
     token = request.session.get('token')
     if token and endpoint:
         delete_token(endpoint=endpoint, token_id=token.id)
+
+    # delete the domain scoped token if set
+    domain_token = request.session.get('domain_token')
+    if domain_token and endpoint:
+        delete_token(endpoint=endpoint, token_id=domain_token.auth_token)
+
     """ Securely logs a user out. """
     return django_auth_views.logout_then_login(request, login_url=login_url,
                                                **kwargs)
