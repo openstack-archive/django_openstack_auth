@@ -224,13 +224,20 @@ def get_password_auth_plugin(auth_url, username, password, user_domain_name):
                                 password=password)
 
 
-def get_token_auth_plugin(auth_url, token, project_id):
+def get_token_auth_plugin(auth_url, token, project_id=None, domain_name=None):
     if get_keystone_version() >= 3:
-        return v3_auth.Token(auth_url=auth_url,
-                             token=token,
-                             project_id=project_id,
-                             reauthenticate=False)
-
+        if domain_name:
+            return v3_auth.Token(auth_url=auth_url,
+                                 token=token,
+                                 domain_name=domain_name,
+                                 reauthenticate=False)
+        elif project_id:
+            return v3_auth.Token(auth_url=auth_url,
+                                 token=token,
+                                 project_id=project_id,
+                                 reauthenticate=False)
+        else:
+            return None
     else:
         return v2_auth.Token(auth_url=auth_url,
                              token=token,
@@ -295,3 +302,8 @@ def set_response_cookie(response, cookie_name, cookie_value):
     now = timezone.now()
     expire_date = now + datetime.timedelta(days=365)
     response.set_cookie(cookie_name, cookie_value, expires=expire_date)
+
+
+def using_cookie_backed_sessions():
+    engine = getattr(settings, 'SESSION_ENGINE', '')
+    return "signed_cookies" in engine

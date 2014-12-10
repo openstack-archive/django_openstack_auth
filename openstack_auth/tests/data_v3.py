@@ -216,6 +216,31 @@ def generate_test_data():
         body=scoped_token_dict
     )
 
+    domain_token_dict = {
+        'token': {
+            'methods': ['password'],
+            'expires_at': expiration,
+            'domain': {
+                'id': domain_dict['id'],
+                'name': domain_dict['name'],
+            },
+            'user': {
+                'id': user_dict['id'],
+                'name': user_dict['name'],
+                'domain': {
+                    'id': domain_dict['id'],
+                    'name': domain_dict['name']
+                }
+            },
+            'roles': [role_dict],
+            'catalog': [keystone_service, nova_service]
+        }
+    }
+    test_data.domain_scoped_access_info = access.AccessInfo.factory(
+        resp=auth_response,
+        body=domain_token_dict
+    )
+
     unscoped_token_dict = {
         'token': {
             'methods': ['password'],
