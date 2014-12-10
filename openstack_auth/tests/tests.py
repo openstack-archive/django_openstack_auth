@@ -485,6 +485,32 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         client.projects.list(user=user.id).AndRaise(
             keystone_exceptions.AuthorizationFailure)
 
+    def _mock_unscoped_and_domain_list_projects(self, user, projects):
+        client = self._mock_unscoped_client(user)
+        self._mock_scoped_for_domain(projects)
+        self._mock_unscoped_list_projects(client, user, projects)
+
+    def _mock_scoped_for_domain(self, projects):
+        url = settings.OPENSTACK_KEYSTONE_URL
+
+        plugin = self._create_token_auth(
+            project_id=None,
+            domain_name=DEFAULT_DOMAIN,
+            token=self.data.unscoped_access_info.auth_token,
+            url=url)
+
+        plugin.get_access(mox.IsA(session.Session)).AndReturn(
+            self.data.domain_scoped_access_info)
+
+        # if no projects or no enabled projects for user, but domain scoped
+        # token client auth gets set to domain scoped auth otherwise it's set
+        # to the project scoped auth and that happens in a different mock
+        enabled_projects = [project for project in projects if project.enabled]
+        if not projects or not enabled_projects:
+            return self.ks_client_module.Client(
+                session=mox.IsA(session.Session),
+                auth=plugin)
+
     def _create_password_auth(self, username=None, password=None, url=None):
         if not username:
             username = self.data.user.name
@@ -501,17 +527,24 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
                                 user_domain_name=DEFAULT_DOMAIN,
                                 unscoped=True)
 
-    def _create_token_auth(self, project_id, token=None, url=None):
+    def _create_token_auth(self, project_id, token=None, url=None,
+                           domain_name=None):
         if not token:
             token = self.data.unscoped_access_info.auth_token
 
         if not url:
             url = settings.OPENSTACK_KEYSTONE_URL
 
-        return auth_v3.Token(auth_url=url,
-                             token=token,
-                             project_id=project_id,
-                             reauthenticate=False)
+        if domain_name:
+            return auth_v3.Token(auth_url=url,
+                                 token=token,
+                                 domain_name=domain_name,
+                                 reauthenticate=False)
+        else:
+            return auth_v3.Token(auth_url=url,
+                                 token=token,
+                                 project_id=project_id,
+                                 reauthenticate=False)
 
     def setUp(self):
         super(OpenStackAuthTestsV3, self).setUp()
@@ -527,7 +560,6 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         self.data = data_v3.generate_test_data()
         self.ks_client_module = client_v3
-
         settings.OPENSTACK_API_VERSIONS['identity'] = 3
         settings.OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v3"
 
@@ -542,7 +574,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         unscoped = self.data.unscoped_access_info
 
         form_data = self.get_form_data(user)
-        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_unscoped_and_domain_list_projects(user, projects)
         self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
         self.mox.ReplayAll()
@@ -565,7 +597,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         unscoped = self.data.unscoped_access_info
 
         form_data = self.get_form_data(user)
-        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_unscoped_and_domain_list_projects(user, projects)
         self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
         self.mox.ReplayAll()
 
@@ -585,7 +617,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         form_data = self.get_form_data(user)
 
-        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_unscoped_and_domain_list_projects(user, projects)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -596,15 +628,13 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         # POST to the page to log in.
         response = self.client.post(url, form_data)
-        self.assertTemplateUsed(response, 'auth/login.html')
-        self.assertContains(response,
-                            'You are not authorized for any projects.')
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
     def test_no_projects(self):
         user = self.data.user
-
         form_data = self.get_form_data(user)
-        self._mock_unscoped_client_list_projects(user, [])
+
+        self._mock_unscoped_and_domain_list_projects(user, [])
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -615,9 +645,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         # POST to the page to log in.
         response = self.client.post(url, form_data)
-        self.assertTemplateUsed(response, 'auth/login.html')
-        self.assertContains(response,
-                            'You are not authorized for any projects.')
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
     def test_fail_projects(self):
         user = self.data.user
@@ -692,7 +720,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         form_data = self.get_form_data(user)
 
-        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_unscoped_and_domain_list_projects(user, projects)
         self._mock_scoped_client_for_tenant(scoped, self.data.project_one.id)
         self._mock_scoped_client_for_tenant(
             scoped,
@@ -738,7 +766,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         sc = self.data.service_catalog
 
         form_data = self.get_form_data(user)
-        self._mock_unscoped_client_list_projects(user, projects)
+        self._mock_unscoped_and_domain_list_projects(user, projects)
         self._mock_scoped_client_for_tenant(scoped, self.data.project_one.id)
 
         self.mox.ReplayAll()
