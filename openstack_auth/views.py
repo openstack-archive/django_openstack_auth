@@ -24,7 +24,6 @@ from django.views.decorators.cache import never_cache  # noqa
 from django.views.decorators.csrf import csrf_protect  # noqa
 from django.views.decorators.debug import sensitive_post_parameters  # noqa
 from keystoneclient import exceptions as keystone_exceptions
-from keystoneclient.v2_0 import client as keystone_client_v2
 
 from openstack_auth import forms
 # This is historic and is added back in to not break older versions of
@@ -129,25 +128,24 @@ def logout(request, login_url=None, **kwargs):
 
 def delete_token(endpoint, token_id):
     """Delete a token."""
-
     insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
     ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
     utils.remove_project_cache(token_id)
     try:
-        if utils.get_keystone_version() < 3:
-            client = keystone_client_v2.Client(
-                endpoint=endpoint,
-                token=token_id,
-                insecure=insecure,
-                cacert=ca_cert,
-                debug=settings.DEBUG
-            )
-            client.tokens.delete(token=token_id)
-            LOG.info('Deleted token %s' % token_id)
+        if utils.get_keystone_version() >= 3:
+            if not utils.has_in_url_path(endpoint, '/v3'):
+                endpoint = utils.url_path_replace(endpoint, '/v2.0', '/v3', 1)
+        client = utils.get_keystone_client().Client(
+            endpoint=endpoint,
+            token=token_id,
+            insecure=insecure,
+            cacert=ca_cert,
+            debug=settings.DEBUG)
+        if utils.get_keystone_version() >= 3:
+            client.tokens.revoke_token(token=token_id)
         else:
-            # FIXME: KS-client does not have delete token available
-            # Need to add this later when it is exposed.
-            pass
+            client.tokens.delete(token=token_id)
+        LOG.info('Deleted token %s' % token_id)
     except keystone_exceptions.ClientException:
         LOG.info('Could not delete token')
 
