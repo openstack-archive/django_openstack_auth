@@ -11,8 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import copy
-
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
@@ -21,7 +19,7 @@ from keystoneclient import exceptions as keystone_exceptions
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 from mox3 import mox
-import six
+from testscenarios import load_tests_apply_scenarios  # noqa
 
 from openstack_auth.tests import data_v2
 from openstack_auth.tests import data_v3
@@ -33,6 +31,13 @@ DEFAULT_DOMAIN = settings.OPENSTACK_KEYSTONE_DEFAULT_DOMAIN
 
 class OpenStackAuthTestsMixin(object):
     '''Common functions for version specific tests.'''
+
+    scenarios = [
+        ('pure', {'interface': None}),
+        ('public', {'interface': 'publicURL'}),
+        ('internal', {'interface': 'internalURL'}),
+        ('admin', {'interface': 'adminURL'})
+    ]
 
     def tearDown(self):
         self.mox.UnsetStubs()
@@ -101,8 +106,15 @@ class OpenStackAuthTestsMixin(object):
 
 
 class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
+
     def setUp(self):
         super(OpenStackAuthTestsV2, self).setUp()
+
+        if self.interface:
+            override = self.settings(OPENSTACK_ENDPOINT_TYPE=self.interface)
+            override.enable()
+            self.addCleanup(override.disable)
+
         self.mox = mox.Mox()
         self.data = data_v2.generate_test_data()
         self.ks_client_module = client_v2
@@ -433,48 +445,6 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         self.assertIsNone(utils._PROJECT_CACHE.get(unscoped.auth_token))
 
 
-def EndpointMetaFactory(endpoint_type):
-    def endpoint_wrapper(func):
-        def new_func(*args, **kwargs):
-            _endpoint_type = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', None)
-            # set settings.OPENSTACK_ENDPOINT_TYPE to given value
-            setattr(settings, 'OPENSTACK_ENDPOINT_TYPE', endpoint_type)
-            # ensure that ret won't be touched by del/setattr below
-            ret = copy.deepcopy(func(*args, **kwargs))
-            # and restore it
-            if _endpoint_type is None:
-                del settings.OPENSTACK_ENDPOINT_TYPE
-            else:
-                setattr(settings, 'OPENSTACK_ENDPOINT_TYPE', _endpoint_type)
-            return ret
-        return new_func
-
-    class EndPointMeta(type):
-        # wrap each test with OPENSTACK_ENDPOINT_TYPE parameter set/restore
-        def __new__(cls, name, bases, attrs):
-            base, = bases
-            for k, v in six.iteritems(base.__dict__):
-                if not k.startswith('__') and getattr(v, '__call__', None):
-                    attrs[k] = endpoint_wrapper(v)
-            return super(EndPointMeta, cls).__new__(cls, name, bases, attrs)
-    return EndPointMeta
-
-
-@six.add_metaclass(EndpointMetaFactory('publicURL'))
-class OpenStackAuthTestsV2WithPublicURL(OpenStackAuthTestsV2):
-    """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'publicURL'."""
-
-
-@six.add_metaclass(EndpointMetaFactory('internalURL'))
-class OpenStackAuthTestsV2WithInternalURL(OpenStackAuthTestsV2):
-    """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'internalURL'."""
-
-
-@six.add_metaclass(EndpointMetaFactory('adminURL'))
-class OpenStackAuthTestsV2WithAdminURL(OpenStackAuthTestsV2):
-    """Test V2 with settings.OPENSTACK_ENDPOINT_TYPE = 'adminURL'."""
-
-
 class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
     def _mock_unscoped_client_list_projects(self, user, projects):
@@ -489,6 +459,12 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
     def setUp(self):
         super(OpenStackAuthTestsV3, self).setUp()
+
+        if self.interface:
+            override = self.settings(OPENSTACK_ENDPOINT_TYPE=self.interface)
+            override.enable()
+            self.addCleanup(override.disable)
+
         self.mox = mox.Mox()
         self.data = data_v3.generate_test_data()
         self.ks_client_module = client_v3
@@ -784,16 +760,4 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self.assertIsNone(utils._PROJECT_CACHE.get(unscoped.auth_token))
 
 
-@six.add_metaclass(EndpointMetaFactory('publicURL'))
-class OpenStackAuthTestsV3WithPublicURL(OpenStackAuthTestsV3):
-    """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'publicURL'."""
-
-
-@six.add_metaclass(EndpointMetaFactory('internalURL'))
-class OpenStackAuthTestsV3WithInternalURL(OpenStackAuthTestsV3):
-    """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'internalURL'."""
-
-
-@six.add_metaclass(EndpointMetaFactory('adminURL'))
-class OpenStackAuthTestsV3WithAdminURL(OpenStackAuthTestsV3):
-    """Test V3 with settings.OPENSTACK_ENDPOINT_TYPE = 'adminURL'."""
+load_tests = load_tests_apply_scenarios
