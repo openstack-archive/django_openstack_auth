@@ -75,7 +75,10 @@ class Login(django_auth_forms.AuthenticationForm):
     @staticmethod
     def get_region_choices():
         default_region = (settings.OPENSTACK_KEYSTONE_URL, "Default Region")
-        return getattr(settings, 'AVAILABLE_REGIONS', [default_region])
+        regions = getattr(settings, 'AVAILABLE_REGIONS', [])
+        if not regions:
+            regions = [default_region]
+        return regions
 
     @sensitive_variables()
     def clean(self):
