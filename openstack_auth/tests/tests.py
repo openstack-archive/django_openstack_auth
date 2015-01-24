@@ -14,15 +14,19 @@
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
+from django import http
 from django import test
 from keystoneclient import exceptions as keystone_exceptions
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
+import mock
 from mox3 import mox
 from testscenarios import load_tests_apply_scenarios  # noqa
 
+from openstack_auth import policy
 from openstack_auth.tests import data_v2
 from openstack_auth.tests import data_v3
+from openstack_auth import user
 from openstack_auth import utils
 
 
@@ -761,3 +765,98 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
 
 load_tests = load_tests_apply_scenarios
+
+
+class PolicyLoaderTestCase(test.TestCase):
+    def test_policy_file_load(self):
+        policy.reset()
+        enforcer = policy._get_enforcer()
+        self.assertEqual(2, len(enforcer))
+        self.assertTrue('identity' in enforcer)
+        self.assertTrue('compute' in enforcer)
+
+    def test_policy_reset(self):
+        policy._get_enforcer()
+        self.assertEqual(2, len(policy._ENFORCER))
+        policy.reset()
+        self.assertIsNone(policy._ENFORCER)
+
+
+class PolicyTestCase(test.TestCase):
+    _roles = []
+
+    def setUp(self):
+        mock_user = user.User(id=1, roles=self._roles)
+        patcher = mock.patch('openstack_auth.utils.get_user',
+                             return_value=mock_user)
+        self.MockClass = patcher.start()
+        self.addCleanup(patcher.stop)
+        self.request = http.HttpRequest()
+
+
+class PolicyTestCaseNonAdmin(PolicyTestCase):
+    _roles = [{'id': '1', 'name': 'member'}]
+
+    def test_check_admin_required_false(self):
+        policy.reset()
+        value = policy.check((("identity", "admin_required"),),
+                             request=self.request)
+        self.assertFalse(value)
+
+    def test_check_identity_rule_not_found_false(self):
+        policy.reset()
+        value = policy.check((("identity", "i_dont_exist"),),
+                             request=self.request)
+        # this should fail because the default check for
+        # identity is admin_required
+        self.assertFalse(value)
+
+    def test_check_nova_context_is_admin_false(self):
+        policy.reset()
+        value = policy.check((("compute", "context_is_admin"),),
+                             request=self.request)
+        self.assertFalse(value)
+
+    def test_compound_check_false(self):
+        policy.reset()
+        value = policy.check((("identity", "admin_required"),
+                              ("identity", "identity:default"),),
+                             request=self.request)
+        self.assertFalse(value)
+
+    def test_scope_not_found(self):
+        policy.reset()
+        value = policy.check((("dummy", "default"),),
+                             request=self.request)
+        self.assertTrue(value)
+
+
+class PolicyTestCaseAdmin(PolicyTestCase):
+    _roles = [{'id': '1', 'name': 'admin'}]
+
+    def test_check_admin_required_true(self):
+        policy.reset()
+        value = policy.check((("identity", "admin_required"),),
+                             request=self.request)
+        self.assertTrue(value)
+
+    def test_check_identity_rule_not_found_true(self):
+        policy.reset()
+        value = policy.check((("identity", "i_dont_exist"),),
+                             request=self.request)
+        # this should succeed because the default check for
+        # identity is admin_required
+        self.assertTrue(value)
+
+    def test_compound_check_true(self):
+        policy.reset()
+        value = policy.check((("identity", "admin_required"),
+                              ("identity", "identity:default"),),
+                             request=self.request)
+        self.assertTrue(value)
+
+    def test_check_nova_context_is_admin_true(self):
+        policy.reset()
+        value = policy.check((("compute", "context_is_admin"),),
+                             request=self.request)
+        self.assertTrue(value)
