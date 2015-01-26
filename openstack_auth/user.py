@@ -183,7 +183,10 @@ class User(models.AnonymousUser):
         self.project_id = project_id or tenant_id
         self.project_name = project_name or tenant_name
         self.service_catalog = service_catalog
-        self._services_region = services_region
+        self._services_region = (
+            services_region
+            or utils.default_services_region(service_catalog)
+        )
         self.roles = roles or []
         self.endpoint = endpoint
         self.enabled = enabled
