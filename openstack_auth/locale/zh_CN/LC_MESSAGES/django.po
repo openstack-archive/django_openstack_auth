@@ -1,5 +1,5 @@
 # Chinese (Simplified, China) translations for django_openstack_auth.
-# Copyright (C) 2014 ORGANIZATION
+# Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the
 # django_openstack_auth project.
 #
@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-16 06:06+0000\n"
-"PO-Revision-Date: 2014-03-21 08:11+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-01-26 06:01+0000\n"
+"PO-Revision-Date: 2015-01-24 07:54+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (China) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_CN/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -19,27 +19,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:41
+#: openstack_auth/backend.py:40
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "身份认证令牌已过期。"
 
-#: openstack_auth/backend.py:98
+#: openstack_auth/backend.py:104
 msgid "Invalid user name or password."
 msgstr "无效的用户名或密码。"
 
-#: openstack_auth/backend.py:103
+#: openstack_auth/backend.py:109
 msgid "An error occurred authenticating. Please try again later."
 msgstr "认证发生错误。请稍后再试一次。"
 
-#: openstack_auth/backend.py:125
+#: openstack_auth/backend.py:135
 msgid "Unable to retrieve authorized projects."
 msgstr "无法获取授权的项目。"
 
-#: openstack_auth/backend.py:130
+#: openstack_auth/backend.py:140
 msgid "You are not authorized for any projects."
 msgstr "您未被授权访问任何项目。"
 
-#: openstack_auth/backend.py:150
+#: openstack_auth/backend.py:173
 msgid "Unable to authenticate to any available projects."
 msgstr "无法跟可用的项目验证通过。"
 
@@ -55,7 +55,49 @@ msgstr "用户名"
 msgid "Password"
 msgstr "密码"
 
-#: openstack_auth/forms.py:61
+#: openstack_auth/forms.py:62
 msgid "Domain"
 msgstr "域"
+
+#: openstack_auth/openstack/common/log.py:287
+#, python-format
+msgid "Deprecated: %s"
+msgstr "建议不要使用：%s"
+
+#: openstack_auth/openstack/common/log.py:395
+#, python-format
+msgid "Error loading logging config %(log_config)s: %(err_msg)s"
+msgstr "加载登陆配置出错 %(log_config)s:%(err_msg)s"
+
+#: openstack_auth/openstack/common/log.py:456
+#, python-format
+msgid "syslog facility must be one of: %s"
+msgstr "系统日志工具必须是下列其中一项：%s"
+
+#: openstack_auth/openstack/common/log.py:702
+#, python-format
+msgid "Fatal call to deprecated config: %(msg)s"
+msgstr "对建议不要使用的配置进行了后果极严重的调用：%(msg)s"
+
+#: openstack_auth/openstack/common/policy.py:97
+msgid "The JSON file that defines policies."
+msgstr "定义策略的JSON文件。"
+
+#: openstack_auth/openstack/common/policy.py:100
+msgid "Default rule. Enforced when a requested rule is not found."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:104
+msgid "Directories where policy configuration files are stored."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:119
+#, python-format
+msgid "Policy doesn't allow %s to be performed."
+msgstr "策略不允许 %s 被执行。"
+
+#: openstack_auth/openstack/common/policy.py:213
+#, python-format
+msgid "Rules must be an instance of dict or Rules, got %s instead"
+msgstr "规则必须是字典或者规则的实例化对像，获取 %s 取代"
 

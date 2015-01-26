@@ -1,5 +1,5 @@
 # Nepali translations for django_openstack_auth.
-# Copyright (C) 2014 ORGANIZATION
+# Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the
 # django_openstack_auth project.
 #
@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-24 06:06+0000\n"
-"PO-Revision-Date: 2014-10-24 02:31+0000\n"
-"Last-Translator: Surit Aryal <surit_people@hotmail.com>\n"
+"POT-Creation-Date: 2015-01-26 06:01+0000\n"
+"PO-Revision-Date: 2015-01-24 07:07+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Nepali "
 "(http://www.transifex.com/projects/p/horizon/language/ne/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -24,23 +24,23 @@ msgstr ""
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "पहिचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त भएको छ।"
 
-#: openstack_auth/backend.py:101
+#: openstack_auth/backend.py:104
 msgid "Invalid user name or password."
 msgstr "प्रयोगकर्ताको नाम वा पासवर्ड मिलेन । "
 
-#: openstack_auth/backend.py:106
+#: openstack_auth/backend.py:109
 msgid "An error occurred authenticating. Please try again later."
 msgstr "प्रमाणीकरणमा त्रुटि भयो। पछि फेरि प्रयास गर्नुहोस्।"
 
-#: openstack_auth/backend.py:128
+#: openstack_auth/backend.py:135
 msgid "Unable to retrieve authorized projects."
 msgstr "अधिकृत परियोजनाहरू प्राप्त गर्न सकिएन।"
 
-#: openstack_auth/backend.py:133
+#: openstack_auth/backend.py:140
 msgid "You are not authorized for any projects."
 msgstr "तपाईलाई कुनै पनि परियोजनाको अधिकार छैन।"
 
-#: openstack_auth/backend.py:153
+#: openstack_auth/backend.py:173
 msgid "Unable to authenticate to any available projects."
 msgstr "कुनै पनि उपलब्ध परियोजनाहरु प्रमाणीकरण गर्न असमर्थ।"
 
@@ -56,7 +56,49 @@ msgstr "प्रयोगकर्ताको नाम"
 msgid "Password"
 msgstr "पासवर्ड"
 
-#: openstack_auth/forms.py:61
+#: openstack_auth/forms.py:62
 msgid "Domain"
 msgstr "डोमेन"
+
+#: openstack_auth/openstack/common/log.py:287
+#, python-format
+msgid "Deprecated: %s"
+msgstr ""
+
+#: openstack_auth/openstack/common/log.py:395
+#, python-format
+msgid "Error loading logging config %(log_config)s: %(err_msg)s"
+msgstr ""
+
+#: openstack_auth/openstack/common/log.py:456
+#, python-format
+msgid "syslog facility must be one of: %s"
+msgstr ""
+
+#: openstack_auth/openstack/common/log.py:702
+#, python-format
+msgid "Fatal call to deprecated config: %(msg)s"
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:97
+msgid "The JSON file that defines policies."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:100
+msgid "Default rule. Enforced when a requested rule is not found."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:104
+msgid "Directories where policy configuration files are stored."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:119
+#, python-format
+msgid "Policy doesn't allow %s to be performed."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:213
+#, python-format
+msgid "Rules must be an instance of dict or Rules, got %s instead"
+msgstr ""
 

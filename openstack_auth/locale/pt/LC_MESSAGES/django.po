@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-21 06:06+0000\n"
-"PO-Revision-Date: 2014-10-04 04:45+0000\n"
-"Last-Translator: alfalb_mansil\n"
+"POT-Creation-Date: 2015-01-26 06:01+0000\n"
+"PO-Revision-Date: 2015-01-24 07:54+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Portuguese "
 "(http://www.transifex.com/projects/p/horizon/language/pt/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -59,4 +59,46 @@ msgstr "Senha"
 #: openstack_auth/forms.py:62
 msgid "Domain"
 msgstr "Domínio"
+
+#: openstack_auth/openstack/common/log.py:287
+#, python-format
+msgid "Deprecated: %s"
+msgstr "Pedido: %s"
+
+#: openstack_auth/openstack/common/log.py:395
+#, python-format
+msgid "Error loading logging config %(log_config)s: %(err_msg)s"
+msgstr ""
+
+#: openstack_auth/openstack/common/log.py:456
+#, python-format
+msgid "syslog facility must be one of: %s"
+msgstr "A função registo do sistema deve ser uma de %s"
+
+#: openstack_auth/openstack/common/log.py:702
+#, python-format
+msgid "Fatal call to deprecated config: %(msg)s"
+msgstr "Chamada fatal para a config. pedida: %(msg)s"
+
+#: openstack_auth/openstack/common/policy.py:97
+msgid "The JSON file that defines policies."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:100
+msgid "Default rule. Enforced when a requested rule is not found."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:104
+msgid "Directories where policy configuration files are stored."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:119
+#, python-format
+msgid "Policy doesn't allow %s to be performed."
+msgstr "A política não permite que %s seja realizada."
+
+#: openstack_auth/openstack/common/policy.py:213
+#, python-format
+msgid "Rules must be an instance of dict or Rules, got %s instead"
+msgstr ""
 

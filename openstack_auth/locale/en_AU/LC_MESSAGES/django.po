@@ -1,5 +1,5 @@
 # English (Australia) translations for django_openstack_auth.
-# Copyright (C) 2014 ORGANIZATION
+# Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the
 # django_openstack_auth project.
 #
@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-16 06:06+0000\n"
-"PO-Revision-Date: 2014-03-21 08:11+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-01-26 06:01+0000\n"
+"PO-Revision-Date: 2015-01-24 07:54+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: English (Australia) "
 "(http://www.transifex.com/projects/p/horizon/language/en_AU/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -19,27 +19,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:41
+#: openstack_auth/backend.py:40
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "The authentication token issued by the Identity service has expired."
 
-#: openstack_auth/backend.py:98
+#: openstack_auth/backend.py:104
 msgid "Invalid user name or password."
 msgstr "Invalid user name or password."
 
-#: openstack_auth/backend.py:103
+#: openstack_auth/backend.py:109
 msgid "An error occurred authenticating. Please try again later."
 msgstr "An error occurred authenticating. Please try again later."
 
-#: openstack_auth/backend.py:125
+#: openstack_auth/backend.py:135
 msgid "Unable to retrieve authorized projects."
 msgstr "Unable to retrieve authorized projects."
 
-#: openstack_auth/backend.py:130
+#: openstack_auth/backend.py:140
 msgid "You are not authorized for any projects."
 msgstr "You are not authorized for any projects."
 
-#: openstack_auth/backend.py:150
+#: openstack_auth/backend.py:173
 msgid "Unable to authenticate to any available projects."
 msgstr "Unable to authenticate to any available projects."
 
@@ -55,7 +55,49 @@ msgstr "User Name"
 msgid "Password"
 msgstr "Password"
 
-#: openstack_auth/forms.py:61
+#: openstack_auth/forms.py:62
 msgid "Domain"
 msgstr "Domain"
+
+#: openstack_auth/openstack/common/log.py:287
+#, python-format
+msgid "Deprecated: %s"
+msgstr "Deprecated: %s"
+
+#: openstack_auth/openstack/common/log.py:395
+#, python-format
+msgid "Error loading logging config %(log_config)s: %(err_msg)s"
+msgstr "Error loading logging config %(log_config)s: %(err_msg)s"
+
+#: openstack_auth/openstack/common/log.py:456
+#, python-format
+msgid "syslog facility must be one of: %s"
+msgstr "syslog facility must be one of: %s"
+
+#: openstack_auth/openstack/common/log.py:702
+#, python-format
+msgid "Fatal call to deprecated config: %(msg)s"
+msgstr "Fatal call to deprecated config: %(msg)s"
+
+#: openstack_auth/openstack/common/policy.py:97
+msgid "The JSON file that defines policies."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:100
+msgid "Default rule. Enforced when a requested rule is not found."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:104
+msgid "Directories where policy configuration files are stored."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:119
+#, python-format
+msgid "Policy doesn't allow %s to be performed."
+msgstr "Policy doesn't allow %s to be performed."
+
+#: openstack_auth/openstack/common/policy.py:213
+#, python-format
+msgid "Rules must be an instance of dict or Rules, got %s instead"
+msgstr "Rules must be an instance of dict or Rules, got %s instead"
 

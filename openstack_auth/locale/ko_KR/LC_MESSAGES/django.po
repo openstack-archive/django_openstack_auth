@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-23 06:03+0000\n"
-"PO-Revision-Date: 2015-01-23 02:27+0000\n"
-"Last-Translator: Sungjin Kang <potopro@gmail.com>\n"
+"POT-Creation-Date: 2015-01-26 06:01+0000\n"
+"PO-Revision-Date: 2015-01-24 07:54+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Korean (Korea) "
 "(http://www.transifex.com/projects/p/horizon/language/ko_KR/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -59,4 +59,46 @@ msgstr "비밀번호"
 #: openstack_auth/forms.py:62
 msgid "Domain"
 msgstr "도메인"
+
+#: openstack_auth/openstack/common/log.py:287
+#, python-format
+msgid "Deprecated: %s"
+msgstr "더 이상 사용되지 않음: %s"
+
+#: openstack_auth/openstack/common/log.py:395
+#, python-format
+msgid "Error loading logging config %(log_config)s: %(err_msg)s"
+msgstr "%(log_config)s 설정 기록을 불러오는 중 오류가 발생했습니다: %(err_msg)s"
+
+#: openstack_auth/openstack/common/log.py:456
+#, python-format
+msgid "syslog facility must be one of: %s"
+msgstr "syslog 기능이 다음 중 하나여야 함: %s"
+
+#: openstack_auth/openstack/common/log.py:702
+#, python-format
+msgid "Fatal call to deprecated config: %(msg)s"
+msgstr "더 이상 사용되지 않는 구성에 대한 심각한 호출: %(msg)s"
+
+#: openstack_auth/openstack/common/policy.py:97
+msgid "The JSON file that defines policies."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:100
+msgid "Default rule. Enforced when a requested rule is not found."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:104
+msgid "Directories where policy configuration files are stored."
+msgstr ""
+
+#: openstack_auth/openstack/common/policy.py:119
+#, python-format
+msgid "Policy doesn't allow %s to be performed."
+msgstr "정책에서 수행해야 할 %s을(를) 허용하지 않습니다."
+
+#: openstack_auth/openstack/common/policy.py:213
+#, python-format
+msgid "Rules must be an instance of dict or Rules, got %s instead"
+msgstr "규칙은 사전의 인스턴스이거나 규칙 그 자체여야 하지만 %s을(를) 가져왔습니다"
 
