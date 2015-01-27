@@ -5,13 +5,14 @@
 #
 # Translators:
 # Ian Y. Choi <ianyrchoi@gmail.com>, 2015
+# Sungjin Kang <potopro@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-26 06:01+0000\n"
-"PO-Revision-Date: 2015-01-24 07:54+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-01-27 06:02+0000\n"
+"PO-Revision-Date: 2015-01-26 14:12+0000\n"
+"Last-Translator: Sungjin Kang <potopro@gmail.com>\n"
 "Language-Team: Korean (Korea) "
 "(http://www.transifex.com/projects/p/horizon/language/ko_KR/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -63,17 +64,17 @@ msgstr "도메인"
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
 msgid "Deprecated: %s"
-msgstr "더 이상 사용되지 않음: %s"
+msgstr "더 이상 사용되지 않습니다: %s"
 
 #: openstack_auth/openstack/common/log.py:395
 #, python-format
 msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "%(log_config)s 설정 기록을 불러오는 중 오류가 발생했습니다: %(err_msg)s"
+msgstr "로깅 설정 %(log_config)s을 불러오지 못했습니다: %(err_msg)s"
 
 #: openstack_auth/openstack/common/log.py:456
 #, python-format
 msgid "syslog facility must be one of: %s"
-msgstr "syslog 기능이 다음 중 하나여야 함: %s"
+msgstr "syslog 기능이 다음 중 하나여야 합니다: %s"
 
 #: openstack_auth/openstack/common/log.py:702
 #, python-format
@@ -82,23 +83,23 @@ msgstr "더 이상 사용되지 않는 구성에 대한 심각한 호출: %(msg)
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
-msgstr ""
+msgstr "JSON 파일로 정책을 정의합니다."
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
+msgstr "기본 룰입니다. 요청된 룰이 없을 때, 이 값으로 강제 설정됩니다."
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
-msgstr ""
+msgstr "정책 구성 파일이 저장되는 디렉토리입니다."
 
 #: openstack_auth/openstack/common/policy.py:119
 #, python-format
 msgid "Policy doesn't allow %s to be performed."
-msgstr "정책에서 수행해야 할 %s을(를) 허용하지 않습니다."
+msgstr "정책 %s (을)를 진행 할 수 없습니다."
 
 #: openstack_auth/openstack/common/policy.py:213
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr "규칙은 사전의 인스턴스이거나 규칙 그 자체여야 하지만 %s을(를) 가져왔습니다"
+msgstr "롤은 %s 대신 롤 또는 dict의 인스턴트여야 합니다."
 
