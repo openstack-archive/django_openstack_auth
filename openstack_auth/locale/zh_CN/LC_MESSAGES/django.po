@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-26 06:01+0000\n"
-"PO-Revision-Date: 2015-01-24 07:54+0000\n"
+"POT-Creation-Date: 2015-01-28 06:03+0000\n"
+"PO-Revision-Date: 2015-01-27 07:10+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (China) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_CN/)\n"
@@ -85,7 +85,7 @@ msgstr "定义策略的JSON文件。"
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
+msgstr "默认规则。当一个请求的规则没有找到时强制使用的规则。"
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
