@@ -24,6 +24,7 @@ from django.utils import http
 from django.views.decorators.cache import never_cache  # noqa
 from django.views.decorators.csrf import csrf_protect  # noqa
 from django.views.decorators.debug import sensitive_post_parameters  # noqa
+from keystoneclient.auth import token_endpoint
 from keystoneclient import exceptions as keystone_exceptions
 
 from openstack_auth import forms
@@ -136,23 +137,21 @@ def logout(request, login_url=None, **kwargs):
 
 def delete_token(endpoint, token_id):
     """Delete a token."""
-    insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
-    ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
     utils.remove_project_cache(token_id)
+
     try:
-        if utils.get_keystone_version() >= 3:
-            if not utils.has_in_url_path(endpoint, '/v3'):
-                endpoint = utils.url_path_replace(endpoint, '/v2.0', '/v3', 1)
-        client = utils.get_keystone_client().Client(
-            endpoint=endpoint,
-            token=token_id,
-            insecure=insecure,
-            cacert=ca_cert,
-            debug=settings.DEBUG)
+        endpoint = utils.fix_auth_url_version(endpoint)
+
+        session = utils.get_session()
+        auth_plugin = token_endpoint.Token(endpoint=endpoint,
+                                           token=token_id)
+        client = utils.get_keystone_client().Client(session=session,
+                                                    auth=auth_plugin)
         if utils.get_keystone_version() >= 3:
             client.tokens.revoke_token(token=token_id)
         else:
             client.tokens.delete(token=token_id)
+
         LOG.info('Deleted token %s' % token_id)
     except keystone_exceptions.ClientException:
         LOG.info('Could not delete token')
@@ -163,21 +162,15 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
     """Switches an authenticated user from one project to another."""
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
-    insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
-    ca_cert = getattr(settings, "OPENSTACK_SSL_CACERT", None)
-    endpoint = request.user.endpoint
+
+    endpoint = utils.fix_auth_url_version(request.user.endpoint)
+    session = utils.get_session()
+    auth = utils.get_token_auth_plugin(auth_url=endpoint,
+                                       token=request.user.token.id,
+                                       project_id=tenant_id)
+
     try:
-        if utils.get_keystone_version() >= 3:
-            if not utils.has_in_url_path(endpoint, '/v3'):
-                endpoint = utils.url_path_replace(endpoint, '/v2.0', '/v3', 1)
-        client = utils.get_keystone_client().Client(
-            tenant_id=tenant_id,
-            token=request.user.token.id,
-            auth_url=endpoint,
-            insecure=insecure,
-            cacert=ca_cert,
-            debug=settings.DEBUG)
-        auth_ref = client.auth_ref
+        auth_ref = auth.get_access(session)
         msg = 'Project switch successful for user "%(username)s".' % \
             {'username': request.user.username}
         LOG.info(msg)
