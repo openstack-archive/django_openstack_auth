@@ -14,7 +14,9 @@
 import datetime
 import functools
 import logging
+import sys
 
+import django
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import middleware
@@ -27,6 +29,7 @@ from keystoneclient.auth import token_endpoint
 from keystoneclient import session
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
+import six
 from six.moves.urllib import parse as urlparse
 
 
@@ -211,19 +214,6 @@ def fix_auth_url_version(auth_url):
     return auth_url
 
 
-def get_password_auth_plugin(auth_url, username, password, user_domain_name):
-    if get_keystone_version() >= 3:
-        return v3_auth.Password(auth_url=auth_url,
-                                username=username,
-                                password=password,
-                                user_domain_name=user_domain_name)
-
-    else:
-        return v2_auth.Password(auth_url=auth_url,
-                                username=username,
-                                password=password)
-
-
 def get_token_auth_plugin(auth_url, token, project_id):
     if get_keystone_version() >= 3:
         return v3_auth.Token(auth_url=auth_url,
@@ -295,3 +285,65 @@ def set_response_cookie(response, cookie_name, cookie_value):
     now = timezone.now()
     expire_date = now + datetime.timedelta(days=365)
     response.set_cookie(cookie_name, cookie_value, expires=expire_date)
+
+
+if django.VERSION < (1, 7):
+    try:
+        from importlib import import_module
+    except ImportError:
+        # NOTE(jamielennox): importlib was introduced in python 2.7. This is
+        # copied from the backported importlib library. See:
+        # http://svn.python.org/projects/python/trunk/Lib/importlib/__init__.py
+
+        def _resolve_name(name, package, level):
+            """Return the absolute name of the module to be imported."""
+            if not hasattr(package, 'rindex'):
+                raise ValueError("'package' not set to a string")
+            dot = len(package)
+            for x in xrange(level, 1, -1):
+                try:
+                    dot = package.rindex('.', 0, dot)
+                except ValueError:
+                    raise ValueError("attempted relative import beyond "
+                                     "top-level package")
+            return "%s.%s" % (package[:dot], name)
+
+        def import_module(name, package=None):
+            """Import a module.
+
+            The 'package' argument is required when performing a relative
+            import. It specifies the package to use as the anchor point from
+            which to resolve the relative import to an absolute import.
+            """
+            if name.startswith('.'):
+                if not package:
+                    raise TypeError("relative imports require the "
+                                    "'package' argument")
+                level = 0
+                for character in name:
+                    if character != '.':
+                        break
+                    level += 1
+                name = _resolve_name(name[level:], package, level)
+            __import__(name)
+            return sys.modules[name]
+
+    # NOTE(jamielennox): copied verbatim from django 1.7
+    def import_string(dotted_path):
+        try:
+            module_path, class_name = dotted_path.rsplit('.', 1)
+        except ValueError:
+            msg = "%s doesn't look like a module path" % dotted_path
+            six.reraise(ImportError, ImportError(msg), sys.exc_info()[2])
+
+        module = import_module(module_path)
+
+        try:
+            return getattr(module, class_name)
+        except AttributeError:
+            msg = 'Module "%s" does not define a "%s" attribute/class' % (
+                dotted_path, class_name)
+            six.reraise(ImportError, ImportError(msg), sys.exc_info()[2])
+
+else:
+    from django.utils.module_loading import import_string  # noqa

@@ -33,6 +33,21 @@ KEYSTONE_CLIENT_ATTR = "_keystoneclient"
 class KeystoneBackend(object):
     """Django authentication backend for use with ``django.contrib.auth``."""
 
+    def __init__(self):
+        self._auth_plugins = None
+
+    @property
+    def auth_plugins(self):
+        if self._auth_plugins is None:
+            plugins = getattr(
+                settings,
+                'AUTH_PLUGINS',
+                ['openstack_auth.plugin.password.PasswordPlugin'])
+
+            self._auth_plugins = [utils.import_string(p)() for p in plugins]
+
+        return self._auth_plugins
+
     def check_auth_expiry(self, auth_ref, margin=None):
         if not utils.is_token_valid(auth_ref, margin):
             msg = _("The authentication token issued by the Identity service "
@@ -64,24 +79,25 @@ class KeystoneBackend(object):
         else:
             return None
 
-    def authenticate(self, request=None, username=None, password=None,
-                     user_domain_name=None, auth_url=None):
+    def authenticate(self, auth_url=None, **kwargs):
         """Authenticates a user via the Keystone Identity API."""
-        LOG.debug('Beginning user authentication for user "%s".' % username)
+        LOG.debug('Beginning user authentication')
 
-        interface = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'public')
-
-        if auth_url is None:
+        if not auth_url:
             auth_url = settings.OPENSTACK_KEYSTONE_URL
+
+        auth_url = utils.fix_auth_url_version(auth_url)
+
+        for plugin in self.auth_plugins:
+            unscoped_auth = plugin.get_plugin(auth_url=auth_url, **kwargs)
+
+            if unscoped_auth:
+                break
+        else:
+            return None
 
         session = utils.get_session()
         keystone_client_class = utils.get_keystone_client().Client
-
-        auth_url = utils.fix_auth_url_version(auth_url)
-        unscoped_auth = utils.get_password_auth_plugin(auth_url,
-                                                       username,
-                                                       password,
-                                                       user_domain_name)
 
         try:
             unscoped_auth_ref = unscoped_auth.get_access(session)
@@ -126,6 +142,8 @@ class KeystoneBackend(object):
 
         # the recent project id a user might have set in a cookie
         recent_project = None
+        request = kwargs.get('request')
+
         if request:
             # Check if token is automatically scoped to default_project
             # grab the project from this token, to use as a default
@@ -162,6 +180,8 @@ class KeystoneBackend(object):
         # Check expiry for our new scoped token.
         self.check_auth_expiry(scoped_auth_ref)
 
+        interface = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'public')
+
         # If we made it here we succeeded. Create our User!
         user = auth_user.create_user_from_token(
             request,
@@ -177,7 +197,7 @@ class KeystoneBackend(object):
             # Support client caching to save on auth calls.
             setattr(request, KEYSTONE_CLIENT_ATTR, scoped_client)
 
-        LOG.debug('Authentication completed for user "%s".' % username)
+        LOG.debug('Authentication completed.')
         return user
 
     def get_group_permissions(self, user, obj=None):
