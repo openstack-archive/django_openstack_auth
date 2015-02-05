@@ -5,13 +5,14 @@
 #
 # Translators:
 # Andreas Jaeger <jaegerandi@gmail.com>, 2014
+# Robert Simai, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-26 06:01+0000\n"
-"PO-Revision-Date: 2015-01-24 07:54+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-02-05 06:17+0000\n"
+"PO-Revision-Date: 2015-02-04 12:42+0000\n"
+"Last-Translator: Robert Simai\n"
 "Language-Team: German "
 "(http://www.transifex.com/projects/p/horizon/language/de/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -26,25 +27,25 @@ msgstr ""
 "Das vom Identitätsdienst ausgegebene Authentifizierungs-Token ist "
 "abgelaufen."
 
-#: openstack_auth/backend.py:104
+#: openstack_auth/backend.py:91
 msgid "Invalid user name or password."
 msgstr "Ungültiger Benutzername oder ungültiges Passwort."
 
-#: openstack_auth/backend.py:109
+#: openstack_auth/backend.py:96
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Während der Authentifizierung ist ein Fehler aufgetreten. Bitte versuchen"
 " Sie es später noch einmal."
 
-#: openstack_auth/backend.py:135
+#: openstack_auth/backend.py:116
 msgid "Unable to retrieve authorized projects."
 msgstr "Autorisierte Projekte können nicht abgerufen werden."
 
-#: openstack_auth/backend.py:140
+#: openstack_auth/backend.py:121
 msgid "You are not authorized for any projects."
 msgstr "Sie sind für kein Projekt berechtigt."
 
-#: openstack_auth/backend.py:173
+#: openstack_auth/backend.py:156
 msgid "Unable to authenticate to any available projects."
 msgstr "Außerstande bei irgendeinem verfügbaren Projekt zu authentifizieren."
 
@@ -77,7 +78,7 @@ msgstr "Fehler beim Laden der Logging-Konfiguration %(log_config)s: %(err_msg)s"
 #: openstack_auth/openstack/common/log.py:456
 #, python-format
 msgid "syslog facility must be one of: %s"
-msgstr "syslog-Funktion muss einer der folgenden Werte sein: %s"
+msgstr "syslog-Facility muss einer der folgenden Werte sein: %s"
 
 #: openstack_auth/openstack/common/log.py:702
 #, python-format
@@ -86,15 +87,19 @@ msgstr "Schwerwiegender Aufruf einer veralteten Konfiguration: %(msg)s"
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
-msgstr ""
+msgstr "Die JSON Datei, welche die Richtlinien definiert."
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
 msgstr ""
+"Voreingestellte Regel. Sie wird angewendet, wenn eine angeforderte Regel "
+"nicht gefunden wird."
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
 msgstr ""
+"Das Verzeichnis, in welchem die Dateien zur Richtlinienkonfiguration "
+"gespeichert werden."
 
 #: openstack_auth/openstack/common/policy.py:119
 #, python-format
