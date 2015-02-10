@@ -509,7 +509,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
     def setUp(self):
         super(OpenStackAuthTestsV3, self).setUp()
 
-        if self.interface:
+        if getattr(self, 'interface', None):
             override = self.settings(OPENSTACK_ENDPOINT_TYPE=self.interface)
             override.enable()
             self.addCleanup(override.disable)
