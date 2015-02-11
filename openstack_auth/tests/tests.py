@@ -190,17 +190,16 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
     def test_login(self):
         self._login()
 
-    def test_login_with_disabled_tenants(self):
-        # Test to validate that authentication will try to get
-        # scoped token if the first project is disabled.
-        tenants = [self.data.tenant_one, self.data.tenant_two]
+    def test_login_with_disabled_tenant(self):
+        # Test to validate that authentication will not try to get
+        # scoped token for disabled project.
+        tenants = [self.data.tenant_two, self.data.tenant_one]
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_tenants(user, tenants)
-        self._mock_client_token_auth_failure(unscoped, self.data.tenant_one.id)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_one.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -222,14 +221,11 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
                          self.client.session['services_region'])
 
     def test_no_enabled_tenants(self):
-        tenants = [self.data.tenant_one, self.data.tenant_two]
+        tenants = [self.data.tenant_two]
         user = self.data.user
-        unscoped = self.data.unscoped_access_info
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_tenants(user, tenants)
-        self._mock_client_token_auth_failure(unscoped, self.data.tenant_one.id)
-        self._mock_client_token_auth_failure(unscoped, self.data.tenant_two.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -242,8 +238,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.post(url, form_data)
         self.assertTemplateUsed(response, 'auth/login.html')
         self.assertContains(response,
-                            'Unable to authenticate to any available'
-                            ' projects.')
+                            'You are not authorized for any projects.')
 
     def test_no_tenants(self):
         user = self.data.user
@@ -550,16 +545,16 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.post(url, form_data)
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
-    def test_login_with_disabled_projects(self):
-        projects = [self.data.project_one, self.data.project_two]
+    def test_login_with_disabled_project(self):
+        # Test to validate that authentication will not try to get
+        # scoped token for disabled project.
+        projects = [self.data.project_two, self.data.project_one]
         user = self.data.user
         unscoped = self.data.unscoped_access_info
 
         form_data = self.get_form_data(user)
         self._mock_unscoped_client_list_projects(user, projects)
-        self._mock_client_token_auth_failure(unscoped,
-                                             self.data.project_one.id)
-        self._mock_scoped_client_for_tenant(unscoped, self.data.project_two.id)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -573,17 +568,12 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
     def test_no_enabled_projects(self):
-        projects = [self.data.project_one, self.data.project_two]
+        projects = [self.data.project_two]
         user = self.data.user
-        unscoped = self.data.unscoped_access_info
 
         form_data = self.get_form_data(user)
 
         self._mock_unscoped_client_list_projects(user, projects)
-        self._mock_client_token_auth_failure(unscoped,
-                                             self.data.project_one.id)
-        self._mock_client_token_auth_failure(unscoped,
-                                             self.data.project_two.id)
         self.mox.ReplayAll()
 
         url = reverse('login')
@@ -596,8 +586,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.post(url, form_data)
         self.assertTemplateUsed(response, 'auth/login.html')
         self.assertContains(response,
-                            'Unable to authenticate to any available'
-                            ' projects.')
+                            'You are not authorized for any projects.')
 
     def test_no_projects(self):
         user = self.data.user

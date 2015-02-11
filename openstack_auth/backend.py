@@ -116,6 +116,9 @@ class KeystoneBackend(object):
             msg = _('Unable to retrieve authorized projects.')
             raise exceptions.KeystoneAuthException(msg)
 
+        # Attempt to scope only to enabled projects
+        projects = [project for project in projects if project.enabled]
+
         # Abort if there are no projects for this user
         if not projects:
             msg = _('You are not authorized for any projects.')
