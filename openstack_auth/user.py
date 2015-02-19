@@ -57,11 +57,13 @@ def create_user_from_token(request, token, endpoint, services_region=None):
 
 
 class Token(object):
-    """Token object that encapsulates the auth_ref (AccessInfo)from keystone
-       client.
+    """Encapsulates the AccessInfo object from keystoneclient.
 
-       Added for maintaining backward compatibility with horizon that expects
-       Token object in the user object.
+    Token object provides a consistent interface for accessing the keystone
+    token information and service catalog.
+
+    Added for maintaining backward compatibility with horizon that expects
+    Token object in the user object.
     """
     def __init__(self, auth_ref):
         # User-related attributes
