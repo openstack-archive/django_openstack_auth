@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-27 06:02+0000\n"
-"PO-Revision-Date: 2015-01-26 14:12+0000\n"
+"POT-Creation-Date: 2015-02-21 06:03+0000\n"
+"PO-Revision-Date: 2015-02-20 18:49+0000\n"
 "Last-Translator: Sungjin Kang <potopro@gmail.com>\n"
 "Language-Team: Korean (Korea) "
 "(http://www.transifex.com/projects/p/horizon/language/ko_KR/)\n"
@@ -25,23 +25,23 @@ msgstr ""
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니다."
 
-#: openstack_auth/backend.py:104
+#: openstack_auth/backend.py:91
 msgid "Invalid user name or password."
-msgstr "사용자 이름이나 비밀번호가 잘못되었습니다."
+msgstr "사용자 이름이나  잘못되었습니다."
 
-#: openstack_auth/backend.py:109
+#: openstack_auth/backend.py:96
 msgid "An error occurred authenticating. Please try again later."
 msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세요."
 
-#: openstack_auth/backend.py:135
+#: openstack_auth/backend.py:116
 msgid "Unable to retrieve authorized projects."
 msgstr "프로젝트 권한을 찾을 수 없습니다."
 
-#: openstack_auth/backend.py:140
+#: openstack_auth/backend.py:124
 msgid "You are not authorized for any projects."
 msgstr "당신은 어떤 프로젝트에도 권한이 없습니다."
 
-#: openstack_auth/backend.py:173
+#: openstack_auth/backend.py:159
 msgid "Unable to authenticate to any available projects."
 msgstr "사용 가능한 프로젝트에 인증 할 수 없습니다."
 
@@ -55,7 +55,7 @@ msgstr "사용자 이름"
 
 #: openstack_auth/forms.py:52
 msgid "Password"
-msgstr "비밀번호"
+msgstr "암호"
 
 #: openstack_auth/forms.py:62
 msgid "Domain"
@@ -87,7 +87,7 @@ msgstr "JSON 파일로 정책을 정의합니다."
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
-msgstr "기본 룰입니다. 요청된 룰이 없을 때, 이 값으로 강제 설정됩니다."
+msgstr "기본 규칙입니다. 요청된 규칙이 없을 때, 이 값으로 강제 설정됩니다."
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
@@ -101,5 +101,5 @@ msgstr "정책 %s (을)를 진행 할 수 없습니다."
 #: openstack_auth/openstack/common/policy.py:213
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr "롤은 %s 대신 롤 또는 dict의 인스턴트여야 합니다."
+msgstr "%s 대신 가져와야하는 규칙이나 dict에 대한 인스턴스여야 합니다."
 
