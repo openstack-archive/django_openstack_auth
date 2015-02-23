@@ -31,9 +31,7 @@ KEYSTONE_CLIENT_ATTR = "_keystoneclient"
 
 
 class KeystoneBackend(object):
-    """Django authentication backend class for use with
-      ``django.contrib.auth``.
-    """
+    """Django authentication backend for use with ``django.contrib.auth``."""
 
     def check_auth_expiry(self, auth_ref, margin=None):
         if not utils.is_token_valid(auth_ref, margin):
@@ -47,7 +45,9 @@ class KeystoneBackend(object):
         return True
 
     def get_user(self, user_id):
-        """Returns the current user (if authenticated) based on the user ID
+        """Returns the current user from the session data.
+
+        If authenticated, this return the user object based on the user ID
         and session data.
 
         Note: this required monkey-patching the ``contrib.auth`` middleware
@@ -188,10 +188,12 @@ class KeystoneBackend(object):
         return set()
 
     def get_all_permissions(self, user, obj=None):
-        """Returns a set of permission strings that this user has through
-           his/her Keystone "roles".
+        """Returns a set of permission strings that the user has.
 
-          The permissions are returned as ``"openstack.{{ role.name }}"``.
+        This permission available to the user is derived from the user's
+        Keystone "roles".
+
+        The permissions are returned as ``"openstack.{{ role.name }}"``.
         """
         if user.is_anonymous() or obj is not None:
             return set()
@@ -215,7 +217,7 @@ class KeystoneBackend(object):
     def has_module_perms(self, user, app_label):
         """Returns True if user has any permissions in the given app_label.
 
-           Currently this matches for the app_label ``"openstack"``.
+        Currently this matches for the app_label ``"openstack"``.
         """
         if not user.is_active:
             return False

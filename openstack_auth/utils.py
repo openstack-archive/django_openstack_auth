@@ -285,9 +285,12 @@ def default_services_region(service_catalog, request=None):
 
 
 def set_response_cookie(response, cookie_name, cookie_value):
-    """a common policy of setting cookies for last used project
+    """Common function for setting the cookie in the response.
+
+    Provides a common policy of setting cookies for last used project
     and region, can be reused in other locations.
-    this method will set the cookie to expire in 365 days.
+
+    This method will set the cookie to expire in 365 days.
     """
     now = timezone.now()
     expire_date = now + datetime.timedelta(days=365)
