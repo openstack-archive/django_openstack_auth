@@ -215,11 +215,19 @@ class KeystoneBackend(object):
         #                      when supported by Keystone.
         role_perms = set(["openstack.roles.%s" % role['name'].lower()
                           for role in user.roles])
-        service_perms = set(["openstack.services.%s" % service['type'].lower()
-                             for service in user.service_catalog
-                             if user.services_region in
-                             [endpoint.get('region', None) for endpoint
-                              in service.get('endpoints', [])]])
+
+        services = []
+        for service in user.service_catalog:
+            try:
+                service_type = service['type']
+            except KeyError:
+                continue
+            service_regions = [utils.get_endpoint_region(endpoint) for endpoint
+                               in service.get('endpoints', [])]
+            if user.services_region in service_regions:
+                services.append(service_type.lower())
+        service_perms = set(["openstack.services.%s" % service
+                             for service in services])
         return role_perms | service_perms
 
     def has_perm(self, user, perm, obj=None):

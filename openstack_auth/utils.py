@@ -260,20 +260,24 @@ def default_services_region(service_catalog, request=None):
     Extracted from the service catalog.
     """
     if service_catalog:
-        available_regions = [endpoint['region'] for service
+        available_regions = [get_endpoint_region(endpoint) for service
                              in service_catalog for endpoint
-                             in service['endpoints']
-                             if service['type'] != 'identity']
+                             in service.get('endpoints', [])
+                             if (service.get('type') is not None
+                                 and service.get('type') != 'identity')]
         if not available_regions:
             # this is very likely an incomplete keystone setup
             LOG.warning('No regions could be found excluding identity.')
-            available_regions = [endpoint['region'] for service
+            available_regions = [get_endpoint_region(endpoint) for service
                                  in service_catalog for endpoint
-                                 in service['endpoints']]
-        if not available_regions:
-            # this is a critical problem and it's not clear how this occurs
-            LOG.error('No regions can be found in the service catalog.')
-            return None
+                                 in service.get('endpoints', [])]
+
+            if not available_regions:
+                # if there are no region setup for any service endpoint,
+                # this is a critical problem and it's not clear how this occurs
+                LOG.error('No regions can be found in the service catalog.')
+                return None
+
         selected_region = None
         if request:
             selected_region = request.COOKIES.get('services_region',
@@ -295,6 +299,18 @@ def set_response_cookie(response, cookie_name, cookie_value):
     now = timezone.now()
     expire_date = now + datetime.timedelta(days=365)
     response.set_cookie(cookie_name, cookie_value, expires=expire_date)
+
+
+def get_endpoint_region(endpoint):
+    """Common function for getting the region from endpoint.
+
+    In Keystone V3, region has been deprecated in favor of
+    region_id.
+
+    This method provides a way to get region that works for both
+    Keystone V2 and V3.
+    """
+    return endpoint.get('region_id') or endpoint.get('region')
 
 
 if django.VERSION < (1, 7):
