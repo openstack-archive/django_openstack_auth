@@ -113,10 +113,7 @@ class Token(object):
         else:
             self.roles = auth_ref.get('roles', [])
 
-        if utils.get_keystone_version() < 3:
-            self.serviceCatalog = auth_ref.get('serviceCatalog', [])
-        else:
-            self.serviceCatalog = auth_ref.get('catalog', [])
+        self.serviceCatalog = auth_ref.service_catalog.get_data()
 
 
 class User(models.AnonymousUser):
@@ -331,11 +328,13 @@ class User(models.AnonymousUser):
         regions = []
         if self.service_catalog:
             for service in self.service_catalog:
-                if service['type'] == 'identity':
+                service_type = service.get('type')
+                if service_type is None or service_type == 'identity':
                     continue
-                for endpoint in service['endpoints']:
-                    if endpoint['region'] not in regions:
-                        regions.append(endpoint['region'])
+                for endpoint in service.get('endpoints', []):
+                    region = utils.get_endpoint_region(endpoint)
+                    if region not in regions:
+                        regions.append(region)
         return regions
 
     def save(*args, **kwargs):
