@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import logging
+import re
 import time
 
 import django
@@ -18,15 +19,18 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required  # noqa
 from django.contrib.auth import views as django_auth_views
+from django import http as django_http
 from django import shortcuts
 from django.utils import functional
 from django.utils import http
 from django.views.decorators.cache import never_cache  # noqa
+from django.views.decorators.csrf import csrf_exempt  # noqa
 from django.views.decorators.csrf import csrf_protect  # noqa
 from django.views.decorators.debug import sensitive_post_parameters  # noqa
 from keystoneclient.auth import token_endpoint
 from keystoneclient import exceptions as keystone_exceptions
 
+from openstack_auth import exceptions
 from openstack_auth import forms
 # This is historic and is added back in to not break older versions of
 # Horizon, fix to Horizon to remove this requirement was committed in
@@ -49,6 +53,18 @@ LOG = logging.getLogger(__name__)
 @never_cache
 def login(request, template_name=None, extra_context=None, **kwargs):
     """Logs a user in using the :class:`~openstack_auth.forms.Login` form."""
+
+    # If the user enabled websso and selects default protocol
+    # from the dropdown, We need to redirect user to the websso url
+    if request.method == 'POST':
+        protocol = request.POST.get('auth_type', 'credentials')
+        if utils.is_websso_enabled() and protocol != 'credentials':
+            region = request.POST.get('region')
+            origin = request.build_absolute_uri('/auth/websso/')
+            url = ('%s/auth/OS-FEDERATION/websso/%s?origin=%s' %
+                   (region, protocol, origin))
+            return shortcuts.redirect(url)
+
     if not request.is_ajax():
         # If the user is already authenticated, redirect them to the
         # dashboard straight away, unless the 'next' parameter is set as it
@@ -112,6 +128,30 @@ def login(request, template_name=None, extra_context=None, **kwargs):
     return res
 
 
+@sensitive_post_parameters()
+@csrf_exempt
+@never_cache
+def websso(request):
+    """Logs a user in using a token from Keystone's POST."""
+    referer = request.META.get('HTTP_REFERER', settings.OPENSTACK_KEYSTONE_URL)
+    auth_url = re.sub(r'/auth.*', '', referer)
+    token = request.POST.get('token')
+    try:
+        request.user = auth.authenticate(request=request, auth_url=auth_url,
+                                         token=token)
+    except exceptions.KeystoneAuthException as exc:
+        msg = 'Login failed: %s' % unicode(exc)
+        res = django_http.HttpResponseRedirect(settings.LOGIN_URL)
+        res.set_cookie('logout_reason', msg, max_age=10)
+        return res
+
+    auth_user.set_session_from_user(request, request.user)
+    auth.login(request, request.user)
+    if request.session.test_cookie_worked():
+        request.session.delete_test_cookie()
+    return django_http.HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+
+
 def logout(request, login_url=None, **kwargs):
     """Logs out the user if he is logged in. Then redirects to the log-in page.
 
@@ -165,8 +205,12 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
 
     endpoint = utils.fix_auth_url_version(request.user.endpoint)
     session = utils.get_session()
+    # Keystone can be configured to prevent exchanging a scoped token for
+    # another token. Always use the unscoped token for requesting a
+    # scoped token.
+    unscoped_token = request.user.unscoped_token
     auth = utils.get_token_auth_plugin(auth_url=endpoint,
-                                       token=request.user.token.id,
+                                       token=unscoped_token,
                                        project_id=tenant_id)
 
     try:
@@ -193,7 +237,9 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
         if old_token and old_endpoint and old_token.id != auth_ref.auth_token:
             delete_token(endpoint=old_endpoint, token_id=old_token.id)
         user = auth_user.create_user_from_token(
-            request, auth_user.Token(auth_ref), endpoint)
+            request,
+            auth_user.Token(auth_ref, unscoped_token=unscoped_token),
+            endpoint)
         auth_user.set_session_from_user(request, user)
     response = shortcuts.redirect(redirect_to)
     utils.set_response_cookie(response, 'recent_project',

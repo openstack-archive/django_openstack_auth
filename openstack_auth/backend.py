@@ -95,10 +95,12 @@ class KeystoneBackend(object):
             if unscoped_auth:
                 break
         else:
+            msg = _('No authentication backend could be determined to '
+                    'handle the provided credentials.')
             LOG.warn('No authentication backend could be determined to '
                      'handle the provided credentials. This is likely a '
                      'configuration error that should be addressed.')
-            return None
+            raise exceptions.KeystoneAuthException(msg)
 
         session = utils.get_session()
         keystone_client_class = utils.get_keystone_client().Client
@@ -174,13 +176,14 @@ class KeystoneBackend(object):
         interface = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'public')
 
         # If we made it here we succeeded. Create our User!
+        unscoped_token = unscoped_auth_ref.auth_token
         user = auth_user.create_user_from_token(
             request,
-            auth_user.Token(scoped_auth_ref),
+            auth_user.Token(scoped_auth_ref, unscoped_token=unscoped_token),
             scoped_auth_ref.service_catalog.url_for(endpoint_type=interface))
 
         if request is not None:
-            request.session['unscoped_token'] = unscoped_auth_ref.auth_token
+            request.session['unscoped_token'] = unscoped_token
             request.user = user
             scoped_client = keystone_client_class(session=session,
                                                   auth=scoped_auth)
