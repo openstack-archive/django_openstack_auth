@@ -25,5 +25,6 @@ utils.patch_middleware_get_user()
 urlpatterns = patterns(
     '',
     url(r"", include('openstack_auth.urls')),
+    url(r"^websso/$", "openstack_auth.views.websso", name='websso'),
     url(r"^$", generic.TemplateView.as_view(template_name="auth/blank.html"))
 )

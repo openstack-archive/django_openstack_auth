@@ -81,7 +81,10 @@ class BasePlugin(object):
         try:
             if self.keystone_version >= 3:
                 client = v3_client.Client(session=session, auth=auth_plugin)
-                return client.projects.list(user=auth_ref.user_id)
+                if auth_ref.is_federated:
+                    return client.federation.projects.list()
+                else:
+                    return client.projects.list(user=auth_ref.user_id)
 
             else:
                 client = v2_client.Client(session=session, auth=auth_plugin)
