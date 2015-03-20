@@ -4,13 +4,14 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Tom Fifield <tom@openstack.org>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-26 06:01+0000\n"
-"PO-Revision-Date: 2015-01-24 07:54+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-03-20 06:39+0000\n"
+"PO-Revision-Date: 2015-03-19 08:57+0000\n"
+"Last-Translator: Tom Fifield <tom@openstack.org>\n"
 "Language-Team: English (Australia) "
 "(http://www.transifex.com/projects/p/horizon/language/en_AU/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -19,27 +20,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:40
+#: openstack_auth/backend.py:38
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "The authentication token issued by the Identity service has expired."
 
-#: openstack_auth/backend.py:104
+#: openstack_auth/backend.py:91
 msgid "Invalid user name or password."
 msgstr "Invalid user name or password."
 
-#: openstack_auth/backend.py:109
+#: openstack_auth/backend.py:96
 msgid "An error occurred authenticating. Please try again later."
 msgstr "An error occurred authenticating. Please try again later."
 
-#: openstack_auth/backend.py:135
+#: openstack_auth/backend.py:116
 msgid "Unable to retrieve authorized projects."
 msgstr "Unable to retrieve authorized projects."
 
-#: openstack_auth/backend.py:140
+#: openstack_auth/backend.py:124
 msgid "You are not authorized for any projects."
 msgstr "You are not authorized for any projects."
 
-#: openstack_auth/backend.py:173
+#: openstack_auth/backend.py:159
 msgid "Unable to authenticate to any available projects."
 msgstr "Unable to authenticate to any available projects."
 
@@ -81,15 +82,15 @@ msgstr "Fatal call to deprecated config: %(msg)s"
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
-msgstr ""
+msgstr "The JSON file that defines policies."
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
+msgstr "Default rule. Enforced when a requested rule is not found."
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
-msgstr ""
+msgstr "Directories where policy configuration files are stored."
 
 #: openstack_auth/openstack/common/policy.py:119
 #, python-format
