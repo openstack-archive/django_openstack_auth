@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-26 06:01+0000\n"
-"PO-Revision-Date: 2015-01-24 07:54+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-03-20 06:39+0000\n"
+"PO-Revision-Date: 2015-03-19 20:44+0000\n"
+"Last-Translator: Zhang Xiaowei <zero00072@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_TW/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -19,27 +19,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:40
+#: openstack_auth/backend.py:38
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "認證伺服器發佈的憑證已經過期。"
 
-#: openstack_auth/backend.py:104
+#: openstack_auth/backend.py:91
 msgid "Invalid user name or password."
 msgstr "無效的使用者名稱或密碼。"
 
-#: openstack_auth/backend.py:109
+#: openstack_auth/backend.py:96
 msgid "An error occurred authenticating. Please try again later."
 msgstr "認證發生錯誤。請稍後再試。"
 
-#: openstack_auth/backend.py:135
+#: openstack_auth/backend.py:116
 msgid "Unable to retrieve authorized projects."
 msgstr "無法取回已授權的專案。"
 
-#: openstack_auth/backend.py:140
+#: openstack_auth/backend.py:124
 msgid "You are not authorized for any projects."
 msgstr "您沒有被授權任何的專案。"
 
-#: openstack_auth/backend.py:173
+#: openstack_auth/backend.py:159
 msgid "Unable to authenticate to any available projects."
 msgstr "無法認證到任何可用的專案。"
 
@@ -67,7 +67,7 @@ msgstr "已淘汰：%s"
 #: openstack_auth/openstack/common/log.py:395
 #, python-format
 msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr ""
+msgstr "讀取紀錄設定 %(log_config)s 時出錯：%(err_msg)s"
 
 #: openstack_auth/openstack/common/log.py:456
 #, python-format
@@ -81,23 +81,23 @@ msgstr "呼叫已淘汰的配置時發生嚴重錯誤：%(msg)s"
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
-msgstr ""
+msgstr "定義了政策的 JSON 檔案。"
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
+msgstr "預設規則。若找無要求的規則時強制啟用。"
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
-msgstr ""
+msgstr "儲存政策設定檔的目錄。"
 
 #: openstack_auth/openstack/common/policy.py:119
 #, python-format
 msgid "Policy doesn't allow %s to be performed."
-msgstr ""
+msgstr "政策不允許執行 %s。"
 
 #: openstack_auth/openstack/common/policy.py:213
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr ""
+msgstr "規則必須是已規範的實例或是規則內的實例，已使用 %s 來代替"
 
