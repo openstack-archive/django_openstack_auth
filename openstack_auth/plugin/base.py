@@ -14,6 +14,8 @@ import abc
 
 import six
 
+from openstack_auth import utils
+
 __all__ = ['BasePlugin']
 
 
@@ -42,3 +44,8 @@ class BasePlugin(object):
         :rtype: keystoneclient.auth.BaseAuthPlugin
         """
         return None
+
+    @property
+    def keystone_version(self):
+        """The Identity API version as specified in the settings file."""
+        return utils.get_keystone_version()
