@@ -280,7 +280,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         # POST to the page to log in.
         response = self.client.post(url, form_data)
         self.assertTemplateUsed(response, 'auth/login.html')
-        self.assertContains(response, "Invalid user name or password.")
+        self.assertContains(response, "Invalid credentials.")
 
     def test_exception(self):
         user = self.data.user
@@ -656,7 +656,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         # POST to the page to log in.
         response = self.client.post(url, form_data)
         self.assertTemplateUsed(response, 'auth/login.html')
-        self.assertContains(response, "Invalid user name or password.")
+        self.assertContains(response, "Invalid credentials.")
 
     def test_exception(self):
         user = self.data.user

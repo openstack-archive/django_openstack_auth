@@ -94,6 +94,9 @@ class KeystoneBackend(object):
             if unscoped_auth:
                 break
         else:
+            LOG.warn('No authentication backend could be determined to '
+                     'handle the provided credentials. This is likely a '
+                     'configuration error that should be addressed.')
             return None
 
         session = utils.get_session()
@@ -104,9 +107,8 @@ class KeystoneBackend(object):
         except (keystone_exceptions.Unauthorized,
                 keystone_exceptions.Forbidden,
                 keystone_exceptions.NotFound) as exc:
-            msg = _('Invalid user name or password.')
             LOG.debug(str(exc))
-            raise exceptions.KeystoneAuthException(msg)
+            raise exceptions.KeystoneAuthException(_('Invalid credentials.'))
         except (keystone_exceptions.ClientException,
                 keystone_exceptions.AuthorizationFailure) as exc:
             msg = _("An error occurred authenticating. "

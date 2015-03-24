@@ -10,12 +10,15 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import logging
+
 from keystoneclient.auth.identity import v2 as v2_auth
 from keystoneclient.auth.identity import v3 as v3_auth
 
 from openstack_auth.plugin import base
 from openstack_auth import utils
 
+LOG = logging.getLogger(__name__)
 
 __all__ = ['PasswordPlugin']
 
@@ -32,6 +35,8 @@ class PasswordPlugin(base.BasePlugin):
                    user_domain_name=None, **kwargs):
         if not all((auth_url, username, password)):
             return None
+
+        LOG.debug('Attempting to authenticate for %s', username)
 
         if utils.get_keystone_version() >= 3:
             return v3_auth.Password(auth_url=auth_url,
