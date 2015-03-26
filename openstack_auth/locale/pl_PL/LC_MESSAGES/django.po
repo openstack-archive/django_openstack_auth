@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-31 06:02+0000\n"
-"PO-Revision-Date: 2015-01-30 11:12+0000\n"
+"POT-Creation-Date: 2015-03-26 06:03+0000\n"
+"PO-Revision-Date: 2015-03-25 18:52+0000\n"
 "Last-Translator: Łukasz Jernaś <deejay1@srem.org>\n"
 "Language-Team: Polish (Poland) "
 "(http://www.transifex.com/projects/p/horizon/language/pl_PL/)\n"
@@ -21,27 +21,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:40
+#: openstack_auth/backend.py:53
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Tonek uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
 
-#: openstack_auth/backend.py:91
-msgid "Invalid user name or password."
-msgstr "Nieprawidłowa nazwa użytkownika lub hasło."
+#: openstack_auth/backend.py:111
+msgid "Invalid credentials."
+msgstr "Błędne dane logowania."
 
-#: openstack_auth/backend.py:96
+#: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Wystąpił błąd w trakcie uwierzytelniania. Proszę spróbować później."
 
-#: openstack_auth/backend.py:116
+#: openstack_auth/backend.py:134
 msgid "Unable to retrieve authorized projects."
 msgstr "Nie można pobrać uwierzytelnionych projektów."
 
-#: openstack_auth/backend.py:121
+#: openstack_auth/backend.py:142
 msgid "You are not authorized for any projects."
 msgstr "Nie upoważniono do żadnego projektu."
 
-#: openstack_auth/backend.py:156
+#: openstack_auth/backend.py:179
 msgid "Unable to authenticate to any available projects."
 msgstr "Nie można uwierzytelnić do żadnego z istniejących projektów."
 
@@ -64,7 +64,7 @@ msgstr "Domena"
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
 msgid "Deprecated: %s"
-msgstr ""
+msgstr "Nieaktualne: %s"
 
 #: openstack_auth/openstack/common/log.py:395
 #, python-format
@@ -83,7 +83,7 @@ msgstr ""
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
-msgstr ""
+msgstr "Plik w formacie JSON definiujący politykę."
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
@@ -91,7 +91,7 @@ msgstr ""
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
-msgstr ""
+msgstr "Katalog, w którym przechowywane są polityki."
 
 #: openstack_auth/openstack/common/policy.py:119
 #, python-format

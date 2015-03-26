@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-26 06:01+0000\n"
-"PO-Revision-Date: 2015-01-24 07:54+0000\n"
+"POT-Creation-Date: 2015-03-26 06:03+0000\n"
+"PO-Revision-Date: 2015-03-25 17:08+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Spanish (Mexico) "
 "(http://www.transifex.com/projects/p/horizon/language/es_MX/)\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:40
+#: openstack_auth/backend.py:53
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
 "El token de autenticación otorgado por el servicio de identidad ha "
 "expirado."
 
-#: openstack_auth/backend.py:104
-msgid "Invalid user name or password."
-msgstr "Nombre de usuario o contraseña inválidos."
+#: openstack_auth/backend.py:111
+msgid "Invalid credentials."
+msgstr ""
 
-#: openstack_auth/backend.py:109
+#: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Se ha producido un error de autenticación. Por favor inténtelo de nuevo "
 "más tarde."
 
-#: openstack_auth/backend.py:135
+#: openstack_auth/backend.py:134
 msgid "Unable to retrieve authorized projects."
 msgstr "No se pueden recuperar los proyectos autorizados."
 
-#: openstack_auth/backend.py:140
+#: openstack_auth/backend.py:142
 msgid "You are not authorized for any projects."
 msgstr "No estás autorizado para algunos proyectos."
 
-#: openstack_auth/backend.py:173
+#: openstack_auth/backend.py:179
 msgid "Unable to authenticate to any available projects."
 msgstr "No se puede autenticar a los proyectos disponibles."
 

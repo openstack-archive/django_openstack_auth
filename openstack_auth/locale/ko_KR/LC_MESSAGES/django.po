@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-02-21 06:03+0000\n"
-"PO-Revision-Date: 2015-02-20 18:49+0000\n"
-"Last-Translator: Sungjin Kang <potopro@gmail.com>\n"
+"POT-Creation-Date: 2015-03-26 06:03+0000\n"
+"PO-Revision-Date: 2015-03-25 17:08+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Korean (Korea) "
 "(http://www.transifex.com/projects/p/horizon/language/ko_KR/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -21,27 +21,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:40
+#: openstack_auth/backend.py:53
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니다."
 
-#: openstack_auth/backend.py:91
-msgid "Invalid user name or password."
-msgstr "사용자 이름이나  잘못되었습니다."
+#: openstack_auth/backend.py:111
+msgid "Invalid credentials."
+msgstr ""
 
-#: openstack_auth/backend.py:96
+#: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."
 msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세요."
 
-#: openstack_auth/backend.py:116
+#: openstack_auth/backend.py:134
 msgid "Unable to retrieve authorized projects."
 msgstr "프로젝트 권한을 찾을 수 없습니다."
 
-#: openstack_auth/backend.py:124
+#: openstack_auth/backend.py:142
 msgid "You are not authorized for any projects."
 msgstr "당신은 어떤 프로젝트에도 권한이 없습니다."
 
-#: openstack_auth/backend.py:159
+#: openstack_auth/backend.py:179
 msgid "Unable to authenticate to any available projects."
 msgstr "사용 가능한 프로젝트에 인증 할 수 없습니다."
 

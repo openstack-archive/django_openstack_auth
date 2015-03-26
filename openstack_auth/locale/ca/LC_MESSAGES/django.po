@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-26 06:01+0000\n"
-"PO-Revision-Date: 2015-01-24 07:07+0000\n"
+"POT-Creation-Date: 2015-03-26 06:03+0000\n"
+"PO-Revision-Date: 2015-03-25 17:08+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Catalan "
 "(http://www.transifex.com/projects/p/horizon/language/ca/)\n"
@@ -19,29 +19,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:40
+#: openstack_auth/backend.py:53
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
 "La autentificació ha trobat un problema pel servei d'identitat hagi "
 "expirat."
 
-#: openstack_auth/backend.py:104
-msgid "Invalid user name or password."
-msgstr "Nom d'usuari o contrasenya no vàlids."
+#: openstack_auth/backend.py:111
+msgid "Invalid credentials."
+msgstr ""
 
-#: openstack_auth/backend.py:109
+#: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."
 msgstr "S'ha produït un error d'autenticació. Si us plau, prova de nou més tard."
 
-#: openstack_auth/backend.py:135
+#: openstack_auth/backend.py:134
 msgid "Unable to retrieve authorized projects."
 msgstr "No es poden recuperar els projectes autoritzats."
 
-#: openstack_auth/backend.py:140
+#: openstack_auth/backend.py:142
 msgid "You are not authorized for any projects."
 msgstr "No esta autoritzat per a cap projecte."
 
-#: openstack_auth/backend.py:173
+#: openstack_auth/backend.py:179
 msgid "Unable to authenticate to any available projects."
 msgstr "No es pot autenticar als projectes disponibles."
 
