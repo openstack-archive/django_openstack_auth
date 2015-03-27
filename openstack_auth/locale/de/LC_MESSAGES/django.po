@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-26 06:03+0000\n"
-"PO-Revision-Date: 2015-03-25 17:08+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-03-27 06:04+0000\n"
+"PO-Revision-Date: 2015-03-26 13:01+0000\n"
+"Last-Translator: Robert Simai\n"
 "Language-Team: German "
 "(http://www.transifex.com/projects/p/horizon/language/de/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -29,7 +29,7 @@ msgstr ""
 
 #: openstack_auth/backend.py:111
 msgid "Invalid credentials."
-msgstr ""
+msgstr "Unzureichende Berechtigung."
 
 #: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."
@@ -110,6 +110,6 @@ msgstr "Die Regel erlaubt nicht die Ausführung von %s."
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr ""
-"Die Regeln müssen eine Instanz eines Verzeichnisses oder von Regeln sein,"
-" anstatt dessen wurde %s zurückgemeldet."
+"Die Regeln müssen im Regelverzeichnis vorkommen, anstatt dessen wurde %s "
+"zurückgemeldet"
 

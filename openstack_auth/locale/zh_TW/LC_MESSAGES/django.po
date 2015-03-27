@@ -4,12 +4,13 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Zhang Xiaowei <zero00072@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-26 06:03+0000\n"
-"PO-Revision-Date: 2015-03-26 05:01+0000\n"
+"POT-Creation-Date: 2015-03-27 06:04+0000\n"
+"PO-Revision-Date: 2015-03-27 06:00+0000\n"
 "Last-Translator: Zhang Xiaowei <zero00072@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_TW/)\n"
@@ -21,7 +22,7 @@ msgstr ""
 
 #: openstack_auth/backend.py:53
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "認證服務發佈的憑證已經過期。"
+msgstr "認證伺服器發佈的憑證已經過期。"
 
 #: openstack_auth/backend.py:111
 msgid "Invalid credentials."
@@ -67,7 +68,7 @@ msgstr "已淘汰：%s"
 #: openstack_auth/openstack/common/log.py:395
 #, python-format
 msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "讀取紀錄設定 %(log_config)s 時出錯：%(err_msg)s"
+msgstr "讀取紀錄設定檔 %(log_config)s 時出錯：%(err_msg)s"
 
 #: openstack_auth/openstack/common/log.py:456
 #, python-format
@@ -77,7 +78,7 @@ msgstr "Syslog 機能必須是下列其中一項：%s"
 #: openstack_auth/openstack/common/log.py:702
 #, python-format
 msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "呼叫已淘汰的配置時發生嚴重錯誤：%(msg)s"
+msgstr "呼叫已淘汰的設置時發生嚴重錯誤：%(msg)s"
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
