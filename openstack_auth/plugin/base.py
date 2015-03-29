@@ -12,8 +12,12 @@
 
 import abc
 
+from keystoneclient import exceptions as keystone_exceptions
+from keystoneclient.v2_0 import client as v2_client
+from keystoneclient.v3 import client as v3_client
 import six
 
+from openstack_auth import exceptions
 from openstack_auth import utils
 
 __all__ = ['BasePlugin']
@@ -49,3 +53,41 @@ class BasePlugin(object):
     def keystone_version(self):
         """The Identity API version as specified in the settings file."""
         return utils.get_keystone_version()
+
+    def list_projects(self, session, auth_plugin, auth_ref=None):
+        """List the projects that are accessible to this plugin.
+
+        Query the keystone server for all projects that this authentication
+        token can be rescoped to.
+
+        This function is overrideable by plugins if they use a non-standard
+        mechanism to determine projects.
+
+        :param session: A session object for communication:
+        :type session: keystoneclient.session.Session
+        :param auth_plugin: The auth plugin returned by :py:meth:`get_plugin`.
+        :type auth_plugin: keystoneclient.auth.BaseAuthPlugin
+        :param auth_ref: The current authentication data. This is optional as
+                         future auth plugins may not have auth_ref data and all
+                         the required information should be available via the
+                         auth_plugin.
+        :type auth_ref: keystoneclient.access.AccessInfo` or None.
+
+        :raises: exceptions.KeystoneAuthException on lookup failure.
+
+        :returns: A list of projects. This currently accepts returning both v2
+                  or v3 keystoneclient projects objects.
+        """
+        try:
+            if self.keystone_version >= 3:
+                client = v3_client.Client(session=session, auth=auth_plugin)
+                return client.projects.list(user=auth_ref.user_id)
+
+            else:
+                client = v2_client.Client(session=session, auth=auth_plugin)
+                return client.tenants.list()
+
+        except (keystone_exceptions.ClientException,
+                keystone_exceptions.AuthorizationFailure):
+            msg = _('Unable to retrieve authorized projects.')
+            raise exceptions.KeystoneAuthException(msg)
