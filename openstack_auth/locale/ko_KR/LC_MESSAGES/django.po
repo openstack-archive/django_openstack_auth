@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-26 06:03+0000\n"
-"PO-Revision-Date: 2015-03-25 17:08+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-03-30 06:02+0000\n"
+"PO-Revision-Date: 2015-03-27 14:31+0000\n"
+"Last-Translator: Ian Y. Choi <ianyrchoi@gmail.com>\n"
 "Language-Team: Korean (Korea) "
 "(http://www.transifex.com/projects/p/horizon/language/ko_KR/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -27,7 +27,7 @@ msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니�
 
 #: openstack_auth/backend.py:111
 msgid "Invalid credentials."
-msgstr ""
+msgstr "잘못된 자격 증명입니다."
 
 #: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."
