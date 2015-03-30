@@ -42,7 +42,8 @@ class KeystoneBackend(object):
             plugins = getattr(
                 settings,
                 'AUTHENTICATION_PLUGINS',
-                ['openstack_auth.plugin.password.PasswordPlugin'])
+                ['openstack_auth.plugin.password.PasswordPlugin',
+                 'openstack_auth.plugin.token.TokenPlugin'])
 
             self._auth_plugins = [utils.import_string(p)() for p in plugins]
 
