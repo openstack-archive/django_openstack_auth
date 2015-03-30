@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-26 06:03+0000\n"
-"PO-Revision-Date: 2015-03-25 17:08+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-03-30 06:02+0000\n"
+"PO-Revision-Date: 2015-03-27 23:30+0000\n"
+"Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language-Team: Japanese "
 "(http://www.transifex.com/projects/p/horizon/language/ja/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -26,7 +26,7 @@ msgstr "Identity Service により発行された認証トークンの期限が�
 
 #: openstack_auth/backend.py:111
 msgid "Invalid credentials."
-msgstr ""
+msgstr "無効な認証情報です。"
 
 #: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."

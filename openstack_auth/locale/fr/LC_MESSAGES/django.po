@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-26 06:03+0000\n"
-"PO-Revision-Date: 2015-03-25 17:08+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-03-30 06:02+0000\n"
+"PO-Revision-Date: 2015-03-27 21:02+0000\n"
+"Last-Translator: Maxime COQUEREL <max.coquerel@gmail.com>\n"
 "Language-Team: French "
 "(http://www.transifex.com/projects/p/horizon/language/fr/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -27,7 +27,7 @@ msgstr "Le jeton d'authentification délivré par le service d'Identité a expir
 
 #: openstack_auth/backend.py:111
 msgid "Invalid credentials."
-msgstr ""
+msgstr "Identifiants de connexion non valide"
 
 #: openstack_auth/backend.py:114
 msgid "An error occurred authenticating. Please try again later."
