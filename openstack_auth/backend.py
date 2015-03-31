@@ -120,21 +120,9 @@ class KeystoneBackend(object):
         # Check expiry for our unscoped auth ref.
         self.check_auth_expiry(unscoped_auth_ref)
 
-        unscoped_client = keystone_client_class(session=session,
-                                                auth=unscoped_auth)
-
-        # We list all the user's projects
-        try:
-            if utils.get_keystone_version() >= 3:
-                projects = unscoped_client.projects.list(
-                    user=unscoped_auth_ref.user_id)
-            else:
-                projects = unscoped_client.tenants.list()
-        except (keystone_exceptions.ClientException,
-                keystone_exceptions.AuthorizationFailure) as exc:
-            msg = _('Unable to retrieve authorized projects.')
-            raise exceptions.KeystoneAuthException(msg)
-
+        projects = plugin.list_projects(session,
+                                        unscoped_auth,
+                                        unscoped_auth_ref)
         # Attempt to scope only to enabled projects
         projects = [project for project in projects if project.enabled]
 
