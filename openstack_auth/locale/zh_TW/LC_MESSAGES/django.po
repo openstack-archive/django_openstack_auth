@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-27 06:04+0000\n"
-"PO-Revision-Date: 2015-03-27 06:00+0000\n"
+"POT-Creation-Date: 2015-03-31 06:03+0000\n"
+"PO-Revision-Date: 2015-03-31 04:30+0000\n"
 "Last-Translator: Zhang Xiaowei <zero00072@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_TW/)\n"
@@ -20,27 +20,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:53
+#: openstack_auth/backend.py:54
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "認證伺服器發佈的憑證已經過期。"
 
-#: openstack_auth/backend.py:111
+#: openstack_auth/backend.py:112
 msgid "Invalid credentials."
 msgstr "無效的認證。"
 
-#: openstack_auth/backend.py:114
+#: openstack_auth/backend.py:115
 msgid "An error occurred authenticating. Please try again later."
 msgstr "認證發生錯誤。請稍後再試。"
 
-#: openstack_auth/backend.py:134
+#: openstack_auth/backend.py:135
 msgid "Unable to retrieve authorized projects."
 msgstr "無法取回已授權的專案。"
 
-#: openstack_auth/backend.py:142
+#: openstack_auth/backend.py:143
 msgid "You are not authorized for any projects."
-msgstr "您沒有被授權任何的專案。"
+msgstr "沒有授權您任何專案。"
 
-#: openstack_auth/backend.py:179
+#: openstack_auth/backend.py:180
 msgid "Unable to authenticate to any available projects."
 msgstr "無法認證到任何可用的專案。"
 
