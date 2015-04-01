@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-31 06:03+0000\n"
+"POT-Creation-Date: 2015-04-01 06:02+0000\n"
 "PO-Revision-Date: 2015-03-31 05:39+0000\n"
 "Last-Translator: Ying Chun Guo <daisy.ycguo@gmail.com>\n"
 "Language-Team: Chinese (China) "
@@ -33,15 +33,11 @@ msgstr "无效证书"
 msgid "An error occurred authenticating. Please try again later."
 msgstr "认证发生错误。请稍后再试一次。"
 
-#: openstack_auth/backend.py:135
-msgid "Unable to retrieve authorized projects."
-msgstr "无法获取授权的项目。"
-
-#: openstack_auth/backend.py:143
+#: openstack_auth/backend.py:131
 msgid "You are not authorized for any projects."
 msgstr "您未被授权访问任何项目。"
 
-#: openstack_auth/backend.py:180
+#: openstack_auth/backend.py:168
 msgid "Unable to authenticate to any available projects."
 msgstr "无法跟可用的项目验证通过。"
 
@@ -102,4 +98,8 @@ msgstr "策略不允许 %s 被执行。"
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr "规则必须是字典或者规则的实例化对像，获取 %s 取代"
+
+#: openstack_auth/plugin/base.py:92
+msgid "Unable to retrieve authorized projects."
+msgstr "无法获取授权的项目。"
 
