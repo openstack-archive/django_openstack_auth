@@ -791,6 +791,89 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self.assertIsNone(utils._PROJECT_CACHE.get(unscoped.auth_token))
 
 
+class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
+
+    def _create_token_auth(self, project_id=None, token=None, url=None):
+        if not token:
+            token = self.data.federated_unscoped_access_info.auth_token
+
+        if not url:
+            url = settings.OPENSTACK_KEYSTONE_URL
+
+        return auth_v3.Token(auth_url=url,
+                             token=token,
+                             project_id=project_id,
+                             reauthenticate=False)
+
+    def _mock_unscoped_client(self, unscoped):
+        plugin = self._create_token_auth(
+            None,
+            token=unscoped.auth_token,
+            url=settings.OPENSTACK_KEYSTONE_URL)
+        plugin.get_access(mox.IsA(session.Session)).AndReturn(unscoped)
+
+        return self.ks_client_module.Client(session=mox.IsA(session.Session),
+                                            auth=plugin)
+
+    def _mock_unscoped_federated_list_projects(self, client, projects):
+        client.federation = self.mox.CreateMockAnything()
+        client.federation.projects = self.mox.CreateMockAnything()
+        client.federation.projects.list().AndReturn(projects)
+
+    def _mock_unscoped_client_list_projects(self, unscoped, projects):
+        client = self._mock_unscoped_client(unscoped)
+        self._mock_unscoped_federated_list_projects(client, projects)
+
+    def setUp(self):
+        super(OpenStackAuthTestsWebSSO, self).setUp()
+
+        self.mox = mox.Mox()
+        self.addCleanup(self.mox.VerifyAll)
+        self.addCleanup(self.mox.UnsetStubs)
+
+        self.data = data_v3.generate_test_data()
+        self.ks_client_module = client_v3
+
+        settings.OPENSTACK_API_VERSIONS['identity'] = 3
+        settings.OPENSTACK_KEYSTONE_URL = 'http://localhost:5000/v3'
+        settings.WEBSSO_ENABLED = True
+        settings.WEBSSO_CHOICES = (
+            ('credentials', 'Keystone Credentials'),
+            ('oidc', 'OpenID Connect'),
+            ('saml2', 'Security Assertion Markup Language')
+        )
+
+        self.mox.StubOutClassWithMocks(token_endpoint, 'Token')
+        self.mox.StubOutClassWithMocks(auth_v3, 'Token')
+        self.mox.StubOutClassWithMocks(auth_v3, 'Password')
+        self.mox.StubOutClassWithMocks(client_v3, 'Client')
+
+    def test_login_form(self):
+        url = reverse('login')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'credentials')
+        self.assertContains(response, 'oidc')
+        self.assertContains(response, 'saml2')
+
+    def test_web_sso_login(self):
+        projects = [self.data.project_one, self.data.project_two]
+        unscoped = self.data.federated_unscoped_access_info
+        token = unscoped.auth_token
+
+        form_data = {'token': token}
+        self._mock_unscoped_client_list_projects(unscoped, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+
+        self.mox.ReplayAll()
+
+        url = reverse('websso')
+
+        # POST to the page to log in.
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
 load_tests = load_tests_apply_scenarios
 
 

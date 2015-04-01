@@ -27,3 +27,9 @@ urlpatterns = patterns(
     url(r'^switch_services_region/(?P<region_name>[^/]+)/$', 'switch_region',
         name='switch_services_region')
 )
+
+if utils.is_websso_enabled():
+    urlpatterns += patterns(
+        'openstack_auth.views',
+        url(r"^websso/$", "websso", name='websso')
+    )

@@ -176,6 +176,13 @@ def get_keystone_client():
         return client_v3
 
 
+def is_websso_enabled():
+    """Websso is supported in Keystone version 3."""
+    websso_enabled = getattr(settings, 'WEBSSO_ENABLED', False)
+    keystonev3_plus = (get_keystone_version() >= 3)
+    return websso_enabled and keystonev3_plus
+
+
 def has_in_url_path(url, sub):
     """Test if the `sub` string is in the `url` path."""
     scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
@@ -214,7 +221,7 @@ def fix_auth_url_version(auth_url):
     return auth_url
 
 
-def get_token_auth_plugin(auth_url, token, project_id):
+def get_token_auth_plugin(auth_url, token, project_id=None):
     if get_keystone_version() >= 3:
         return v3_auth.Token(auth_url=auth_url,
                              token=token,
@@ -230,6 +237,7 @@ def get_token_auth_plugin(auth_url, token, project_id):
 
 @memoize_by_keyword_arg(_PROJECT_CACHE, ('token', ))
 def get_project_list(*args, **kwargs):
+    is_federated = kwargs.get('is_federated', False)
     sess = kwargs.get('session') or get_session()
     auth_url = fix_auth_url_version(kwargs['auth_url'])
     auth = token_endpoint.Token(auth_url, kwargs['token'])
@@ -237,6 +245,8 @@ def get_project_list(*args, **kwargs):
 
     if get_keystone_version() < 3:
         projects = client.tenants.list()
+    elif is_federated:
+        projects = client.federation.projects.list()
     else:
         projects = client.projects.list(user=kwargs.get('user_id'))
 
