@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-26 06:03+0000\n"
+"POT-Creation-Date: 2015-04-01 06:02+0000\n"
 "PO-Revision-Date: 2015-03-25 17:08+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Portuguese (Brazil) "
@@ -19,27 +19,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:53
+#: openstack_auth/backend.py:54
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "O token de autenticação emitido pelo serviço de identidade expirou."
 
-#: openstack_auth/backend.py:111
+#: openstack_auth/backend.py:112
 msgid "Invalid credentials."
 msgstr ""
 
-#: openstack_auth/backend.py:114
+#: openstack_auth/backend.py:115
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Um erro ocorreu autenticando. Por favor tente novamente mais tarde."
 
-#: openstack_auth/backend.py:134
-msgid "Unable to retrieve authorized projects."
-msgstr "Não foi possível obter os projetos autorizados."
-
-#: openstack_auth/backend.py:142
+#: openstack_auth/backend.py:131
 msgid "You are not authorized for any projects."
 msgstr "Você não está autorizado para nenhum projeto."
 
-#: openstack_auth/backend.py:179
+#: openstack_auth/backend.py:168
 msgid "Unable to authenticate to any available projects."
 msgstr "Não foi possível autenticar nos projetos disponíveis."
 
@@ -100,4 +96,8 @@ msgstr "Política não permite a realização de %s."
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr "Regras devem ser uma instância de dict ou Rules, recebeu %s em seu lugar"
+
+#: openstack_auth/plugin/base.py:92
+msgid "Unable to retrieve authorized projects."
+msgstr "Não foi possível obter os projetos autorizados."
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-30 06:02+0000\n"
+"POT-Creation-Date: 2015-04-01 06:02+0000\n"
 "PO-Revision-Date: 2015-03-27 23:30+0000\n"
 "Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language-Team: Japanese "
@@ -20,27 +20,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:53
+#: openstack_auth/backend.py:54
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity Service により発行された認証トークンの期限が切れました。"
 
-#: openstack_auth/backend.py:111
+#: openstack_auth/backend.py:112
 msgid "Invalid credentials."
 msgstr "無効な認証情報です。"
 
-#: openstack_auth/backend.py:114
+#: openstack_auth/backend.py:115
 msgid "An error occurred authenticating. Please try again later."
 msgstr "認証中にエラーが発生しました。後ほどもう一度お試しください。"
 
-#: openstack_auth/backend.py:134
-msgid "Unable to retrieve authorized projects."
-msgstr "権限のあるプロジェクトの情報を取得できません。"
-
-#: openstack_auth/backend.py:142
+#: openstack_auth/backend.py:131
 msgid "You are not authorized for any projects."
 msgstr "どのプロジェクトに対しても認可されていません。"
 
-#: openstack_auth/backend.py:179
+#: openstack_auth/backend.py:168
 msgid "Unable to authenticate to any available projects."
 msgstr "どの利用可能なプロジェクトに対しても認証できませんでした。"
 
@@ -101,4 +97,8 @@ msgstr "ポリシーは %s の実行を許可していません。"
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr "ルールは辞書型または Rules のインスタンスでなければいけませんが、%s が渡されました。"
+
+#: openstack_auth/plugin/base.py:92
+msgid "Unable to retrieve authorized projects."
+msgstr "権限のあるプロジェクトの情報を取得できません。"
 

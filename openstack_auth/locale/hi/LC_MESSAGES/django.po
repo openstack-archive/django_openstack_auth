@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-26 06:03+0000\n"
+"POT-Creation-Date: 2015-04-01 06:02+0000\n"
 "PO-Revision-Date: 2015-03-25 17:08+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Hindi "
@@ -19,27 +19,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: openstack_auth/backend.py:53
+#: openstack_auth/backend.py:54
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "पहचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त हो गया है."
 
-#: openstack_auth/backend.py:111
+#: openstack_auth/backend.py:112
 msgid "Invalid credentials."
 msgstr ""
 
-#: openstack_auth/backend.py:114
+#: openstack_auth/backend.py:115
 msgid "An error occurred authenticating. Please try again later."
 msgstr "पहचान सेवा में त्रुटि. बाद में पुन: प्रयास करें."
 
-#: openstack_auth/backend.py:134
-msgid "Unable to retrieve authorized projects."
-msgstr "अधिकृत परियोजनाओं को पुनः प्राप्त करने में असमर्थ."
-
-#: openstack_auth/backend.py:142
+#: openstack_auth/backend.py:131
 msgid "You are not authorized for any projects."
 msgstr "आप किसी भी परियोजनाओं के लिए अधिकृत नहीं हैं."
 
-#: openstack_auth/backend.py:179
+#: openstack_auth/backend.py:168
 msgid "Unable to authenticate to any available projects."
 msgstr "किसी भी उपलब्ध परियोजनाओं को प्रमाणित करने में असमर्थ."
 
@@ -100,4 +96,8 @@ msgstr ""
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr ""
+
+#: openstack_auth/plugin/base.py:92
+msgid "Unable to retrieve authorized projects."
+msgstr "अधिकृत परियोजनाओं को पुनः प्राप्त करने में असमर्थ."
 
