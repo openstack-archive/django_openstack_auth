@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-01 06:02+0000\n"
-"PO-Revision-Date: 2015-03-25 17:08+0000\n"
+"POT-Creation-Date: 2015-04-02 06:02+0000\n"
+"PO-Revision-Date: 2015-04-01 19:18+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Nepali "
 "(http://www.transifex.com/projects/p/horizon/language/ne/)\n"
@@ -24,37 +24,47 @@ msgstr ""
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "पहिचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त भएको छ।"
 
-#: openstack_auth/backend.py:112
+#: openstack_auth/backend.py:98
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+
+#: openstack_auth/backend.py:114
 msgid "Invalid credentials."
 msgstr ""
 
-#: openstack_auth/backend.py:115
+#: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
 msgstr "प्रमाणीकरणमा त्रुटि भयो। पछि फेरि प्रयास गर्नुहोस्।"
 
-#: openstack_auth/backend.py:131
+#: openstack_auth/backend.py:133
 msgid "You are not authorized for any projects."
 msgstr "तपाईलाई कुनै पनि परियोजनाको अधिकार छैन।"
 
-#: openstack_auth/backend.py:168
+#: openstack_auth/backend.py:170
 msgid "Unable to authenticate to any available projects."
 msgstr "कुनै पनि उपलब्ध परियोजनाहरु प्रमाणीकरण गर्न असमर्थ।"
 
-#: openstack_auth/forms.py:48
+#: openstack_auth/forms.py:49
 msgid "Region"
 msgstr "क्षेत्र"
 
-#: openstack_auth/forms.py:50
+#: openstack_auth/forms.py:51
 msgid "User Name"
 msgstr "प्रयोगकर्ताको नाम"
 
-#: openstack_auth/forms.py:52
+#: openstack_auth/forms.py:53
 msgid "Password"
 msgstr "पासवर्ड"
 
-#: openstack_auth/forms.py:62
+#: openstack_auth/forms.py:63
 msgid "Domain"
 msgstr "डोमेन"
+
+#: openstack_auth/forms.py:81
+msgid "Authenticate using"
+msgstr ""
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -98,7 +108,7 @@ msgstr ""
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr ""
 
-#: openstack_auth/plugin/base.py:92
+#: openstack_auth/plugin/base.py:95
 msgid "Unable to retrieve authorized projects."
 msgstr "अधिकृत परियोजनाहरू प्राप्त गर्न सकिएन।"
 

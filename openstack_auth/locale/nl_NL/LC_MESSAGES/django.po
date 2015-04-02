@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-01 06:02+0000\n"
-"PO-Revision-Date: 2015-03-25 17:08+0000\n"
+"POT-Creation-Date: 2015-04-02 06:02+0000\n"
+"PO-Revision-Date: 2015-04-01 19:18+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Dutch (Netherlands) "
 "(http://www.transifex.com/projects/p/horizon/language/nl_NL/)\n"
@@ -23,39 +23,49 @@ msgstr ""
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "De door de identiteitsdienst verstrekte authenticatietoken is verlopen."
 
-#: openstack_auth/backend.py:112
+#: openstack_auth/backend.py:98
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+
+#: openstack_auth/backend.py:114
 msgid "Invalid credentials."
 msgstr ""
 
-#: openstack_auth/backend.py:115
+#: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Er is een fout opgetreden bij de verificatie. Probeert u het later nog "
 "eens."
 
-#: openstack_auth/backend.py:131
+#: openstack_auth/backend.py:133
 msgid "You are not authorized for any projects."
 msgstr "U bent voor geen enkel project gemachtigd."
 
-#: openstack_auth/backend.py:168
+#: openstack_auth/backend.py:170
 msgid "Unable to authenticate to any available projects."
 msgstr "Niet in staat u te authenticeren bij enig beschikbaar project."
 
-#: openstack_auth/forms.py:48
+#: openstack_auth/forms.py:49
 msgid "Region"
 msgstr "Regio"
 
-#: openstack_auth/forms.py:50
+#: openstack_auth/forms.py:51
 msgid "User Name"
 msgstr "Gebruikersnaam"
 
-#: openstack_auth/forms.py:52
+#: openstack_auth/forms.py:53
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: openstack_auth/forms.py:62
+#: openstack_auth/forms.py:63
 msgid "Domain"
 msgstr "Domein"
+
+#: openstack_auth/forms.py:81
+msgid "Authenticate using"
+msgstr ""
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -99,7 +109,7 @@ msgstr ""
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr ""
 
-#: openstack_auth/plugin/base.py:92
+#: openstack_auth/plugin/base.py:95
 msgid "Unable to retrieve authorized projects."
 msgstr "Niet in staat om de geauthentificeerde projecten op te halen."
 

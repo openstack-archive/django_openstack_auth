@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-01 06:02+0000\n"
-"PO-Revision-Date: 2015-03-31 05:39+0000\n"
-"Last-Translator: Ying Chun Guo <daisy.ycguo@gmail.com>\n"
+"POT-Creation-Date: 2015-04-02 06:02+0000\n"
+"PO-Revision-Date: 2015-04-01 19:18+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (China) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_CN/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -25,37 +25,47 @@ msgstr ""
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "身份认证令牌已过期。"
 
-#: openstack_auth/backend.py:112
+#: openstack_auth/backend.py:98
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+
+#: openstack_auth/backend.py:114
 msgid "Invalid credentials."
 msgstr "无效证书"
 
-#: openstack_auth/backend.py:115
+#: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
 msgstr "认证发生错误。请稍后再试一次。"
 
-#: openstack_auth/backend.py:131
+#: openstack_auth/backend.py:133
 msgid "You are not authorized for any projects."
 msgstr "您未被授权访问任何项目。"
 
-#: openstack_auth/backend.py:168
+#: openstack_auth/backend.py:170
 msgid "Unable to authenticate to any available projects."
 msgstr "无法跟可用的项目验证通过。"
 
-#: openstack_auth/forms.py:48
+#: openstack_auth/forms.py:49
 msgid "Region"
 msgstr "域"
 
-#: openstack_auth/forms.py:50
+#: openstack_auth/forms.py:51
 msgid "User Name"
 msgstr "用户名"
 
-#: openstack_auth/forms.py:52
+#: openstack_auth/forms.py:53
 msgid "Password"
 msgstr "密码"
 
-#: openstack_auth/forms.py:62
+#: openstack_auth/forms.py:63
 msgid "Domain"
 msgstr "域"
+
+#: openstack_auth/forms.py:81
+msgid "Authenticate using"
+msgstr ""
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -99,7 +109,7 @@ msgstr "策略不允许 %s 被执行。"
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr "规则必须是字典或者规则的实例化对像，获取 %s 取代"
 
-#: openstack_auth/plugin/base.py:92
+#: openstack_auth/plugin/base.py:95
 msgid "Unable to retrieve authorized projects."
 msgstr "无法获取授权的项目。"
 

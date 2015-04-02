@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-01 06:02+0000\n"
-"PO-Revision-Date: 2015-03-31 04:30+0000\n"
+"POT-Creation-Date: 2015-04-02 06:02+0000\n"
+"PO-Revision-Date: 2015-04-02 05:22+0000\n"
 "Last-Translator: Zhang Xiaowei <zero00072@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_TW/)\n"
@@ -24,37 +24,47 @@ msgstr ""
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "認證伺服器發佈的憑證已經過期。"
 
-#: openstack_auth/backend.py:112
+#: openstack_auth/backend.py:98
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr "沒有選擇認證後端來處理提供的憑證。"
+
+#: openstack_auth/backend.py:114
 msgid "Invalid credentials."
 msgstr "無效的認證。"
 
-#: openstack_auth/backend.py:115
+#: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
 msgstr "認證發生錯誤。請稍後再試。"
 
-#: openstack_auth/backend.py:131
+#: openstack_auth/backend.py:133
 msgid "You are not authorized for any projects."
 msgstr "沒有授權您任何專案。"
 
-#: openstack_auth/backend.py:168
+#: openstack_auth/backend.py:170
 msgid "Unable to authenticate to any available projects."
 msgstr "無法認證到任何可用的專案。"
 
-#: openstack_auth/forms.py:48
+#: openstack_auth/forms.py:49
 msgid "Region"
 msgstr "區域"
 
-#: openstack_auth/forms.py:50
+#: openstack_auth/forms.py:51
 msgid "User Name"
-msgstr "使用者名稱"
+msgstr "用戶名稱"
 
-#: openstack_auth/forms.py:52
+#: openstack_auth/forms.py:53
 msgid "Password"
 msgstr "密碼"
 
-#: openstack_auth/forms.py:62
+#: openstack_auth/forms.py:63
 msgid "Domain"
 msgstr "地域"
+
+#: openstack_auth/forms.py:81
+msgid "Authenticate using"
+msgstr "認證使用"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -98,7 +108,7 @@ msgstr "政策不允許執行 %s。"
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr "規則必須是已規範的實例或是規則內的實例，已使用 %s 來代替"
 
-#: openstack_auth/plugin/base.py:92
+#: openstack_auth/plugin/base.py:95
 msgid "Unable to retrieve authorized projects."
 msgstr "無法取回已授權的專案。"
 
