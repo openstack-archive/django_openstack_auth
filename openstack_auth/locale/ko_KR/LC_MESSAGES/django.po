@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-01 06:02+0000\n"
-"PO-Revision-Date: 2015-03-27 14:31+0000\n"
-"Last-Translator: Ian Y. Choi <ianyrchoi@gmail.com>\n"
+"POT-Creation-Date: 2015-04-02 06:02+0000\n"
+"PO-Revision-Date: 2015-04-01 19:18+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Korean (Korea) "
 "(http://www.transifex.com/projects/p/horizon/language/ko_KR/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -25,37 +25,47 @@ msgstr ""
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니다."
 
-#: openstack_auth/backend.py:112
+#: openstack_auth/backend.py:98
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+
+#: openstack_auth/backend.py:114
 msgid "Invalid credentials."
 msgstr "잘못된 자격 증명입니다."
 
-#: openstack_auth/backend.py:115
+#: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
 msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세요."
 
-#: openstack_auth/backend.py:131
+#: openstack_auth/backend.py:133
 msgid "You are not authorized for any projects."
 msgstr "당신은 어떤 프로젝트에도 권한이 없습니다."
 
-#: openstack_auth/backend.py:168
+#: openstack_auth/backend.py:170
 msgid "Unable to authenticate to any available projects."
 msgstr "사용 가능한 프로젝트에 인증 할 수 없습니다."
 
-#: openstack_auth/forms.py:48
+#: openstack_auth/forms.py:49
 msgid "Region"
 msgstr "지역"
 
-#: openstack_auth/forms.py:50
+#: openstack_auth/forms.py:51
 msgid "User Name"
 msgstr "사용자 이름"
 
-#: openstack_auth/forms.py:52
+#: openstack_auth/forms.py:53
 msgid "Password"
 msgstr "암호"
 
-#: openstack_auth/forms.py:62
+#: openstack_auth/forms.py:63
 msgid "Domain"
 msgstr "도메인"
+
+#: openstack_auth/forms.py:81
+msgid "Authenticate using"
+msgstr ""
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -99,7 +109,7 @@ msgstr "정책 %s (을)를 진행 할 수 없습니다."
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr "%s 대신 가져와야하는 규칙이나 dict에 대한 인스턴스여야 합니다."
 
-#: openstack_auth/plugin/base.py:92
+#: openstack_auth/plugin/base.py:95
 msgid "Unable to retrieve authorized projects."
 msgstr "프로젝트 권한을 찾을 수 없습니다."
 

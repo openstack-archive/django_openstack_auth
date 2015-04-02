@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-01 06:02+0000\n"
-"PO-Revision-Date: 2015-03-25 17:08+0000\n"
+"POT-Creation-Date: 2015-04-02 06:02+0000\n"
+"PO-Revision-Date: 2015-04-01 19:18+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Spanish (Mexico) "
 "(http://www.transifex.com/projects/p/horizon/language/es_MX/)\n"
@@ -25,39 +25,49 @@ msgstr ""
 "El token de autenticación otorgado por el servicio de identidad ha "
 "expirado."
 
-#: openstack_auth/backend.py:112
+#: openstack_auth/backend.py:98
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+
+#: openstack_auth/backend.py:114
 msgid "Invalid credentials."
 msgstr ""
 
-#: openstack_auth/backend.py:115
+#: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Se ha producido un error de autenticación. Por favor inténtelo de nuevo "
 "más tarde."
 
-#: openstack_auth/backend.py:131
+#: openstack_auth/backend.py:133
 msgid "You are not authorized for any projects."
 msgstr "No estás autorizado para algunos proyectos."
 
-#: openstack_auth/backend.py:168
+#: openstack_auth/backend.py:170
 msgid "Unable to authenticate to any available projects."
 msgstr "No se puede autenticar a los proyectos disponibles."
 
-#: openstack_auth/forms.py:48
+#: openstack_auth/forms.py:49
 msgid "Region"
 msgstr "Región."
 
-#: openstack_auth/forms.py:50
+#: openstack_auth/forms.py:51
 msgid "User Name"
 msgstr "Nombre de Usuario"
 
-#: openstack_auth/forms.py:52
+#: openstack_auth/forms.py:53
 msgid "Password"
 msgstr "Contraseña"
 
-#: openstack_auth/forms.py:62
+#: openstack_auth/forms.py:63
 msgid "Domain"
 msgstr "Dominio"
+
+#: openstack_auth/forms.py:81
+msgid "Authenticate using"
+msgstr ""
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -101,7 +111,7 @@ msgstr ""
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr ""
 
-#: openstack_auth/plugin/base.py:92
+#: openstack_auth/plugin/base.py:95
 msgid "Unable to retrieve authorized projects."
 msgstr "No se pueden recuperar los proyectos autorizados."
 
