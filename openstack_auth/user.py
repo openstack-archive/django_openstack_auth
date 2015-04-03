@@ -16,6 +16,7 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth import models
+from keystoneclient.common import cms as keystone_cms
 from keystoneclient import exceptions as keystone_exceptions
 
 from openstack_auth import utils
@@ -79,7 +80,8 @@ class Token(object):
         # Token-related attributes
         self.id = auth_ref.auth_token
         self.unscoped_token = unscoped_token
-        if len(self.id) > 64:
+        if (keystone_cms.is_asn1_token(self.id)
+                or keystone_cms.is_pkiz(self.id)):
             algorithm = getattr(settings, 'OPENSTACK_TOKEN_HASH_ALGORITHM',
                                 'md5')
             hasher = hashlib.new(algorithm)
