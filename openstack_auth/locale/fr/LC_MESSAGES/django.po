@@ -5,14 +5,15 @@
 #
 # Translators:
 # Maxime COQUEREL <max.coquerel@gmail.com>, 2015
+# Patte D <pattedeph@gmail.com>, 2015
 # Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-02 06:02+0000\n"
-"PO-Revision-Date: 2015-04-01 19:18+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-04-03 06:03+0000\n"
+"PO-Revision-Date: 2015-04-02 08:44+0000\n"
+"Last-Translator: Patte D <pattedeph@gmail.com>\n"
 "Language-Team: French "
 "(http://www.transifex.com/projects/p/horizon/language/fr/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -30,6 +31,8 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
+"Aucun backend d'authentification n'a pu être déterminé pour gérer les "
+"identifiants fournis."
 
 #: openstack_auth/backend.py:114
 msgid "Invalid credentials."
