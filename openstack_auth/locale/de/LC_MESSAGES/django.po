@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-02 06:02+0000\n"
-"PO-Revision-Date: 2015-04-01 19:18+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-04-03 06:03+0000\n"
+"PO-Revision-Date: 2015-04-02 07:31+0000\n"
+"Last-Translator: Robert Simai\n"
 "Language-Team: German "
 "(http://www.transifex.com/projects/p/horizon/language/de/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -32,6 +32,8 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
+"Es konnte kein Authentifizierungsbackend für die angegebene Legitimierung"
+" gefunden werden."
 
 #: openstack_auth/backend.py:114
 msgid "Invalid credentials."
@@ -69,7 +71,7 @@ msgstr "Domäne"
 
 #: openstack_auth/forms.py:81
 msgid "Authenticate using"
-msgstr ""
+msgstr "Authentifizieren mit"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format

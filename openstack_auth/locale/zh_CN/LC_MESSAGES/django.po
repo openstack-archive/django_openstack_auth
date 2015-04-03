@@ -4,15 +4,16 @@
 # django_openstack_auth project.
 #
 # Translators:
+# johnwoo_lee <lijiangsheng1@gmail.com>, 2015
 # LIU Yulong <dragon889@163.com>, 2015
 # Ying Chun Guo <daisy.ycguo@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-02 06:02+0000\n"
-"PO-Revision-Date: 2015-04-01 19:18+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-04-03 06:03+0000\n"
+"PO-Revision-Date: 2015-04-02 09:53+0000\n"
+"Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_CN/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -29,7 +30,7 @@ msgstr "身份认证令牌已过期。"
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
-msgstr ""
+msgstr "后端没有认证可以决定掌控已经提供的凭证。"
 
 #: openstack_auth/backend.py:114
 msgid "Invalid credentials."
@@ -65,7 +66,7 @@ msgstr "域"
 
 #: openstack_auth/forms.py:81
 msgid "Authenticate using"
-msgstr ""
+msgstr "使用认证"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
