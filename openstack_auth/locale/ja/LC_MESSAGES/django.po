@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-03 06:03+0000\n"
-"PO-Revision-Date: 2015-04-02 23:32+0000\n"
-"Last-Translator: ykatabam <ykatabam@redhat.com>\n"
+"POT-Creation-Date: 2015-04-05 06:02+0000\n"
+"PO-Revision-Date: 2015-04-04 22:51+0000\n"
+"Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language-Team: Japanese "
 "(http://www.transifex.com/projects/p/horizon/language/ja/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -65,7 +65,7 @@ msgstr "ドメイン"
 
 #: openstack_auth/forms.py:81
 msgid "Authenticate using"
-msgstr ""
+msgstr "使用する認証方法"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
