@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-02 06:02+0000\n"
-"PO-Revision-Date: 2015-04-02 05:22+0000\n"
+"POT-Creation-Date: 2015-04-08 06:17+0000\n"
+"PO-Revision-Date: 2015-04-07 02:41+0000\n"
 "Last-Translator: Zhang Xiaowei <zero00072@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) "
 "(http://www.transifex.com/projects/p/horizon/language/zh_TW/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: openstack_auth/backend.py:54
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "認證伺服器發佈的憑證已經過期。"
+msgstr "認證伺服器發佈的門票已經過期。"
 
 #: openstack_auth/backend.py:98
 msgid ""
