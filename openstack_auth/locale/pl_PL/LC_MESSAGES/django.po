@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-02 06:02+0000\n"
-"PO-Revision-Date: 2015-04-01 19:18+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-04-09 07:00+0000\n"
+"PO-Revision-Date: 2015-04-08 17:59+0000\n"
+"Last-Translator: Łukasz Jernaś <deejay1@srem.org>\n"
 "Language-Team: Polish (Poland) "
 "(http://www.transifex.com/projects/p/horizon/language/pl_PL/)\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
@@ -30,6 +30,8 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
+"Nie można określić silnika uwierzytelniania, który by mógł obsłużyć "
+"podane dane uwierzytelniające."
 
 #: openstack_auth/backend.py:114
 msgid "Invalid credentials."
@@ -65,7 +67,7 @@ msgstr "Domena"
 
 #: openstack_auth/forms.py:81
 msgid "Authenticate using"
-msgstr ""
+msgstr "Uwierzytelnij się pużywając"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -76,16 +78,18 @@ msgstr "Nieaktualne: %s"
 #, python-format
 msgid "Error loading logging config %(log_config)s: %(err_msg)s"
 msgstr ""
+"Błąd podczas wczytywania konfiguracji logowania %(log_config)s: "
+"%(err_msg)s"
 
 #: openstack_auth/openstack/common/log.py:456
 #, python-format
 msgid "syslog facility must be one of: %s"
-msgstr ""
+msgstr "usługa syslog musi być jedną z: %s"
 
 #: openstack_auth/openstack/common/log.py:702
 #, python-format
 msgid "Fatal call to deprecated config: %(msg)s"
-msgstr ""
+msgstr "Błędne odwołanie do przestarzałej konfiguracji: %(msg)s"
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
@@ -94,6 +98,8 @@ msgstr "Plik w formacie JSON definiujący politykę."
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
 msgstr ""
+"Domyślna reguła. Wymuszana w chwili, gdy żądana reguła nie zostanie "
+"znaleziona."
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
@@ -108,6 +114,8 @@ msgstr "Polityka nie zezwala na wykonanie %s."
 #, python-format
 msgid "Rules must be an instance of dict or Rules, got %s instead"
 msgstr ""
+"Reguły muszą być instancją słownika lub obiektu Rules, zamiast tego "
+"otrzymano %s."
 
 #: openstack_auth/plugin/base.py:95
 msgid "Unable to retrieve authorized projects."
