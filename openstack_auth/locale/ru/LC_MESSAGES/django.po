@@ -4,13 +4,14 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Fedor Tarasenko <feodor.tarasenko@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-02 06:02+0000\n"
-"PO-Revision-Date: 2015-04-01 19:18+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-04-11 06:02+0000\n"
+"PO-Revision-Date: 2015-04-10 15:31+0000\n"
+"Last-Translator: Fedor Tarasenko <feodor.tarasenko@gmail.com>\n"
 "Language-Team: Russian "
 "(http://www.transifex.com/projects/p/horizon/language/ru/)\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
@@ -29,10 +30,12 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
+"Невозможно определить backend для обработки предоставленных учётных "
+"данных."
 
 #: openstack_auth/backend.py:114
 msgid "Invalid credentials."
-msgstr ""
+msgstr "Некорректные учётные данные."
 
 #: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
@@ -64,44 +67,46 @@ msgstr "Домен"
 
 #: openstack_auth/forms.py:81
 msgid "Authenticate using"
-msgstr ""
+msgstr "Аутентификация с использованием"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
 msgid "Deprecated: %s"
-msgstr ""
+msgstr "Признано устаревшим: %s"
 
 #: openstack_auth/openstack/common/log.py:395
 #, python-format
 msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr ""
+msgstr "Ошибка при загрузке конфигурации журнала %(log_config)s: %(err_msg)s"
 
 #: openstack_auth/openstack/common/log.py:456
 #, python-format
 msgid "syslog facility must be one of: %s"
-msgstr ""
+msgstr "категория журнала должна быть одной из: %s"
 
 #: openstack_auth/openstack/common/log.py:702
 #, python-format
 msgid "Fatal call to deprecated config: %(msg)s"
-msgstr ""
+msgstr "Неустранимое обращение к устаревшей конфигурации: %(msg)s"
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
-msgstr ""
+msgstr "JSON файл определяющий политики."
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
 msgstr ""
+"Правило по умолчанию. Используется в случае, если запрашиваемое правило "
+"отсутствует."
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
-msgstr ""
+msgstr "Каталоги с конфигурационными файлами политик."
 
 #: openstack_auth/openstack/common/policy.py:119
 #, python-format
 msgid "Policy doesn't allow %s to be performed."
-msgstr ""
+msgstr "Политика не разрешает чтобы %s было выполнено."
 
 #: openstack_auth/openstack/common/policy.py:213
 #, python-format
