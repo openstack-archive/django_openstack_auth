@@ -77,12 +77,14 @@ class Login(django_auth_forms.AuthenticationForm):
         # prepend the websso_choices select input to the form
         if utils.is_websso_enabled():
             initial = getattr(settings, 'WEBSSO_INITIAL_CHOICE', 'credentials')
-            choicefield = forms.ChoiceField(
+            self.fields['auth_type'] = forms.ChoiceField(
                 label=_("Authenticate using"),
                 choices=getattr(settings, 'WEBSSO_CHOICES', ()),
                 required=False,
                 initial=initial)
-            self.fields.insert(0, 'auth_type', choicefield)
+            # move auth_type to the top of the list
+            self.fields.keyOrder.pop(-1)
+            self.fields.keyOrder.insert(0, 'auth_type')
 
         # websso is enabled, but keystone version is not supported
         elif getattr(settings, 'WEBSSO_ENABLED', False):
