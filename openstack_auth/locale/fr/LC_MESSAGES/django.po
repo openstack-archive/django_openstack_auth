@@ -4,6 +4,7 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Cédric Savignan <liced@liced.fr>, 2015
 # Maxime COQUEREL <max.coquerel@gmail.com>, 2015
 # Patte D <pattedeph@gmail.com>, 2015
 # Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-03 06:03+0000\n"
-"PO-Revision-Date: 2015-04-02 08:44+0000\n"
-"Last-Translator: Patte D <pattedeph@gmail.com>\n"
+"POT-Creation-Date: 2015-04-17 06:02+0000\n"
+"PO-Revision-Date: 2015-04-16 10:05+0000\n"
+"Last-Translator: Cédric Savignan <liced@liced.fr>\n"
 "Language-Team: French "
 "(http://www.transifex.com/projects/p/horizon/language/fr/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -68,7 +69,7 @@ msgstr "Domaine"
 
 #: openstack_auth/forms.py:81
 msgid "Authenticate using"
-msgstr ""
+msgstr "Mode d'authentification"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
