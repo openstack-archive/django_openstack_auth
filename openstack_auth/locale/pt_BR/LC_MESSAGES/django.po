@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-19 06:02+0000\n"
-"PO-Revision-Date: 2015-04-18 11:28+0000\n"
+"POT-Creation-Date: 2015-04-20 06:03+0000\n"
+"PO-Revision-Date: 2015-04-20 05:51+0000\n"
 "Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) "
 "(http://www.transifex.com/projects/p/horizon/language/pt_BR/)\n"
@@ -28,10 +28,12 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
+"Nenhuma autenticação poderia ser determinada para lidar com as "
+"credenciais fornecidas."
 
 #: openstack_auth/backend.py:114
 msgid "Invalid credentials."
-msgstr ""
+msgstr "Credencial Inválida"
 
 #: openstack_auth/backend.py:117
 msgid "An error occurred authenticating. Please try again later."
@@ -63,7 +65,7 @@ msgstr "Domínio"
 
 #: openstack_auth/forms.py:81
 msgid "Authenticate using"
-msgstr ""
+msgstr "Autenticar usando"
 
 #: openstack_auth/openstack/common/log.py:287
 #, python-format
@@ -87,15 +89,15 @@ msgstr "Chamada fatal de configuração obsoleta: %(msg)s"
 
 #: openstack_auth/openstack/common/policy.py:97
 msgid "The JSON file that defines policies."
-msgstr ""
+msgstr "O arquivo JSON que define as políticas."
 
 #: openstack_auth/openstack/common/policy.py:100
 msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
+msgstr "Regra padrão. Aplicada quando a url solicitada não for encontrada."
 
 #: openstack_auth/openstack/common/policy.py:104
 msgid "Directories where policy configuration files are stored."
-msgstr ""
+msgstr "Diretório onde os arquivos de configuração de politica estão armazenados."
 
 #: openstack_auth/openstack/common/policy.py:119
 #, python-format
