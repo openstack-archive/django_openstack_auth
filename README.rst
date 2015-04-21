@@ -8,10 +8,11 @@ OpenStack's Keystone Identity API.
 
 The current version is designed to work with the Keystone v2.0 and v3 API.
 
-You can `view the documentation`_ on Read The Docs.
-
-.. _view the documentation: http://django-openstack-auth.readthedocs.org/en/latest/
-
 You can `view the installation instructions`_ on Read The Docs.
 
 .. _view the installation instructions: http://django-openstack-auth.readthedocs.org/en/latest/installation.html#installation
+
+* License: Apache License, Version 2.0
+* Documentation: http://django-openstack-auth.readthedocs.org/en/latest/
+* Source: http://git.openstack.org/cgit/openstack/django_openstack_auth/
+* Bugs: https://bugs.launchpad.net/django-openstack-auth
