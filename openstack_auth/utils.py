@@ -183,6 +183,15 @@ def is_websso_enabled():
     return websso_enabled and keystonev3_plus
 
 
+def build_absolute_uri(request, relative_url):
+    """Ensure absolute_uri are relative to WEBROOT."""
+    webroot = getattr(settings, 'WEBROOT', '')
+    if webroot.endswith("/") and relative_url.startswith("/"):
+        webroot = webroot[:-1]
+
+    return request.build_absolute_uri(webroot + relative_url)
+
+
 def has_in_url_path(url, sub):
     """Test if the `sub` string is in the `url` path."""
     scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
