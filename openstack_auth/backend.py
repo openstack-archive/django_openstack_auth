@@ -13,7 +13,9 @@
 
 """ Module defining the Django auth backend class for the Keystone API. """
 
+import datetime
 import logging
+import pytz
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -189,6 +191,11 @@ class KeystoneBackend(object):
         if request is not None:
             request.session['unscoped_token'] = unscoped_token
             request.user = user
+            timeout = getattr(settings, "SESSION_TIMEOUT", 3600)
+            token_life = user.token.expires - datetime.datetime.now(pytz.utc)
+            session_time = min(timeout, token_life.seconds)
+            request.session.set_expiry(session_time)
+
             scoped_client = keystone_client_class(session=session,
                                                   auth=scoped_auth)
 
