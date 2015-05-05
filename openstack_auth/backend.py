@@ -133,7 +133,7 @@ class KeystoneBackend(object):
                 domain_auth = utils.get_token_auth_plugin(
                     auth_url,
                     token,
-                    domain_name=user_domain_name)
+                    domain_name=kwargs.get('user_domain_name'))
                 domain_auth_ref = domain_auth.get_access(session)
             except Exception:
                 LOG.exception('Error getting domain scoped token.')
