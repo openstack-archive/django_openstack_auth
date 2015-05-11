@@ -107,6 +107,10 @@ class KeystoneBackend(object):
 
         try:
             unscoped_auth_ref = unscoped_auth.get_access(session)
+        except keystone_exceptions.ConnectionRefused as exc:
+            LOG.error(str(exc))
+            msg = _('Unable to establish connection to keystone endpoint.')
+            raise exceptions.KeystoneAuthException(msg)
         except (keystone_exceptions.Unauthorized,
                 keystone_exceptions.Forbidden,
                 keystone_exceptions.NotFound) as exc:
