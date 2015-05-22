@@ -4,13 +4,14 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Andre Campos Bezerra <andrecbezerra@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-05-22 06:03+0000\n"
+"PO-Revision-Date: 2015-05-21 04:58+0000\n"
+"Last-Translator: Andre Campos Bezerra <andrecbezerra@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
 "horizon/language/pt_BR/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -28,6 +29,9 @@ msgid ""
 msgstr ""
 "Nenhuma autenticação poderia ser determinada para lidar com as credenciais "
 "fornecidas."
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Não foi possível estabelecer conexão com o endpoint do Keystone."
 
 msgid "Invalid credentials."
 msgstr "Credencial Inválida"
