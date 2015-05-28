@@ -18,21 +18,28 @@ import os.path
 
 from django.conf import settings
 from oslo_config import cfg
+from oslo_policy import opts as policy_opts
+from oslo_policy import policy
 
-from openstack_auth.openstack.common import policy
 from openstack_auth import utils as auth_utils
 
 LOG = logging.getLogger(__name__)
 
-CONF = cfg.CONF
-# Policy Enforcer has been updated to take in a policy directory
-# as a config option. However, the default value in is set to
-# ['policy.d'] which causes the code to break. Set the default
-# value to empty list for now.
-CONF.policy_dirs = []
-
 _ENFORCER = None
 _BASE_PATH = getattr(settings, 'POLICY_FILES_PATH', '')
+
+
+def _get_policy_conf():
+    conf = cfg.ConfigOpts()
+    # Passing [] is required. Otherwise oslo.config looks up sys.argv.
+    conf([])
+    policy_opts.set_defaults(conf)
+    # Policy Enforcer has been updated to take in a policy directory
+    # as a config option. However, the default value in is set to
+    # ['policy.d'] which causes the code to break. Set the default
+    # value to empty list for now.
+    conf.set_default('policy_dirs', [], 'oslo_policy')
+    return conf
 
 
 def _get_enforcer():
@@ -40,10 +47,12 @@ def _get_enforcer():
     if not _ENFORCER:
         _ENFORCER = {}
         policy_files = getattr(settings, 'POLICY_FILES', {})
+        conf = _get_policy_conf()
         for service in policy_files.keys():
-            enforcer = policy.Enforcer()
-            enforcer.policy_path = os.path.join(_BASE_PATH,
-                                                policy_files[service])
+            policy_file = os.path.join(_BASE_PATH, policy_files[service])
+            enforcer = policy.Enforcer(conf, policy_file)
+            # Ensure enforcer.policy_path is populated.
+            enforcer.load_rules()
             if os.path.isfile(enforcer.policy_path):
                 LOG.debug("adding enforcer for service: %s" % service)
                 _ENFORCER[service] = enforcer
