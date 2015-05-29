@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/horizon/language/"
 "ru/)\n"
@@ -23,8 +23,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "Время действия токена, выданного сервисом идентификации, истекло."
+msgid "An error occurred authenticating. Please try again later."
+msgstr "Произошла ошибка аутентификации. Пожалуйста, повторите попытку позже."
+
+msgid "Authenticate using"
+msgstr "Аутентификация с использованием"
+
+msgid "Domain"
+msgstr "Домен"
+
+msgid "Invalid credentials."
+msgstr "Неправильные учётные данные."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -32,67 +41,23 @@ msgid ""
 msgstr ""
 "Невозможно определить backend для обработки предоставленных учётных данных."
 
-msgid "Invalid credentials."
-msgstr "Неправильные учётные данные."
-
-msgid "An error occurred authenticating. Please try again later."
-msgstr "Произошла ошибка аутентификации. Пожалуйста, повторите попытку позже."
-
-msgid "You are not authorized for any projects."
-msgstr "Вы не авторизованы ни в одном проекте."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Невозможно аутентифицировать ни в одном доступном проекте"
+msgid "Password"
+msgstr "Пароль"
 
 msgid "Region"
 msgstr "Регион"
 
-msgid "User Name"
-msgstr "Имя пользователя"
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "Время действия токена, выданного сервисом идентификации, истекло."
 
-msgid "Password"
-msgstr "Пароль"
-
-msgid "Domain"
-msgstr "Домен"
-
-msgid "Authenticate using"
-msgstr "Аутентификация с использованием"
-
-#, python-format
-msgid "Deprecated: %s"
-msgstr "Признано устаревшим: %s"
-
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "Ошибка при загрузке конфигурации журнала %(log_config)s: %(err_msg)s"
-
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "syslog facility должна быть одной из: %s"
-
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "Неустранимое обращение к устаревшей конфигурации: %(msg)s"
-
-msgid "The JSON file that defines policies."
-msgstr "JSON файл определяющий политики."
-
-msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
-"Правило по умолчанию. Используется в случае, если запрашиваемое правило "
-"отсутствует."
-
-msgid "Directories where policy configuration files are stored."
-msgstr "Каталоги с конфигурационными файлами политик."
-
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "Политика не разрешает выполнение %s"
-
-#, python-format
-msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr "Rules должно быть экземпляром dict или Rules, получено %s"
+msgid "Unable to authenticate to any available projects."
+msgstr "Невозможно аутентифицировать ни в одном доступном проекте"
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Невозможно получить авторизованные проекты"
+
+msgid "User Name"
+msgstr "Имя пользователя"
+
+msgid "You are not authorized for any projects."
+msgstr "Вы не авторизованы ни в одном проекте."

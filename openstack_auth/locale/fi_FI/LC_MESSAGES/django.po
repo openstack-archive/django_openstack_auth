@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/projects/p/"
 "horizon/language/fi_FI/)\n"
@@ -20,29 +20,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "Tunnistuspalvelun myöntämä tunniste on vanhentunut."
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Tunnistautumisvirhe. Yritä uudelleen myöhemmin."
-
-msgid "You are not authorized for any projects."
-msgstr "Sinulla ei ole oikeutta yhteenkään projektiin."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Tunnistautuminen projekteihin epäonnistui."
-
-msgid "Region"
-msgstr "Alue"
-
-msgid "User Name"
-msgstr "Käyttäjätunnus"
-
-msgid "Password"
-msgstr "Salasana"
 
 msgid "Domain"
 msgstr "Toimialue"
 
+msgid "Password"
+msgstr "Salasana"
+
+msgid "Region"
+msgstr "Alue"
+
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "Tunnistuspalvelun myöntämä tunniste on vanhentunut."
+
+msgid "Unable to authenticate to any available projects."
+msgstr "Tunnistautuminen projekteihin epäonnistui."
+
 msgid "Unable to retrieve authorized projects."
 msgstr "Projektilistan nouto ei onnistunut."
+
+msgid "User Name"
+msgstr "Käyttäjätunnus"
+
+msgid "You are not authorized for any projects."
+msgstr "Sinulla ei ole oikeutta yhteenkään projektiin."

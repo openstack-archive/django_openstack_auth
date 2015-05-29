@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Hindi (http://www.transifex.com/projects/p/horizon/language/"
 "hi/)\n"
@@ -19,29 +19,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "पहचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त हो गया है."
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr "पहचान सेवा में त्रुटि. बाद में पुन: प्रयास करें."
-
-msgid "You are not authorized for any projects."
-msgstr "आप किसी भी परियोजनाओं के लिए अधिकृत नहीं हैं."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "किसी भी उपलब्ध परियोजनाओं को प्रमाणित करने में असमर्थ."
-
-msgid "Region"
-msgstr "क्षेत्र"
-
-msgid "User Name"
-msgstr "उपयोगकर्ता"
-
-msgid "Password"
-msgstr "पासवर्ड"
 
 msgid "Domain"
 msgstr "अनुक्षेत्र"
 
+msgid "Password"
+msgstr "पासवर्ड"
+
+msgid "Region"
+msgstr "क्षेत्र"
+
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "पहचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त हो गया है."
+
+msgid "Unable to authenticate to any available projects."
+msgstr "किसी भी उपलब्ध परियोजनाओं को प्रमाणित करने में असमर्थ."
+
 msgid "Unable to retrieve authorized projects."
 msgstr "अधिकृत परियोजनाओं को पुनः प्राप्त करने में असमर्थ."
+
+msgid "User Name"
+msgstr "उपयोगकर्ता"
+
+msgid "You are not authorized for any projects."
+msgstr "आप किसी भी परियोजनाओं के लिए अधिकृत नहीं हैं."

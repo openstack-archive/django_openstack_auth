@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/"
 "horizon/language/nl_NL/)\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr ""
-"De door de identiteitsdienst verstrekte authenticatietoken is verlopen."
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Er is een fout opgetreden bij de verificatie. Probeert u het later nog eens."
 
-msgid "You are not authorized for any projects."
-msgstr "U bent voor geen enkel project gemachtigd."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Niet in staat u te authenticeren bij enig beschikbaar project."
-
-msgid "Region"
-msgstr "Regio"
-
-msgid "User Name"
-msgstr "Gebruikersnaam"
+msgid "Domain"
+msgstr "Domein"
 
 msgid "Password"
 msgstr "Wachtwoord"
 
-msgid "Domain"
-msgstr "Domein"
+msgid "Region"
+msgstr "Regio"
+
+msgid "The authentication token issued by the Identity service has expired."
+msgstr ""
+"De door de identiteitsdienst verstrekte authenticatietoken is verlopen."
+
+msgid "Unable to authenticate to any available projects."
+msgstr "Niet in staat u te authenticeren bij enig beschikbaar project."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Niet in staat om de geauthentificeerde projecten op te halen."
+
+msgid "User Name"
+msgstr "Gebruikersnaam"
+
+msgid "You are not authorized for any projects."
+msgstr "U bent voor geen enkel project gemachtigd."

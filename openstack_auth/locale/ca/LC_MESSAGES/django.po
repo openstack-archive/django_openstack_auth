@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/horizon/language/"
 "ca/)\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr ""
-"La autentificació ha trobat un problema pel servei d'identitat hagi expirat."
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "S'ha produït un error d'autenticació. Si us plau, prova de nou més tard."
 
-msgid "You are not authorized for any projects."
-msgstr "No esta autoritzat per a cap projecte."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "No es pot autenticar als projectes disponibles."
-
-msgid "Region"
-msgstr "Regió"
-
-msgid "User Name"
-msgstr "Nom d'usuari"
+msgid "Domain"
+msgstr "Domini "
 
 msgid "Password"
 msgstr "Contrasenya"
 
-msgid "Domain"
-msgstr "Domini "
+msgid "Region"
+msgstr "Regió"
+
+msgid "The authentication token issued by the Identity service has expired."
+msgstr ""
+"La autentificació ha trobat un problema pel servei d'identitat hagi expirat."
+
+msgid "Unable to authenticate to any available projects."
+msgstr "No es pot autenticar als projectes disponibles."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "No es poden recuperar els projectes autoritzats."
+
+msgid "User Name"
+msgstr "Nom d'usuari"
+
+msgid "You are not authorized for any projects."
+msgstr "No esta autoritzat per a cap projecte."

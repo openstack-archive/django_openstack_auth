@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/horizon/"
 "language/tr_TR/)\n"
@@ -19,34 +19,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr ""
-"Kimlik servisi tarafından verilen kimlik doğrulama belirtecinin süresi doldu."
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Bilinmeyen bir hata oluştu. Lütfen tekrar deneyin."
-
-msgid "You are not authorized for any projects."
-msgstr "Herhangi bir proje için yetkili değilsiniz."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Mevcut projelerde kimlik doğrulanamadı."
-
-msgid "Region"
-msgstr "Bölge"
-
-msgid "User Name"
-msgstr "Kullanıcı Adı"
-
-msgid "Password"
-msgstr "Şifre"
 
 msgid "Domain"
 msgstr "Domain"
 
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "syslog servisi bunlardan biri olmak zorundadır: %s"
+msgid "Password"
+msgstr "Şifre"
+
+msgid "Region"
+msgstr "Bölge"
+
+msgid "The authentication token issued by the Identity service has expired."
+msgstr ""
+"Kimlik servisi tarafından verilen kimlik doğrulama belirtecinin süresi doldu."
+
+msgid "Unable to authenticate to any available projects."
+msgstr "Mevcut projelerde kimlik doğrulanamadı."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Yetkili projeler alınamadı."
+
+msgid "User Name"
+msgstr "Kullanıcı Adı"
+
+msgid "You are not authorized for any projects."
+msgstr "Herhangi bir proje için yetkili değilsiniz."

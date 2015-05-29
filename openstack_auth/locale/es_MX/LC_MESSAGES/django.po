@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/horizon/"
 "language/es_MX/)\n"
@@ -19,40 +19,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr ""
-"El token de autenticación otorgado por el servicio de identidad ha expirado."
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Se ha producido un error de autenticación. Por favor inténtelo de nuevo más "
 "tarde."
 
-msgid "You are not authorized for any projects."
-msgstr "No estás autorizado para algunos proyectos."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "No se puede autenticar a los proyectos disponibles."
-
-msgid "Region"
-msgstr "Región."
-
-msgid "User Name"
-msgstr "Nombre de Usuario"
+msgid "Domain"
+msgstr "Dominio"
 
 msgid "Password"
 msgstr "Contraseña"
 
-msgid "Domain"
-msgstr "Dominio"
+msgid "Region"
+msgstr "Región."
 
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "Error al cargar configuración de entrada %(log_config)s: %(err_msg)s"
+msgid "The authentication token issued by the Identity service has expired."
+msgstr ""
+"El token de autenticación otorgado por el servicio de identidad ha expirado."
 
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "Llamado crítico de configuración en desuso ; %(msg)s"
+msgid "Unable to authenticate to any available projects."
+msgstr "No se puede autenticar a los proyectos disponibles."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "No se pueden recuperar los proyectos autorizados."
+
+msgid "User Name"
+msgstr "Nombre de Usuario"
+
+msgid "You are not authorized for any projects."
+msgstr "No estás autorizado para algunos proyectos."

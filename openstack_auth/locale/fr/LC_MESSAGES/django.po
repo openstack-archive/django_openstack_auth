@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-16 07:33+0000\n"
-"PO-Revision-Date: 2015-05-15 17:28+0000\n"
-"Last-Translator: Maxime COQUEREL <max.coquerel@gmail.com>\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/horizon/language/"
 "fr/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -23,9 +23,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr ""
-"Le jeton d'authentification délivré par le service d'Identité a expiré."
+msgid "An error occurred authenticating. Please try again later."
+msgstr "Une erreur s'est produite. Veuillez réessayer ultérieurement."
+
+msgid "Authenticate using"
+msgstr "Mode d'authentification"
+
+msgid "Domain"
+msgstr "Domaine"
+
+msgid "Invalid credentials."
+msgstr "Identifiants de connexion non valide"
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -34,74 +42,27 @@ msgstr ""
 "Aucun backend d'authentification n'a pu être déterminé pour gérer les "
 "identifiants fournis."
 
-msgid "Unable to establish connection to keystone endpoint."
-msgstr "Impossible d'établir la connection avec le point de sortie keystone"
-
-msgid "Invalid credentials."
-msgstr "Identifiants de connexion non valide"
-
-msgid "An error occurred authenticating. Please try again later."
-msgstr "Une erreur s'est produite. Veuillez réessayer ultérieurement."
-
-msgid "You are not authorized for any projects."
-msgstr "Vous n'êtes autorisé sur aucun projet."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Authentification impossible quel que soit le projet."
+msgid "Password"
+msgstr "Mot de Passe"
 
 msgid "Region"
 msgstr "Région"
 
-msgid "User Name"
-msgstr "Nom d'Utilisateur"
-
-msgid "Password"
-msgstr "Mot de Passe"
-
-msgid "Domain"
-msgstr "Domaine"
-
-msgid "Authenticate using"
-msgstr "Mode d'authentification"
-
-#, python-format
-msgid "Deprecated: %s"
-msgstr "Déprécié : %s"
-
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
+msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
-"Erreur de chargement de la config de journalisation %(log_config)s: "
-"%(err_msg)s"
+"Le jeton d'authentification délivré par le service d'Identité a expiré."
 
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "La fonction syslog doit faire partie de  : %s"
+msgid "Unable to authenticate to any available projects."
+msgstr "Authentification impossible quel que soit le projet."
 
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "Appel fatal à config dépréciée : %(msg)s"
-
-msgid "The JSON file that defines policies."
-msgstr "Le fichier JSON qui définit les stratégies."
-
-msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
-"Règle par défaut. Respectée quand une règle demandée n'est pas trouvée."
-
-msgid "Directories where policy configuration files are stored."
-msgstr ""
-"Répertoires où les fichiers de configuration de stratégie sont stockés."
-
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "Stratégie ne permettant pas d'effectuer %s."
-
-#, python-format
-msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr ""
-"Les règles doivent représenter une instance de dict ou Règles, %s obtenu à "
-"la place"
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Impossible d'établir la connection avec le point de sortie keystone"
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Impossible de récupérer les projets autorisés."
+
+msgid "User Name"
+msgstr "Nom d'Utilisateur"
+
+msgid "You are not authorized for any projects."
+msgstr "Vous n'êtes autorisé sur aucun projet."

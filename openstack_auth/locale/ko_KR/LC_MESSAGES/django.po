@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-22 06:03+0000\n"
-"PO-Revision-Date: 2015-05-21 18:55+0000\n"
-"Last-Translator: Ian Y. Choi <ianyrchoi@gmail.com>\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Korean (Korea) (http://www.transifex.com/projects/p/horizon/"
 "language/ko_KR/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -21,8 +21,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니다."
+msgid "An error occurred authenticating. Please try again later."
+msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세요."
+
+msgid "Authenticate using"
+msgstr "인증 사용중"
+
+msgid "Domain"
+msgstr "도메인"
+
+msgid "Invalid credentials."
+msgstr "잘못된 자격 증명입니다."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -30,68 +39,26 @@ msgid ""
 msgstr ""
 "인증이 안된 백엔드는 제공된 credential를 처리하기위해 결정할 수 있습니다"
 
-msgid "Unable to establish connection to keystone endpoint."
-msgstr "Keystone 엔드포인트에 접속할 수 없습니다."
-
-msgid "Invalid credentials."
-msgstr "잘못된 자격 증명입니다."
-
-msgid "An error occurred authenticating. Please try again later."
-msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세요."
-
-msgid "You are not authorized for any projects."
-msgstr "당신은 어떤 프로젝트에도 권한이 없습니다."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "사용 가능한 프로젝트에 인증 할 수 없습니다."
+msgid "Password"
+msgstr "암호"
 
 msgid "Region"
 msgstr "지역"
 
-msgid "User Name"
-msgstr "사용자 이름"
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니다."
 
-msgid "Password"
-msgstr "암호"
+msgid "Unable to authenticate to any available projects."
+msgstr "사용 가능한 프로젝트에 인증 할 수 없습니다."
 
-msgid "Domain"
-msgstr "도메인"
-
-msgid "Authenticate using"
-msgstr "인증 사용중"
-
-#, python-format
-msgid "Deprecated: %s"
-msgstr "더 이상 사용되지 않습니다: %s"
-
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "로깅 설정 %(log_config)s을 불러오지 못했습니다: %(err_msg)s"
-
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "syslog 기능이 다음 중 하나여야 합니다: %s"
-
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "더 이상 사용되지 않는 구성에 대한 심각한 호출: %(msg)s"
-
-msgid "The JSON file that defines policies."
-msgstr "JSON 파일로 정책을 정의합니다."
-
-msgid "Default rule. Enforced when a requested rule is not found."
-msgstr "기본 규칙입니다. 요청된 규칙이 없을 때, 이 값으로 강제 설정됩니다."
-
-msgid "Directories where policy configuration files are stored."
-msgstr "정책 구성 파일이 저장되는 디렉토리입니다."
-
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "정책 %s (을)를 진행 할 수 없습니다."
-
-#, python-format
-msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr "%s 대신 가져와야하는 규칙이나 dict에 대한 인스턴스여야 합니다."
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Keystone 엔드포인트에 접속할 수 없습니다."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "프로젝트 권한을 찾을 수 없습니다."
+
+msgid "User Name"
+msgstr "사용자 이름"
+
+msgid "You are not authorized for any projects."
+msgstr "당신은 어떤 프로젝트에도 권한이 없습니다."

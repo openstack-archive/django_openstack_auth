@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/projects/p/horizon/"
 "language/pt/)\n"
@@ -20,45 +20,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "A senha de autenticação gerada pelo serviço de identidade expirou."
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Ocorreu um erro de autenticação. Por favor, tente de novo mais tarde."
-
-msgid "You are not authorized for any projects."
-msgstr "Não não está autorizado para quaisquer projetos."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Não foi possível autenticar qualquer projeto disponível."
-
-msgid "Region"
-msgstr "Região"
-
-msgid "User Name"
-msgstr "Nome de Utilizador"
-
-msgid "Password"
-msgstr "Senha"
 
 msgid "Domain"
 msgstr "Domínio"
 
-#, python-format
-msgid "Deprecated: %s"
-msgstr "Pedido: %s"
+msgid "Password"
+msgstr "Senha"
 
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "A função registo do sistema deve ser uma de %s"
+msgid "Region"
+msgstr "Região"
 
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "Chamada fatal para a config. pedida: %(msg)s"
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "A senha de autenticação gerada pelo serviço de identidade expirou."
 
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "A política não permite que %s seja realizada."
+msgid "Unable to authenticate to any available projects."
+msgstr "Não foi possível autenticar qualquer projeto disponível."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Não foi possível obter os projetos autorizados."
+
+msgid "User Name"
+msgstr "Nome de Utilizador"
+
+msgid "You are not authorized for any projects."
+msgstr "Não não está autorizado para quaisquer projetos."

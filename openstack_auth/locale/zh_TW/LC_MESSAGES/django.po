@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/horizon/"
 "language/zh_TW/)\n"
@@ -20,73 +20,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "認證伺服器發佈的門票已經過期。"
+msgid "An error occurred authenticating. Please try again later."
+msgstr "認證發生錯誤。請稍後再試。"
+
+msgid "Authenticate using"
+msgstr "認證使用"
+
+msgid "Domain"
+msgstr "地域"
+
+msgid "Invalid credentials."
+msgstr "無效的認證。"
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr "沒有選擇認證後端來處理提供的憑證。"
 
-msgid "Invalid credentials."
-msgstr "無效的認證。"
-
-msgid "An error occurred authenticating. Please try again later."
-msgstr "認證發生錯誤。請稍後再試。"
-
-msgid "You are not authorized for any projects."
-msgstr "沒有授權您任何專案。"
-
-msgid "Unable to authenticate to any available projects."
-msgstr "無法認證到任何可用的專案。"
+msgid "Password"
+msgstr "密碼"
 
 msgid "Region"
 msgstr "區域"
 
-msgid "User Name"
-msgstr "用戶名稱"
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "認證伺服器發佈的門票已經過期。"
 
-msgid "Password"
-msgstr "密碼"
-
-msgid "Domain"
-msgstr "地域"
-
-msgid "Authenticate using"
-msgstr "認證使用"
-
-#, python-format
-msgid "Deprecated: %s"
-msgstr "已淘汰：%s"
-
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "讀取紀錄設定檔 %(log_config)s 時出錯：%(err_msg)s"
-
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "Syslog 機能必須是下列其中一項：%s"
-
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "呼叫已淘汰的設置時發生嚴重錯誤：%(msg)s"
-
-msgid "The JSON file that defines policies."
-msgstr "定義了政策的 JSON 檔案。"
-
-msgid "Default rule. Enforced when a requested rule is not found."
-msgstr "預設規則。若找無要求的規則時強制啟用。"
-
-msgid "Directories where policy configuration files are stored."
-msgstr "儲存政策設定檔的目錄。"
-
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "政策不允許執行 %s。"
-
-#, python-format
-msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr "規則必須是已規範的實例或是規則內的實例，已使用 %s 來代替"
+msgid "Unable to authenticate to any available projects."
+msgstr "無法認證到任何可用的專案。"
 
 msgid "Unable to retrieve authorized projects."
 msgstr "無法取回已授權的專案。"
+
+msgid "User Name"
+msgstr "用戶名稱"
+
+msgid "You are not authorized for any projects."
+msgstr "沒有授權您任何專案。"

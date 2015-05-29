@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-22 06:03+0000\n"
-"PO-Revision-Date: 2015-05-21 04:58+0000\n"
-"Last-Translator: Andre Campos Bezerra <andrecbezerra@gmail.com>\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
 "horizon/language/pt_BR/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -20,8 +20,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "O token de autenticação emitido pelo serviço de identidade expirou."
+msgid "An error occurred authenticating. Please try again later."
+msgstr "Um erro ocorreu autenticando. Por favor tente novamente mais tarde."
+
+msgid "Authenticate using"
+msgstr "Autenticar usando"
+
+msgid "Domain"
+msgstr "Domínio"
+
+msgid "Invalid credentials."
+msgstr "Credencial Inválida"
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -30,70 +39,26 @@ msgstr ""
 "Nenhuma autenticação poderia ser determinada para lidar com as credenciais "
 "fornecidas."
 
-msgid "Unable to establish connection to keystone endpoint."
-msgstr "Não foi possível estabelecer conexão com o endpoint do Keystone."
-
-msgid "Invalid credentials."
-msgstr "Credencial Inválida"
-
-msgid "An error occurred authenticating. Please try again later."
-msgstr "Um erro ocorreu autenticando. Por favor tente novamente mais tarde."
-
-msgid "You are not authorized for any projects."
-msgstr "Você não está autorizado para nenhum projeto."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Não foi possível autenticar nos projetos disponíveis."
+msgid "Password"
+msgstr "Senha"
 
 msgid "Region"
 msgstr "Região"
 
-msgid "User Name"
-msgstr "Nome do Usuário"
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "O token de autenticação emitido pelo serviço de identidade expirou."
 
-msgid "Password"
-msgstr "Senha"
+msgid "Unable to authenticate to any available projects."
+msgstr "Não foi possível autenticar nos projetos disponíveis."
 
-msgid "Domain"
-msgstr "Domínio"
-
-msgid "Authenticate using"
-msgstr "Autenticar usando"
-
-#, python-format
-msgid "Deprecated: %s"
-msgstr "Obsoleto: %s"
-
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "Erro ao carregar configuração %(log_config)s: %(err_msg)s"
-
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "O recurso de syslog deve ser um dos seguintes: %s"
-
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "Chamada fatal de configuração obsoleta: %(msg)s"
-
-msgid "The JSON file that defines policies."
-msgstr "O arquivo JSON que define as políticas."
-
-msgid "Default rule. Enforced when a requested rule is not found."
-msgstr "Regra padrão. Aplicada quando a url solicitada não for encontrada."
-
-msgid "Directories where policy configuration files are stored."
-msgstr ""
-"Diretório onde os arquivos de configuração de politica estão armazenados."
-
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "Política não permite a realização de %s."
-
-#, python-format
-msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr ""
-"Regras devem ser uma instância de dict ou Rules, recebeu %s em seu lugar"
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Não foi possível estabelecer conexão com o endpoint do Keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Não foi possível obter os projetos autorizados."
+
+msgid "User Name"
+msgstr "Nome do Usuário"
+
+msgid "You are not authorized for any projects."
+msgstr "Você não está autorizado para nenhum projeto."

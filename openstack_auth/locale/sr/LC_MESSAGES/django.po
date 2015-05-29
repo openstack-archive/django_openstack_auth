@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Serbian (http://www.transifex.com/projects/p/horizon/language/"
 "sr/)\n"
@@ -20,35 +20,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
+msgid "An error occurred authenticating. Please try again later."
+msgstr "Greška u proveri autentičnosti. Pokušajte ponovo kasnije."
+
+msgid "Domain"
+msgstr "Domen"
+
+msgid "Password"
+msgstr "Lozinka"
+
+msgid "Region"
+msgstr "Region"
+
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
 "Token za dokaz autentičnosti dodeljen od servisa za identifikaciju je "
 "istekao."
 
-msgid "An error occurred authenticating. Please try again later."
-msgstr "Greška u proveri autentičnosti. Pokušajte ponovo kasnije."
-
-msgid "You are not authorized for any projects."
-msgstr "Vi nemate projekat u kome ste autorizovani."
-
 msgid "Unable to authenticate to any available projects."
 msgstr "Nema projekata za koje je Vaša autentičnost odgovarajuća."
 
-msgid "Region"
-msgstr "Region"
+msgid "Unable to retrieve authorized projects."
+msgstr "Nije moguće dosegnuti autorizovane projekte."
 
 msgid "User Name"
 msgstr "Korisničko ime"
 
-msgid "Password"
-msgstr "Lozinka"
-
-msgid "Domain"
-msgstr "Domen"
-
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "syslog okruženje mora biti jedno od: %s"
-
-msgid "Unable to retrieve authorized projects."
-msgstr "Nije moguće dosegnuti autorizovane projekte."
+msgid "You are not authorized for any projects."
+msgstr "Vi nemate projekat u kome ste autorizovani."

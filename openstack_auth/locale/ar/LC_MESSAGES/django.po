@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-13 06:05+0000\n"
-"PO-Revision-Date: 2015-05-12 09:27+0000\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/horizon/language/"
 "ar/)\n"
@@ -20,33 +20,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "انتهت صلاحية الرمز الموثوق الصادر عن خدمة الهوية"
-
 msgid "An error occurred authenticating. Please try again later."
 msgstr "حدث خطأ أثناء المصادقة , يرجى اعادة المحاولة لاحقا."
-
-msgid "You are not authorized for any projects."
-msgstr "لايوجد لديك تصريح لدخول أي مشروع."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "لايمكن المصادقة لولوج أيٍّ من المشاريع المتاحة."
-
-msgid "Region"
-msgstr "المجال"
-
-msgid "User Name"
-msgstr "اسم المستخدم"
-
-msgid "Password"
-msgstr "كلمة المرور"
 
 msgid "Domain"
 msgstr "نطاق"
 
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "لا تسمح السياسة العامة بتنفيذ %s "
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "Region"
+msgstr "المجال"
+
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "انتهت صلاحية الرمز الموثوق الصادر عن خدمة الهوية"
+
+msgid "Unable to authenticate to any available projects."
+msgstr "لايمكن المصادقة لولوج أيٍّ من المشاريع المتاحة."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "لايمكن اظهار المشاريع المتاحة."
+
+msgid "User Name"
+msgstr "اسم المستخدم"
+
+msgid "You are not authorized for any projects."
+msgstr "لايوجد لديك تصريح لدخول أي مشروع."

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-14 06:07+0000\n"
-"PO-Revision-Date: 2015-05-13 10:22+0000\n"
-"Last-Translator: Rob Cresswell <robert.cresswell@outlook.com>\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: English (United Kingdom) (http://www.transifex.com/projects/p/"
 "horizon/language/en_GB/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -20,8 +20,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
-msgstr "The authentication token issued by the Identity service has expired."
+msgid "An error occurred authenticating. Please try again later."
+msgstr "An error occurred authenticating. Please try again later."
+
+msgid "Authenticate using"
+msgstr "Authenticate using"
+
+msgid "Domain"
+msgstr "Domain"
+
+msgid "Invalid credentials."
+msgstr "Invalid credentials."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -30,68 +39,26 @@ msgstr ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 
-msgid "Unable to establish connection to keystone endpoint."
-msgstr "Unable to establish connection to keystone endpoint."
-
-msgid "Invalid credentials."
-msgstr "Invalid credentials."
-
-msgid "An error occurred authenticating. Please try again later."
-msgstr "An error occurred authenticating. Please try again later."
-
-msgid "You are not authorized for any projects."
-msgstr "You are not authorised for any projects."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Unable to authenticate to any available projects."
+msgid "Password"
+msgstr "Password"
 
 msgid "Region"
 msgstr "Region"
 
-msgid "User Name"
-msgstr "User Name"
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "The authentication token issued by the Identity service has expired."
 
-msgid "Password"
-msgstr "Password"
+msgid "Unable to authenticate to any available projects."
+msgstr "Unable to authenticate to any available projects."
 
-msgid "Domain"
-msgstr "Domain"
-
-msgid "Authenticate using"
-msgstr "Authenticate using"
-
-#, python-format
-msgid "Deprecated: %s"
-msgstr "Deprecated: %s"
-
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
-msgstr "Error loading logging config %(log_config)s: %(err_msg)s"
-
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "syslog facility must be one of: %s"
-
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "Fatal call to deprecated config: %(msg)s"
-
-msgid "The JSON file that defines policies."
-msgstr "The JSON file that defines policies."
-
-msgid "Default rule. Enforced when a requested rule is not found."
-msgstr "Default rule. Enforced when a requested rule is not found."
-
-msgid "Directories where policy configuration files are stored."
-msgstr "Directories where policy configuration files are stored."
-
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "Policy doesn't allow %s to be performed."
-
-#, python-format
-msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr "Rules must be an instance of dict or Rules, got %s instead"
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Unable to establish connection to keystone endpoint."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Unable to retrieve authorised projects."
+
+msgid "User Name"
+msgstr "User Name"
+
+msgid "You are not authorized for any projects."
+msgstr "You are not authorised for any projects."

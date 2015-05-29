@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-20 06:05+0000\n"
-"PO-Revision-Date: 2015-05-19 10:04+0000\n"
-"Last-Translator: Robert Simai\n"
+"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"PO-Revision-Date: 2015-05-28 07:03+0000\n"
+"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/horizon/language/"
 "de/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -21,9 +21,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-msgid "The authentication token issued by the Identity service has expired."
+msgid "An error occurred authenticating. Please try again later."
 msgstr ""
-"Das vom Identitätsdienst ausgegebene Authentifizierungs-Token ist abgelaufen."
+"Während der Authentifizierung ist ein Fehler aufgetreten. Bitte versuchen "
+"Sie es später noch einmal."
+
+msgid "Authenticate using"
+msgstr "Authentifizieren mit"
+
+msgid "Domain"
+msgstr "Domäne"
+
+msgid "Invalid credentials."
+msgstr "Unzureichende Berechtigung."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -32,77 +42,27 @@ msgstr ""
 "Es konnte kein Authentifizierungsbackend für die angegebene Legitimierung "
 "gefunden werden."
 
-msgid "Unable to establish connection to keystone endpoint."
-msgstr "Es kann keine Verbindung zum Keystone Endpunkt aufgebaut werden."
-
-msgid "Invalid credentials."
-msgstr "Unzureichende Berechtigung."
-
-msgid "An error occurred authenticating. Please try again later."
-msgstr ""
-"Während der Authentifizierung ist ein Fehler aufgetreten. Bitte versuchen "
-"Sie es später noch einmal."
-
-msgid "You are not authorized for any projects."
-msgstr "Sie sind für kein Projekt berechtigt."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "Außerstande bei irgendeinem verfügbaren Projekt zu authentifizieren."
+msgid "Password"
+msgstr "Passwort"
 
 msgid "Region"
 msgstr "Region"
 
-msgid "User Name"
-msgstr "Benutzername"
-
-msgid "Password"
-msgstr "Passwort"
-
-msgid "Domain"
-msgstr "Domäne"
-
-msgid "Authenticate using"
-msgstr "Authentifizieren mit"
-
-#, python-format
-msgid "Deprecated: %s"
-msgstr "Veraltet: %s"
-
-#, python-format
-msgid "Error loading logging config %(log_config)s: %(err_msg)s"
+msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
-"Fehler beim Laden der Logging-Konfiguration %(log_config)s: %(err_msg)s"
+"Das vom Identitätsdienst ausgegebene Authentifizierungs-Token ist abgelaufen."
 
-#, python-format
-msgid "syslog facility must be one of: %s"
-msgstr "syslog-Facility muss einer der folgenden Werte sein: %s"
+msgid "Unable to authenticate to any available projects."
+msgstr "Außerstande bei irgendeinem verfügbaren Projekt zu authentifizieren."
 
-#, python-format
-msgid "Fatal call to deprecated config: %(msg)s"
-msgstr "Schwerwiegender Aufruf einer veralteten Konfiguration: %(msg)s"
-
-msgid "The JSON file that defines policies."
-msgstr "Die JSON Datei, welche die Richtlinien definiert."
-
-msgid "Default rule. Enforced when a requested rule is not found."
-msgstr ""
-"Voreingestellte Regel. Sie wird angewendet, wenn eine angeforderte Regel "
-"nicht gefunden wird."
-
-msgid "Directories where policy configuration files are stored."
-msgstr ""
-"Das Verzeichnis, in welchem die Dateien zur Richtlinienkonfiguration "
-"gespeichert werden."
-
-#, python-format
-msgid "Policy doesn't allow %s to be performed."
-msgstr "Die Regel erlaubt nicht die Ausführung von %s."
-
-#, python-format
-msgid "Rules must be an instance of dict or Rules, got %s instead"
-msgstr ""
-"Die Regeln müssen im Regelverzeichnis vorkommen, anstatt dessen wurde %s "
-"zurückgemeldet"
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Es kann keine Verbindung zum Keystone Endpunkt aufgebaut werden."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Autorisierte Projekte können nicht abgerufen werden."
+
+msgid "User Name"
+msgstr "Benutzername"
+
+msgid "You are not authorized for any projects."
+msgstr "Sie sind für kein Projekt berechtigt."
