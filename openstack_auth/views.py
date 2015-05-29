@@ -136,9 +136,10 @@ def websso(request):
     referer = request.META.get('HTTP_REFERER', settings.OPENSTACK_KEYSTONE_URL)
     auth_url = re.sub(r'/auth.*', '', referer)
     token = request.POST.get('token')
+    domain_name = request.POST.get('domain_name')
     try:
         request.user = auth.authenticate(request=request, auth_url=auth_url,
-                                         token=token)
+                                         token=token, user_domain_name=domain_name)
     except exceptions.KeystoneAuthException as exc:
         msg = 'Login failed: %s' % unicode(exc)
         res = django_http.HttpResponseRedirect(settings.LOGIN_URL)
