@@ -5,14 +5,15 @@
 #
 # Translators:
 # Fedor Tarasenko <feodor.tarasenko@gmail.com>, 2015
+# Ilya Alekseyev <ilyaalekseyev@acm.org>, 2015
 # Nikita Burtsev, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-29 06:02+0000\n"
-"PO-Revision-Date: 2015-05-28 07:03+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-06-05 06:02+0000\n"
+"PO-Revision-Date: 2015-06-04 08:30+0000\n"
+"Last-Translator: Ilya Alekseyev <ilyaalekseyev@acm.org>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/horizon/language/"
 "ru/)\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -52,6 +53,9 @@ msgstr "Время действия токена, выданного серви�
 
 msgid "Unable to authenticate to any available projects."
 msgstr "Невозможно аутентифицировать ни в одном доступном проекте"
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Невозможно установить соединение с точкой доступа keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Невозможно получить авторизованные проекты"
