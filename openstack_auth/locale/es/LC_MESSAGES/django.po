@@ -4,6 +4,7 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Adriana Chisco Landazábal <achisco94@gmail.com>, 2015
 # Alberto Molina Coballes <alb.molina@gmail.com>, 2014
 # luis gil, 2015
 # Marian Tort <marian.tort@gmail.com>, 2014
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-29 06:02+0000\n"
-"PO-Revision-Date: 2015-05-28 07:03+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-06-08 06:02+0000\n"
+"PO-Revision-Date: 2015-06-05 21:17+0000\n"
+"Last-Translator: Adriana Chisco Landazábal <achisco94@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/horizon/language/"
 "es/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -52,6 +53,9 @@ msgstr "El token de autenticación emitido por Identity Service ha expirado."
 
 msgid "Unable to authenticate to any available projects."
 msgstr "No se puede autenticar en ninguno de los proyectos disponibles."
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "No ha sido posible establecer conexión con el endpoint de keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "No ha sido posible obtener los proyectos autorizados."
