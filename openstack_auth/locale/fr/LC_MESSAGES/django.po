@@ -5,6 +5,7 @@
 #
 # Translators:
 # Cédric Savignan <liced@liced.fr>, 2015
+# François Bureau, 2015
 # Maxime COQUEREL <max.coquerel@gmail.com>, 2015
 # Patte D <pattedeph@gmail.com>, 2015
 # Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
@@ -12,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-29 06:02+0000\n"
-"PO-Revision-Date: 2015-05-28 07:03+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-06-12 06:02+0000\n"
+"PO-Revision-Date: 2015-06-11 08:29+0000\n"
+"Last-Translator: François Bureau\n"
 "Language-Team: French (http://www.transifex.com/projects/p/horizon/language/"
 "fr/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -33,14 +34,14 @@ msgid "Domain"
 msgstr "Domaine"
 
 msgid "Invalid credentials."
-msgstr "Identifiants de connexion non valide"
+msgstr "Informations d'identification non valides."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
-"Aucun backend d'authentification n'a pu être déterminé pour gérer les "
-"identifiants fournis."
+"Aucune identification principale ne peut être définie pour gérer les "
+"informations d'identification fournies."
 
 msgid "Password"
 msgstr "Mot de Passe"
