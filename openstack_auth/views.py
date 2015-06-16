@@ -137,7 +137,10 @@ def websso(request):
     auth_url = re.sub(r'/auth.*', '', referer)
     token = request.POST.get('token')
     domain_name = request.POST.get('domain_name')
+    error_msg = request.POST.get('error_msg')
     try:
+        if error_msg:
+            raise exceptions.KeystoneAuthException(error_msg)
         request.user = auth.authenticate(request=request, auth_url=auth_url,
                                          token=token, user_domain_name=domain_name)
     except exceptions.KeystoneAuthException as exc:
