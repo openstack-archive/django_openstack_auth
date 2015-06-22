@@ -4,14 +4,14 @@
 # django_openstack_auth project.
 #
 # Translators:
-# Zbyněk Schwarz <zbynek.schwarz@gmail.com>, 2014
+# Zbyněk Schwarz <zbynek.schwarz@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-29 06:02+0000\n"
-"PO-Revision-Date: 2015-05-28 07:03+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-06-22 06:08+0000\n"
+"PO-Revision-Date: 2015-06-18 10:04+0000\n"
+"Last-Translator: Zbyněk Schwarz <zbynek.schwarz@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/horizon/language/"
 "cs/)\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
@@ -23,8 +23,14 @@ msgstr ""
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Při ověřování se vyskytla chyba. Zkuste to prosím znovu později."
 
+msgid "Authenticate using"
+msgstr "Přihlásit se pomocí"
+
 msgid "Domain"
 msgstr "Doména"
+
+msgid "Invalid credentials."
+msgstr "Neplatné přihlašovací údaje."
 
 msgid "Password"
 msgstr "Heslo"
@@ -37,6 +43,9 @@ msgstr "Známka ověření přidělená Službou totožnosti vypršela."
 
 msgid "Unable to authenticate to any available projects."
 msgstr "Nelze se přihlásit do žádných dostupných projektů."
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Nelze se připojit ke koncovému bodu keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Nelze získat oprávněné projekty."
