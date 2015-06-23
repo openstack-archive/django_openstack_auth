@@ -474,6 +474,15 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         client.projects = self.mox.CreateMockAnything()
         client.projects.list(user=user.id).AndReturn(projects)
 
+    def _mock_unscoped_client_list_projects_fail(self, user):
+        client = self._mock_unscoped_client(user)
+        self._mock_unscoped_list_projects_fail(client, user)
+
+    def _mock_unscoped_list_projects_fail(self, client, user):
+        client.projects = self.mox.CreateMockAnything()
+        client.projects.list(user=user.id).AndRaise(
+            keystone_exceptions.AuthorizationFailure)
+
     def _mock_unscoped_and_domain_list_projects(self, user, projects):
         client = self._mock_unscoped_client(user)
         self._mock_scoped_for_domain(projects)

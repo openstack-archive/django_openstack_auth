@@ -127,32 +127,20 @@ class KeystoneBackend(object):
         # for keystone.
         domain_auth = None
         domain_auth_ref = None
-        if utils.get_keystone_version() >= 3:
+        if utils.get_keystone_version() >= 3 and 'user_domain_name' in kwargs:
             try:
                 token = unscoped_auth_ref.auth_token
                 domain_auth = utils.get_token_auth_plugin(
                     auth_url,
                     token,
-                    domain_name=kwargs.get('user_domain_name'))
+                    domain_name=kwargs['user_domain_name'])
                 domain_auth_ref = domain_auth.get_access(session)
             except Exception:
-                LOG.exception('Error getting domain scoped token.')
+                LOG.debug('Error getting domain scoped token.')
 
-        unscoped_client = keystone_client_class(session=session,
-                                                auth=unscoped_auth)
-
-        # We list all the user's projects
-        try:
-            if utils.get_keystone_version() >= 3:
-                projects = unscoped_client.projects.list(
-                    user=unscoped_auth_ref.user_id)
-            else:
-                projects = unscoped_client.tenants.list()
-        except (keystone_exceptions.ClientException,
-                keystone_exceptions.AuthorizationFailure) as exc:
-            msg = _('Unable to retrieve authorized projects.')
-            raise exceptions.KeystoneAuthException(msg)
-
+        projects = plugin.list_projects(session,
+                                        unscoped_auth,
+                                        unscoped_auth_ref)
         # Attempt to scope only to enabled projects
         projects = [project for project in projects if project.enabled]
 
@@ -218,7 +206,7 @@ class KeystoneBackend(object):
             scoped_auth_ref.service_catalog.url_for(endpoint_type=interface))
 
         if request is not None:
-            request.session['unscoped_token'] = unscoped_token
+            request.session['unscoped_token'] = unscoped_auth_ref.auth_token
             if domain_auth_ref:
                 # check django session engine, if using cookies, this will not
                 # work, as it will overflow the cookie so don't add domain

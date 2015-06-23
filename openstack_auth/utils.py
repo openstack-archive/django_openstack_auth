@@ -308,11 +308,6 @@ def set_response_cookie(response, cookie_name, cookie_value):
     response.set_cookie(cookie_name, cookie_value, expires=expire_date)
 
 
-def using_cookie_backed_sessions():
-    engine = getattr(settings, 'SESSION_ENGINE', '')
-    return "signed_cookies" in engine
-
-
 def get_endpoint_region(endpoint):
     """Common function for getting the region from endpoint.
 
@@ -323,6 +318,12 @@ def get_endpoint_region(endpoint):
     Keystone V2 and V3.
     """
     return endpoint.get('region_id') or endpoint.get('region')
+
+
+def using_cookie_backed_sessions():
+    engine = getattr(settings, 'SESSION_ENGINE', '')
+    return "signed_cookies" in engine
+
 
 
 if django.VERSION < (1, 7):
