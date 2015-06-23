@@ -136,9 +136,13 @@ def websso(request):
     referer = request.META.get('HTTP_REFERER', settings.OPENSTACK_KEYSTONE_URL)
     auth_url = re.sub(r'/auth.*', '', referer)
     token = request.POST.get('token')
+    domain_name = request.POST.get('domain_name')
+    error_msg = request.POST.get('error_msg')
     try:
+        if error_msg:
+            raise exceptions.KeystoneAuthException(error_msg)
         request.user = auth.authenticate(request=request, auth_url=auth_url,
-                                         token=token)
+                                         token=token, user_domain_name=domain_name)
     except exceptions.KeystoneAuthException as exc:
         msg = 'Login failed: %s' % unicode(exc)
         res = django_http.HttpResponseRedirect(settings.LOGIN_URL)
@@ -205,6 +209,20 @@ def delete_token(endpoint, token_id):
         LOG.info('Could not delete token')
 
 
+def should_revoke_old_token(request, old_token, old_endpoint, auth_ref):
+    # Don't revoke if no token defined
+    if not old_token or not old_endpoint:
+        return False
+    # Don't revoke if new token is the same as the old token
+    if old_token.id == auth_ref.auth_token:
+        return False
+    # Don't revoke if this token is the domain token
+    domain_token_id = request.session.get('domain_token')['auth_token']
+    if old_token.id == domain_token_id:
+        return False
+    return True
+
+
 @login_required
 def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
     """Switches an authenticated user from one project to another."""
@@ -242,7 +260,7 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
     if auth_ref:
         old_endpoint = request.session.get('region_endpoint')
         old_token = request.session.get('token')
-        if old_token and old_endpoint and old_token.id != auth_ref.auth_token:
+        if should_revoke_old_token(request, old_token, old_endpoint, auth_ref):
             delete_token(endpoint=old_endpoint, token_id=old_token.id)
         user = auth_user.create_user_from_token(
             request,
