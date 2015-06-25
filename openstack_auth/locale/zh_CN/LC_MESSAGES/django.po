@@ -7,13 +7,14 @@
 # johnwoo_lee <lijiangsheng1@gmail.com>, 2015
 # LIU Yulong <dragon889@163.com>, 2015
 # Ying Chun Guo <daisy.ycguo@gmail.com>, 2015
+# 刘俊朋 <liujunpeng@inspur.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-29 06:02+0000\n"
-"PO-Revision-Date: 2015-05-28 07:03+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-06-25 06:06+0000\n"
+"PO-Revision-Date: 2015-06-24 07:30+0000\n"
+"Last-Translator: 刘俊朋 <liujunpeng@inspur.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/horizon/"
 "language/zh_CN/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -50,6 +51,9 @@ msgstr "身份认证令牌已过期。"
 
 msgid "Unable to authenticate to any available projects."
 msgstr "无法跟可用的项目验证通过。"
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "无法连接keystone端点。"
 
 msgid "Unable to retrieve authorized projects."
 msgstr "无法获取授权的项目。"
