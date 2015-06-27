@@ -1094,3 +1094,43 @@ class PolicyTestCaseAdmin(PolicyTestCase):
         value = policy.check((("compute", "context_is_admin"),),
                              request=self.request)
         self.assertTrue(value)
+
+
+class PolicyTestCaseV3Admin(PolicyTestCase):
+    _roles = [{'id': '1', 'name': 'admin'}]
+
+    def setUp(self):
+        policy_files = {
+            'identity': 'policy.v3cloudsample.json',
+            'compute': 'nova_policy.json'}
+
+        override = self.settings(POLICY_FILES=policy_files)
+        override.enable()
+        self.addCleanup(override.disable)
+
+        mock_user = user.User(id=1, roles=self._roles,
+                              user_domain_id='admin_domain_id')
+        patcher = mock.patch('openstack_auth.utils.get_user',
+                             return_value=mock_user)
+        self.MockClass = patcher.start()
+        self.addCleanup(patcher.stop)
+        self.request = http.HttpRequest()
+
+    def test_check_cloud_admin_required_true(self):
+        policy.reset()
+        value = policy.check((("identity", "cloud_admin"),),
+                             request=self.request)
+        self.assertTrue(value)
+
+    def test_check_domain_admin_required_true(self):
+        policy.reset()
+        value = policy.check((
+            ("identity", "admin_and_matching_domain_id"),),
+            request=self.request)
+        self.assertTrue(value)
+
+    def test_check_any_admin_required_true(self):
+        policy.reset()
+        value = policy.check((("identity", "admin_or_cloud_admin"),),
+                             request=self.request)
+        self.assertTrue(value)
