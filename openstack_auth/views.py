@@ -29,6 +29,7 @@ from django.views.decorators.csrf import csrf_protect  # noqa
 from django.views.decorators.debug import sensitive_post_parameters  # noqa
 from keystoneclient.auth import token_endpoint
 from keystoneclient import exceptions as keystone_exceptions
+from keystoneclient.v3 import client
 
 from openstack_auth import exceptions
 from openstack_auth import forms
@@ -143,18 +144,26 @@ def websso(request):
             raise exceptions.KeystoneAuthException(error_msg)
         request.user = auth.authenticate(request=request, auth_url=auth_url,
                                          token=token, user_domain_name=domain_name)
+
+        if not user_enabled(request.user, token, auth_url):
+            raise exceptions.KeystoneAuthException("Your account has been disabled. Please contact your administrator.")
     except exceptions.KeystoneAuthException as exc:
         msg = 'Login failed: %s' % unicode(exc)
         res = django_http.HttpResponseRedirect(settings.LOGIN_URL)
         res.set_cookie('logout_reason', msg, max_age=10)
         return res
-
     auth_user.set_session_from_user(request, request.user)
     auth.login(request, request.user)
     if request.session.test_cookie_worked():
         request.session.delete_test_cookie()
     return django_http.HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 
+def user_enabled(user, token, auth_url):
+    keystone = client.Client(
+        token=token,
+        auth_url=auth_url,
+        endpoint=user.endpoint)
+    return keystone.users.get(user).enabled
 
 def logout(request, login_url=None, **kwargs):
     """Logs out the user if he is logged in. Then redirects to the log-in page.
