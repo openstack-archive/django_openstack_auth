@@ -9,3 +9,6 @@ dist
 .tox
 AUTHORS
 ChangeLog
+.coverage
+reports
+coverage.xml
