@@ -80,12 +80,9 @@ def is_token_valid(token, margin=None):
 
     Returns ``True`` if the token has not yet expired, otherwise ``False``.
 
-    .. param:: token
+    :param token: The openstack_auth.user.Token instance to check
 
-       The openstack_auth.user.Token instance to check
-
-    .. param:: margin
-
+    :param margin:
        A time margin in seconds to subtract from the real token's validity.
        An example usage is that the token can be valid once the middleware
        passed, and invalid (timed-out) during a view rendering and this

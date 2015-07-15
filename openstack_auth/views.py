@@ -153,12 +153,11 @@ def websso(request):
 def logout(request, login_url=None, **kwargs):
     """Logs out the user if he is logged in. Then redirects to the log-in page.
 
-    .. param:: login_url
+    :param login_url:
+        Once logged out, defines the URL where to redirect after login
 
-       Once logged out, defines the URL where to redirect after login
-
-    .. param:: kwargs
-       see django.contrib.auth.views.logout_then_login extra parameters.
+    :param kwargs:
+        see django.contrib.auth.views.logout_then_login extra parameters.
 
     """
     msg = 'Logging out user "%(username)s".' % \

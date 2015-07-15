@@ -233,8 +233,7 @@ class User(models.AnonymousUser):
         Returns ``True`` if the token is expired, ``False`` if not, and
         ``None`` if there is no token set.
 
-        .. param:: margin
-
+        :param margin:
            A security time margin in seconds before real expiration.
            Will return ``True`` if the token expires in less than ``margin``
            seconds of time.
@@ -249,8 +248,7 @@ class User(models.AnonymousUser):
     def is_authenticated(self, margin=None):
         """Checks for a valid authentication.
 
-        .. param:: margin
-
+        :param margin:
            A security time margin in seconds before end of authentication.
            Will return ``False`` if authentication ends in less than ``margin``
            seconds of time.
@@ -266,8 +264,7 @@ class User(models.AnonymousUser):
 
         Returns ``True`` if not authenticated,``False`` otherwise.
 
-        .. param:: margin
-
+        :param margin:
            A security time margin in seconds before end of an eventual
            authentication.
            Will return ``True`` even if authenticated but that authentication
