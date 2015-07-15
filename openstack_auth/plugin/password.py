@@ -42,7 +42,8 @@ class PasswordPlugin(base.BasePlugin):
             return v3_auth.Password(auth_url=auth_url,
                                     username=username,
                                     password=password,
-                                    user_domain_name=user_domain_name)
+                                    user_domain_name=user_domain_name,
+                                    unscoped=True)
 
         else:
             return v2_auth.Password(auth_url=auth_url,
