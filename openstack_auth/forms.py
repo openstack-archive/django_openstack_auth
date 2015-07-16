@@ -11,8 +11,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import collections
 import logging
 
+import django
 from django.conf import settings
 from django.contrib.auth import authenticate  # noqa
 from django.contrib.auth import forms as django_auth_forms
@@ -55,7 +57,7 @@ class Login(django_auth_forms.AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(Login, self).__init__(*args, **kwargs)
-        self.fields.keyOrder = ['username', 'password', 'region']
+        fields_ordering = ['username', 'password', 'region']
         if getattr(settings,
                    'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT',
                    False):
@@ -64,7 +66,7 @@ class Login(django_auth_forms.AuthenticationForm):
                 required=True,
                 widget=forms.TextInput(attrs={"autofocus": "autofocus"}))
             self.fields['username'].widget = forms.widgets.TextInput()
-            self.fields.keyOrder = ['domain', 'username', 'password', 'region']
+            fields_ordering = ['domain', 'username', 'password', 'region']
         self.fields['region'].choices = self.get_region_choices()
         if len(self.fields['region'].choices) == 1:
             self.fields['region'].initial = self.fields['region'].choices[0][0]
@@ -83,14 +85,21 @@ class Login(django_auth_forms.AuthenticationForm):
                 required=False,
                 initial=initial)
             # move auth_type to the top of the list
-            self.fields.keyOrder.pop(-1)
-            self.fields.keyOrder.insert(0, 'auth_type')
+            fields_ordering.pop(-1)
+            fields_ordering.insert(0, 'auth_type')
 
         # websso is enabled, but keystone version is not supported
         elif getattr(settings, 'WEBSSO_ENABLED', False):
             msg = ("Websso is enabled but horizon is not configured to work " +
                    "with keystone version 3 or above.")
             LOG.warning(msg)
+        # Starting from 1.7 Django uses OrderedDict for fields and keyOrder
+        # no longer works for it
+        if django.VERSION >= (1, 7):
+            self.fields = collections.OrderedDict(
+                (key, self.fields[key]) for key in fields_ordering)
+        else:
+            self.fields.keyOrder = fields_ordering
 
     @staticmethod
     def get_region_choices():
