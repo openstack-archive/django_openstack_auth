@@ -55,8 +55,9 @@ def create_user_from_token(request, token, endpoint, services_region=None):
                 roles=token.roles,
                 endpoint=endpoint,
                 services_region=svc_region,
-                is_federated=token.is_federated,
-                unscoped_token=token.unscoped_token)
+                is_federated=getattr(token, 'is_federated', False),
+                unscoped_token=getattr(token, 'unscoped_token',
+                                       request.session.get('unscoped_token')))
 
 
 class Token(object):
