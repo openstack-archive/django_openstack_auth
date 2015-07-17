@@ -134,7 +134,7 @@ def login(request, template_name=None, extra_context=None, **kwargs):
 @never_cache
 def websso(request):
     """Logs a user in using a token from Keystone's POST."""
-    referer = request.META.get('HTTP_REFERER', settings.OPENSTACK_KEYSTONE_URL)
+    referer = settings.OPENSTACK_KEYSTONE_URL
     auth_url = re.sub(r'/auth.*', '', referer)
     token = request.POST.get('token')
     domain_name = request.POST.get('domain_name')
