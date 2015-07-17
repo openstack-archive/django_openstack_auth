@@ -474,6 +474,15 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         client.projects = self.mox.CreateMockAnything()
         client.projects.list(user=user.id).AndReturn(projects)
 
+    def _mock_unscoped_client_list_projects_fail(self, user):
+        client = self._mock_unscoped_client(user)
+        self._mock_unscoped_list_projects_fail(client, user)
+
+    def _mock_unscoped_list_projects_fail(self, client, user):
+        client.projects = self.mox.CreateMockAnything()
+        client.projects.list(user=user.id).AndRaise(
+            keystone_exceptions.AuthorizationFailure)
+
     def _create_password_auth(self, username=None, password=None, url=None):
         if not username:
             username = self.data.user.name
@@ -606,6 +615,25 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self.assertTemplateUsed(response, 'auth/login.html')
         self.assertContains(response,
                             'You are not authorized for any projects.')
+
+    def test_fail_projects(self):
+        user = self.data.user
+
+        form_data = self.get_form_data(user)
+        self._mock_unscoped_client_list_projects_fail(user)
+        self.mox.ReplayAll()
+
+        url = reverse('login')
+
+        # GET the page to set the test cookie.
+        response = self.client.get(url, form_data)
+        self.assertEqual(response.status_code, 200)
+
+        # POST to the page to log in.
+        response = self.client.post(url, form_data)
+        self.assertTemplateUsed(response, 'auth/login.html')
+        self.assertContains(response,
+                            'Unable to retrieve authorized projects.')
 
     def test_invalid_credentials(self):
         user = self.data.user
