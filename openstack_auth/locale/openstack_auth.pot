@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 1.3.2.dev9\n"
+"Project-Id-Version: django_openstack_auth 1.3.2.dev36\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-29 06:02+0000\n"
+"POT-Creation-Date: 2015-07-19 06:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,28 +44,38 @@ msgstr ""
 msgid "You are not authorized for any projects."
 msgstr ""
 
-#: openstack_auth/backend.py:176
+#: openstack_auth/backend.py:174
 msgid "Unable to authenticate to any available projects."
 msgstr ""
 
-#: openstack_auth/forms.py:49
+#: openstack_auth/forms.py:51
 msgid "Region"
 msgstr ""
 
-#: openstack_auth/forms.py:51
+#: openstack_auth/forms.py:53
 msgid "User Name"
 msgstr ""
 
-#: openstack_auth/forms.py:53
+#: openstack_auth/forms.py:55
 msgid "Password"
 msgstr ""
 
-#: openstack_auth/forms.py:63
+#: openstack_auth/forms.py:65
 msgid "Domain"
 msgstr ""
 
-#: openstack_auth/forms.py:81
+#: openstack_auth/forms.py:83
 msgid "Authenticate using"
+msgstr ""
+
+#: openstack_auth/views.py:222
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr ""
+
+#: openstack_auth/views.py:245
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
 msgstr ""
 
 #: openstack_auth/plugin/base.py:96
