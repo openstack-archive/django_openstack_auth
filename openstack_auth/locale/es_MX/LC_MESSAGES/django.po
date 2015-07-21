@@ -4,13 +4,14 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-09 06:10+0000\n"
-"PO-Revision-Date: 2015-05-28 07:03+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-07-21 06:06+0000\n"
+"PO-Revision-Date: 2015-07-20 20:19+0000\n"
+"Last-Translator: Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/p/horizon/language/"
 "es_MX/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -27,11 +28,18 @@ msgstr ""
 msgid "Domain"
 msgstr "Dominio"
 
+msgid "Invalid credentials."
+msgstr "Credenciales inválidas."
+
 msgid "Password"
 msgstr "Contraseña"
 
 msgid "Region"
 msgstr "Región."
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Cambio al proyecto \"%(project_name)s\" satisfactorio."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
@@ -39,6 +47,9 @@ msgstr ""
 
 msgid "Unable to authenticate to any available projects."
 msgstr "No se puede autenticar a los proyectos disponibles."
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "No es posible establecer conexión a punto final de la clave base."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "No se pueden recuperar los proyectos autorizados."

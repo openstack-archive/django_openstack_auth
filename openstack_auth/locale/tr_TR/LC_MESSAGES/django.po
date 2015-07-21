@@ -4,12 +4,13 @@
 # django_openstack_auth project.
 #
 # Translators:
+# İşbaran Akçayır <isbaran@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-11 06:08+0000\n"
-"PO-Revision-Date: 2015-07-10 17:14+0000\n"
+"POT-Creation-Date: 2015-07-21 06:06+0000\n"
+"PO-Revision-Date: 2015-07-20 11:52+0000\n"
 "Last-Translator: İşbaran Akçayır <isbaran@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/p/horizon/language/"
 "tr_TR/)\n"
@@ -41,8 +42,16 @@ msgstr ""
 msgid "Password"
 msgstr "Şifre"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "\"%(username)s\" kullanıcısı için proje değişimi başarısız."
+
 msgid "Region"
 msgstr "Bölge"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "\"%(project_name)s\" projesine değişim başarılı."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
