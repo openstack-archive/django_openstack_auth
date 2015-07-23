@@ -6,15 +6,16 @@
 # Translators:
 # Adriana Chisco Landazábal <achisco94@gmail.com>, 2015
 # Alberto Molina Coballes <alb.molina@gmail.com>, 2014
+# dario hereñu <magallania@gmail.com>, 2015
 # luis gil, 2015
 # Marian Tort <marian.tort@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-09 06:10+0000\n"
-"PO-Revision-Date: 2015-06-05 21:17+0000\n"
-"Last-Translator: Adriana Chisco Landazábal <achisco94@gmail.com>\n"
+"POT-Creation-Date: 2015-07-21 06:06+0000\n"
+"PO-Revision-Date: 2015-07-20 16:47+0000\n"
+"Last-Translator: dario hereñu <magallania@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/p/horizon/language/es/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
@@ -44,8 +45,16 @@ msgstr ""
 msgid "Password"
 msgstr "Contraseña"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Intercambio de projecto fracasó para el usuario \"%(username)s\"."
+
 msgid "Region"
 msgstr "Región"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Cambio al proyecto \"%(project_name)s\" de manera exitosa."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "El token de autenticación emitido por Identity Service ha expirado."
