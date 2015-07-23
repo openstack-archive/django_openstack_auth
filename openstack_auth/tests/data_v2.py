@@ -15,8 +15,8 @@ import datetime
 import uuid
 
 from django.utils import datetime_safe
-from keystoneclient import access
-from keystoneclient import service_catalog
+from keystoneauth1.access import access
+from keystoneauth1.access import service_catalog
 from keystoneclient.v2_0 import roles
 from keystoneclient.v2_0 import tenants
 from keystoneclient.v2_0 import users
@@ -116,7 +116,7 @@ def generate_test_data():
         }
     }
 
-    test_data.scoped_access_info = access.AccessInfo.factory(
+    test_data.scoped_access_info = access.create(
         resp=None,
         body=scoped_token_dict)
 
@@ -132,19 +132,12 @@ def generate_test_data():
             'serviceCatalog': [keystone_service]
         }
     }
-    test_data.unscoped_access_info = access.AccessInfo.factory(
+    test_data.unscoped_access_info = access.create(
         resp=None,
         body=unscoped_token_dict)
 
     # Service Catalog
-    test_data.service_catalog = service_catalog.ServiceCatalog.factory({
-        'serviceCatalog': [keystone_service, nova_service],
-        'token': {
-            'id': scoped_token_dict['access']['token']['id'],
-            'expires': scoped_token_dict['access']['token']['expires'],
-            'user_id': user_dict['id'],
-            'tenant_id': tenant_dict_1['id']
-        }
-    })
+    test_data.service_catalog = service_catalog.ServiceCatalogV2(
+        [keystone_service, nova_service])
 
     return test_data

@@ -28,8 +28,8 @@ from django.views.decorators.cache import never_cache  # noqa
 from django.views.decorators.csrf import csrf_exempt  # noqa
 from django.views.decorators.csrf import csrf_protect  # noqa
 from django.views.decorators.debug import sensitive_post_parameters  # noqa
-from keystoneclient.auth import token_endpoint
-from keystoneclient import exceptions as keystone_exceptions
+from keystoneauth1 import exceptions as keystone_exceptions
+from keystoneauth1 import token_endpoint
 import six
 
 from openstack_auth import exceptions

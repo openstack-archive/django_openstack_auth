@@ -15,8 +15,8 @@ import datetime
 import uuid
 
 from django.utils import datetime_safe
-from keystoneclient import access
-from keystoneclient import service_catalog
+from keystoneauth1.access import access
+from keystoneauth1.access import service_catalog
 from keystoneclient.v3 import domains
 from keystoneclient.v3 import projects
 from keystoneclient.v3 import roles
@@ -211,7 +211,7 @@ def generate_test_data():
         }
     }
 
-    test_data.scoped_access_info = access.AccessInfo.factory(
+    test_data.scoped_access_info = access.create(
         resp=auth_response,
         body=scoped_token_dict
     )
@@ -236,7 +236,7 @@ def generate_test_data():
             'catalog': [keystone_service, nova_service]
         }
     }
-    test_data.domain_scoped_access_info = access.AccessInfo.factory(
+    test_data.domain_scoped_access_info = access.create(
         resp=auth_response,
         body=domain_token_dict
     )
@@ -257,17 +257,14 @@ def generate_test_data():
         }
     }
 
-    test_data.unscoped_access_info = access.AccessInfo.factory(
+    test_data.unscoped_access_info = access.create(
         resp=auth_response,
         body=unscoped_token_dict
     )
 
     # Service Catalog
-    test_data.service_catalog = service_catalog.ServiceCatalog.factory({
-        'methods': ['password'],
-        'user': {},
-        'catalog': [keystone_service, nova_service],
-    }, token=auth_token)
+    test_data.service_catalog = service_catalog.ServiceCatalogV3(
+        [keystone_service, nova_service])
 
     # federated user
     federated_scoped_token_dict = {
@@ -303,7 +300,7 @@ def generate_test_data():
         }
     }
 
-    test_data.federated_scoped_access_info = access.AccessInfo.factory(
+    test_data.federated_scoped_access_info = access.create(
         resp=auth_response,
         body=federated_scoped_token_dict
     )
@@ -332,7 +329,7 @@ def generate_test_data():
         }
     }
 
-    test_data.federated_unscoped_access_info = access.AccessInfo.factory(
+    test_data.federated_unscoped_access_info = access.create(
         resp=auth_response,
         body=federated_unscoped_token_dict
     )

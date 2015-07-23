@@ -21,10 +21,10 @@ from django.contrib.auth import middleware
 from django.contrib.auth import models
 from django.utils import decorators
 from django.utils import timezone
-from keystoneclient.auth.identity import v2 as v2_auth
-from keystoneclient.auth.identity import v3 as v3_auth
-from keystoneclient.auth import token_endpoint
-from keystoneclient import session
+from keystoneauth1.identity import v2 as v2_auth
+from keystoneauth1.identity import v3 as v3_auth
+from keystoneauth1 import session
+from keystoneauth1 import token_endpoint
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 from six.moves.urllib import parse as urlparse
