@@ -10,7 +10,7 @@ The current version is designed to work with the Keystone v2.0 and v3 API.
 
 You can `view the installation instructions`_ on Read The Docs.
 
-.. _view the installation instructions: http://django-openstack-auth.readthedocs.org/en/latest/installation.html#installation
+.. _view the installation instructions: http://docs.openstack.org/developer/django_openstack_auth/
 
 * License: Apache License, Version 2.0
 * Documentation: http://django-openstack-auth.readthedocs.org/en/latest/
