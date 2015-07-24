@@ -23,6 +23,7 @@ from openstack_auth import utils
 
 
 LOG = logging.getLogger(__name__)
+_TOKEN_HASH_ENABLED = getattr(settings, 'OPENSTACK_TOKEN_HASH_ENABLED', True)
 
 
 def set_session_from_user(request, user):
@@ -81,8 +82,9 @@ class Token(object):
         # Token-related attributes
         self.id = auth_ref.auth_token
         self.unscoped_token = unscoped_token
-        if (keystone_cms.is_asn1_token(self.id)
-                or keystone_cms.is_pkiz(self.id)):
+        if (_TOKEN_HASH_ENABLED and
+                (keystone_cms.is_asn1_token(self.id)
+                    or keystone_cms.is_pkiz(self.id))):
             algorithm = getattr(settings, 'OPENSTACK_TOKEN_HASH_ALGORITHM',
                                 'md5')
             hasher = hashlib.new(algorithm)
