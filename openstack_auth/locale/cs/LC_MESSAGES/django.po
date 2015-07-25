@@ -9,10 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-09 06:10+0000\n"
-"PO-Revision-Date: 2015-06-30 10:50+0000\n"
+"POT-Creation-Date: 2015-07-25 06:03+0000\n"
+"PO-Revision-Date: 2015-07-21 08:11+0000\n"
 "Last-Translator: Zbyněk Schwarz <zbynek.schwarz@gmail.com>\n"
-"Language-Team: Czech (http://www.transifex.com/p/horizon/language/cs/)\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/horizon/language/"
+"cs/)\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -41,8 +42,16 @@ msgstr ""
 msgid "Password"
 msgstr "Heslo"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Změna projektu selhala u uživatele \"%(username)s\"."
+
 msgid "Region"
 msgstr "Oblast"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Změna projektu \"%(project_name)s\" byla úspěšná."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Známka ověření přidělená Službou totožnosti vypršela."

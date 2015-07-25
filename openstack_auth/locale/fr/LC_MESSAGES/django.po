@@ -5,6 +5,7 @@
 #
 # Translators:
 # Cédric Savignan <liced@liced.fr>, 2015
+# Corinne Verheyde <cverheyd@hotmail.com>, 2015
 # François Bureau, 2015
 # Maxime COQUEREL <max.coquerel@gmail.com>, 2015
 # Patte D <pattedeph@gmail.com>, 2015
@@ -13,10 +14,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-09 06:10+0000\n"
-"PO-Revision-Date: 2015-06-19 14:46+0000\n"
-"Last-Translator: Gael Rehault <gael_rehault@dell.com>\n"
-"Language-Team: French (http://www.transifex.com/p/horizon/language/fr/)\n"
+"POT-Creation-Date: 2015-07-25 06:03+0000\n"
+"PO-Revision-Date: 2015-07-23 23:14+0000\n"
+"Last-Translator: Corinne Verheyde <cverheyd@hotmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/horizon/language/"
+"fr/)\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -45,8 +47,16 @@ msgstr ""
 msgid "Password"
 msgstr "Mot de Passe"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Le changement de projet a échoué pour l'utilisateur \"%(username)s\"."
+
 msgid "Region"
 msgstr "Région"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Bascule vers le projet \"%(project_name)s\" avec succès. "
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
