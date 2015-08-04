@@ -6,15 +6,16 @@
 # Translators:
 # Fedor Tarasenko <feodor.tarasenko@gmail.com>, 2015
 # Ilya Alekseyev <ilyaalekseyev@acm.org>, 2015
+# Ilya Shakhat <shakhat@gmail.com>, 2015
 # Nikita Burtsev, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-31 06:46+0000\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
-"Language-Team: Russian (http://www.transifex.com/projects/p/horizon/language/"
+"POT-Creation-Date: 2015-08-04 06:25+0000\n"
+"PO-Revision-Date: 2015-08-03 15:27+0000\n"
+"Last-Translator: Ilya Shakhat <shakhat@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/openstack/horizon/language/"
 "ru/)\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
@@ -44,6 +45,10 @@ msgstr ""
 
 msgid "Password"
 msgstr "Пароль"
+
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Не удалось переключить проект для пользователя \"%(username)s\"."
 
 msgid "Region"
 msgstr "Регион"
