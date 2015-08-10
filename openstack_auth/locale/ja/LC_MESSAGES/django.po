@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-08-10 06:05+0000\n"
+"PO-Revision-Date: 2015-08-08 11:31+0000\n"
+"Last-Translator: ykatabam <ykatabam@redhat.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/openstack/horizon/language/"
 "ja/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -44,8 +44,16 @@ msgstr ""
 msgid "Password"
 msgstr "パスワード"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "ユーザー \"%(username)s\" のプロジェクト切り替えに失敗しました。"
+
 msgid "Region"
 msgstr "リージョン"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "プロジェクト \"%(project_name)s\" への切り替えが成功しました。"
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity Service により発行された認証トークンの期限が切れました。"
