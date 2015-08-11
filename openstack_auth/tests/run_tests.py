@@ -20,7 +20,10 @@ import sys
 os.environ['DJANGO_SETTINGS_MODULE'] = 'openstack_auth.tests.settings'
 
 import django
-from django.test import simple as test_simple
+if django.VERSION < (1, 8, 0):
+    from django.test.simple import DjangoTestSuiteRunner as test_runner
+else:
+    from django.test.runner import DiscoverRunner as test_runner
 
 if hasattr(django, 'setup'):
     django.setup()
@@ -35,7 +38,7 @@ def run(*test_args):
         "..",
     )
     sys.path.insert(0, parent)
-    failures = test_simple.DjangoTestSuiteRunner().run_tests(test_args)
+    failures = test_runner().run_tests(test_args)
     sys.exit(failures)
 
 

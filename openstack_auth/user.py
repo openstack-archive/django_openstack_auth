@@ -119,7 +119,7 @@ class Token(object):
         self.serviceCatalog = auth_ref.service_catalog.get_data()
 
 
-class User(models.AnonymousUser):
+class User(models.AbstractBaseUser, models.AnonymousUser):
     """A User class with some extra special sauce for Keystone.
 
     In addition to the standard Django user attributes, this class also has
@@ -193,7 +193,7 @@ class User(models.AnonymousUser):
                  services_region=None, user_domain_id=None,
                  user_domain_name=None, domain_id=None, domain_name=None,
                  project_id=None, project_name=None,
-                 is_federated=False, unscoped_token=None):
+                 is_federated=False, unscoped_token=None, password=None):
         self.id = id
         self.pk = id
         self.token = token
@@ -222,6 +222,9 @@ class User(models.AnonymousUser):
         # List of variables to be deprecated.
         self.tenant_id = self.project_id
         self.tenant_name = self.project_name
+
+        # Required by AbstractBaseUser
+        self.password = None
 
     def __unicode__(self):
         return self.username
