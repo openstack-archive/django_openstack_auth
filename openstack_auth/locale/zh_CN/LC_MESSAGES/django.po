@@ -4,6 +4,7 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Allerson Yao, 2015
 # johnwoo_lee <lijiangsheng1@gmail.com>, 2015
 # LIU Yulong <dragon889@163.com>, 2015
 # Ying Chun Guo <daisy.ycguo@gmail.com>, 2015
@@ -12,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-08-17 06:19+0000\n"
+"PO-Revision-Date: 2015-08-17 01:27+0000\n"
+"Last-Translator: Allerson Yao\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/openstack/horizon/"
 "language/zh_CN/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -43,8 +44,16 @@ msgstr "后端没有认证可以决定掌控已经提供的凭证。"
 msgid "Password"
 msgstr "密码"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "为user“%(username)s”切换工程失败"
+
 msgid "Region"
 msgstr "域"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "成功切换到工程\"%(project_name)s\""
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "身份认证令牌已过期。"
