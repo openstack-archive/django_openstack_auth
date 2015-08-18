@@ -4,13 +4,14 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Evelijn Saaltink <evelijnsaaltink@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-08-18 06:27+0000\n"
+"PO-Revision-Date: 2015-08-17 21:33+0000\n"
+"Last-Translator: Evelijn Saaltink <evelijnsaaltink@gmail.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/openstack/"
 "horizon/language/nl_NL/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -22,6 +23,9 @@ msgstr ""
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Er is een fout opgetreden bij de verificatie. Probeert u het later nog eens."
+
+msgid "Authenticate using"
+msgstr "Gebruik authentificeren"
 
 msgid "Domain"
 msgstr "Domein"
