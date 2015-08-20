@@ -4,6 +4,7 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Alexander Vasiliev <avasiliev@asdco.ru>, 2015
 # Fedor Tarasenko <feodor.tarasenko@gmail.com>, 2015
 # Ilya Alekseyev <ilyaalekseyev@acm.org>, 2015
 # Ilya Shakhat <shakhat@gmail.com>, 2015
@@ -12,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Horizon\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-08-03 15:27+0000\n"
-"Last-Translator: Ilya Shakhat <shakhat@gmail.com>\n"
+"POT-Creation-Date: 2015-08-20 06:33+0000\n"
+"PO-Revision-Date: 2015-08-19 13:27+0000\n"
+"Last-Translator: Alexander Vasiliev <avasiliev@asdco.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/openstack/horizon/language/"
 "ru/)\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -52,6 +53,10 @@ msgstr "Не удалось переключить проект для поль�
 
 msgid "Region"
 msgstr "Регион"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Переключение на проект \"%(project_name)s\" выполнено успешно."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Время действия токена, выданного сервисом идентификации, истекло."
