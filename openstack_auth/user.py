@@ -91,6 +91,7 @@ class Token(object):
             hasher.update(self.id)
             self.id = hasher.hexdigest()
             # If the scoped_token is long, then unscoped_token must be too.
+            hasher = hashlib.new(algorithm)
             hasher.update(self.unscoped_token)
             self.unscoped_token = hasher.hexdigest()
         self.expires = auth_ref.expires
