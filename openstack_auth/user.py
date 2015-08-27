@@ -18,6 +18,7 @@ from django.conf import settings
 from django.contrib.auth import models
 from keystoneclient.common import cms as keystone_cms
 from keystoneclient import exceptions as keystone_exceptions
+import six
 
 from openstack_auth import utils
 
@@ -389,7 +390,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
         if not perm_list:
             return True
         for perm in perm_list:
-            if isinstance(perm, basestring):
+            if isinstance(perm, six.string_types):
                 # check that the permission matches
                 if not self.has_perm(perm, obj):
                     return False

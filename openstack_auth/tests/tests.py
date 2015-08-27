@@ -936,6 +936,27 @@ class PolicyLoaderTestCase(test.TestCase):
         self.assertIsNone(policy._ENFORCER)
 
 
+class PermTestCase(test.TestCase):
+    def test_has_perms(self):
+        testuser = user.User(id=1, roles=[])
+
+        def has_perm(perm, obj=None):
+            return perm in ('perm1', 'perm3')
+
+        with mock.patch.object(testuser, 'has_perm', side_effect=has_perm):
+            self.assertFalse(testuser.has_perms(['perm2']))
+
+            # perm1 AND perm3
+            self.assertFalse(testuser.has_perms(['perm1', 'perm2']))
+
+            # perm1 AND perm3
+            self.assertTrue(testuser.has_perms(['perm1', 'perm3']))
+
+            # perm1 AND (perm2 OR perm3)
+            perm_list = ['perm1', ('perm2', 'perm3')]
+            self.assertTrue(testuser.has_perms(perm_list))
+
+
 class PolicyTestCase(test.TestCase):
     _roles = []
 

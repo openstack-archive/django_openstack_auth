@@ -30,6 +30,7 @@ from django.views.decorators.csrf import csrf_protect  # noqa
 from django.views.decorators.debug import sensitive_post_parameters  # noqa
 from keystoneclient.auth import token_endpoint
 from keystoneclient import exceptions as keystone_exceptions
+import six
 
 from openstack_auth import exceptions
 from openstack_auth import forms
@@ -140,7 +141,7 @@ def websso(request):
         request.user = auth.authenticate(request=request, auth_url=auth_url,
                                          token=token)
     except exceptions.KeystoneAuthException as exc:
-        msg = 'Login failed: %s' % unicode(exc)
+        msg = 'Login failed: %s' % six.text_type(exc)
         res = django_http.HttpResponseRedirect(settings.LOGIN_URL)
         res.set_cookie('logout_reason', msg, max_age=10)
         return res
