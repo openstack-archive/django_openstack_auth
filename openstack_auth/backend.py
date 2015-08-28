@@ -18,6 +18,7 @@ import logging
 import pytz
 
 from django.conf import settings
+from django.utils.module_loading import import_string  # noqa
 from django.utils.translation import ugettext_lazy as _
 from keystoneclient import exceptions as keystone_exceptions
 
@@ -47,7 +48,7 @@ class KeystoneBackend(object):
                 ['openstack_auth.plugin.password.PasswordPlugin',
                  'openstack_auth.plugin.token.TokenPlugin'])
 
-            self._auth_plugins = [utils.import_string(p)() for p in plugins]
+            self._auth_plugins = [import_string(p)() for p in plugins]
 
         return self._auth_plugins
 
