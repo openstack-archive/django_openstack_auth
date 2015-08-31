@@ -186,6 +186,80 @@ def build_absolute_uri(request, relative_url):
     return request.build_absolute_uri(webroot + relative_url)
 
 
+def get_websso_url(request, auth_url, websso_auth):
+    """Return the keystone endpoint for initiating WebSSO.
+
+    Generate the keystone WebSSO endpoint that will redirect the user
+    to the login page of the federated identity provider.
+
+    Based on the authentication type selected by the user in the login
+    form, it will construct the keystone WebSSO endpoint.
+
+    :param request: Django http request object.
+    :type request: django.http.HttpRequest
+    :param auth_url: Keystone endpoint configured in the horizon setting.
+                     The value is derived from:
+                     - OPENSTACK_KEYSTONE_URL
+                     - AVAILABLE_REGIONS
+    :type auth_url: string
+    :param websso_auth: Authentication type selected by the user from the
+                        login form. The value is derived from the horizon
+                        setting WEBSSO_CHOICES.
+    :type websso_auth: string
+
+    Example of horizon WebSSO setting::
+        WEBSSO_CHOICES = (
+            ("credentials", "Keystone Credentials"),
+            ("oidc", "OpenID Connect"),
+            ("saml2", "Security Assertion Markup Language"),
+            ("acme_oidc", "ACME - OpenID Connect"),
+            ("acme_saml2", "ACME - SAML2")
+        )
+
+        WEBSSO_IDP_MAPPING = {
+            "acme_oidc": ("acme", "oidc"),
+            "acme_saml2": ("acme", "saml2")
+            }
+        }
+
+    The value of websso_auth will be looked up in the WEBSSO_IDP_MAPPING
+    dictionary, if a match is found it will return a IdP specific WebSSO
+    endpoint using the values found in the mapping.
+
+    The value in WEBSSO_IDP_MAPPING is expected to be a tuple formatted as
+    (<idp_id>, <protocol_id>). Using the values found, a IdP/protocol
+    specific URL will be constructed:
+        /auth/OS-FEDERATION/identity_providers/<idp_id>
+        /protocols/<protocol_id>/websso
+
+    If no value is found from the WEBSSO_IDP_MAPPING dictionary, it will
+    treat the value as the global WebSSO protocol <protocol_id> and
+    construct the WebSSO URL by:
+        /auth/OS-FEDERATION/websso/<protocol_id>
+
+    :returns: Keystone WebSSO endpoint.
+    :rtype: string
+
+    """
+    origin = build_absolute_uri(request, '/auth/websso/')
+    idp_mapping = getattr(settings, 'WEBSSO_IDP_MAPPING', {})
+    idp_id, protocol_id = idp_mapping.get(websso_auth,
+                                          (None, websso_auth))
+
+    if idp_id:
+        # Use the IDP specific WebSSO endpoint
+        url = ('%s/auth/OS-FEDERATION/identity_providers/%s'
+               '/protocols/%s/websso?origin=%s' %
+               (auth_url, idp_id, protocol_id, origin))
+    else:
+        # If no IDP mapping found for the identifier,
+        # perform WebSSO by protocol.
+        url = ('%s/auth/OS-FEDERATION/websso/%s?origin=%s' %
+               (auth_url, protocol_id, origin))
+
+    return url
+
+
 def has_in_url_path(url, sub):
     """Test if the `sub` string is in the `url` path."""
     scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
