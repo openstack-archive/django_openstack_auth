@@ -84,8 +84,7 @@ class Login(django_auth_forms.AuthenticationForm):
                 choices=getattr(settings, 'WEBSSO_CHOICES', ()),
                 required=False,
                 initial=initial)
-            # move auth_type to the top of the list
-            fields_ordering.pop(-1)
+            # add auth_type to the top of the list
             fields_ordering.insert(0, 'auth_type')
 
         # websso is enabled, but keystone version is not supported
