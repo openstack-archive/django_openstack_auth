@@ -16,6 +16,7 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth import models
+from django.db import models as db_models
 from keystoneclient.common import cms as keystone_cms
 from keystoneclient import exceptions as keystone_exceptions
 import six
@@ -189,6 +190,10 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
         Unscoped Keystone token.
 
     """
+
+    keystone_user_id = db_models.CharField(primary_key=True, max_length=256)
+    USERNAME_FIELD = 'keystone_user_id'
+
     def __init__(self, id=None, token=None, user=None, tenant_id=None,
                  service_catalog=None, tenant_name=None, roles=None,
                  authorized_tenants=None, endpoint=None, enabled=False,
@@ -199,6 +204,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
         self.id = id
         self.pk = id
         self.token = token
+        self.keystone_user_id = id
         self.username = user
         self.user_domain_id = user_domain_id
         self.user_domain_name = user_domain_name
