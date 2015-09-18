@@ -11,6 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import uuid
+
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
@@ -863,14 +865,24 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
         self.data = data_v3.generate_test_data()
         self.ks_client_module = client_v3
 
+        self.idp_id = uuid.uuid4().hex
+        self.idp_oidc_id = uuid.uuid4().hex
+        self.idp_saml2_id = uuid.uuid4().hex
+
         settings.OPENSTACK_API_VERSIONS['identity'] = 3
         settings.OPENSTACK_KEYSTONE_URL = 'http://localhost:5000/v3'
         settings.WEBSSO_ENABLED = True
         settings.WEBSSO_CHOICES = (
             ('credentials', 'Keystone Credentials'),
             ('oidc', 'OpenID Connect'),
-            ('saml2', 'Security Assertion Markup Language')
+            ('saml2', 'Security Assertion Markup Language'),
+            (self.idp_oidc_id, 'IDP OIDC'),
+            (self.idp_saml2_id, 'IDP SAML2')
         )
+        settings.WEBSSO_IDP_MAPPING = {
+            self.idp_oidc_id: (self.idp_id, 'oidc'),
+            self.idp_saml2_id: (self.idp_id, 'saml2')
+        }
 
         self.mox.StubOutClassWithMocks(token_endpoint, 'Token')
         self.mox.StubOutClassWithMocks(auth_v3, 'Token')
@@ -885,14 +897,33 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
         self.assertContains(response, 'credentials')
         self.assertContains(response, 'oidc')
         self.assertContains(response, 'saml2')
+        self.assertContains(response, self.idp_oidc_id)
+        self.assertContains(response, self.idp_saml2_id)
 
-    def test_websso_redirect(self):
+    def test_websso_redirect_by_protocol(self):
         origin = 'http://testserver/auth/websso/'
         protocol = 'oidc'
         redirect_url = ('%s/auth/OS-FEDERATION/websso/%s?origin=%s' %
                         (settings.OPENSTACK_KEYSTONE_URL, protocol, origin))
 
         form_data = {'auth_type': protocol,
+                     'region': settings.OPENSTACK_KEYSTONE_URL}
+        url = reverse('login')
+
+        # POST to the page and redirect to keystone.
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, redirect_url, status_code=302,
+                             target_status_code=404)
+
+    def test_websso_redirect_by_idp(self):
+        origin = 'http://testserver/auth/websso/'
+        protocol = 'oidc'
+        redirect_url = ('%s/auth/OS-FEDERATION/identity_providers/%s'
+                        '/protocols/%s/websso?origin=%s' %
+                        (settings.OPENSTACK_KEYSTONE_URL, self.idp_id,
+                         protocol, origin))
+
+        form_data = {'auth_type': self.idp_oidc_id,
                      'region': settings.OPENSTACK_KEYSTONE_URL}
         url = reverse('login')
 
