@@ -7,13 +7,15 @@
 # Akihiro Motoki <amotoki@gmail.com>, 2015
 # Shu Muto <shu-mutou@rf.jp.nec.com>, 2015
 # ykatabam <ykatabam@redhat.com>, 2015
+# Akihiro Motoki <amotoki@gmail.com>, 2015. #zanata
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 1.4.1.dev13\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-10 06:05+0000\n"
-"PO-Revision-Date: 2015-08-08 11:31+0000\n"
-"Last-Translator: ykatabam <ykatabam@redhat.com>\n"
+"POT-Creation-Date: 2015-09-18 06:13+0000\n"
+"PO-Revision-Date: 2015-09-17 07:27+0000\n"
+"Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/openstack/horizon/language/"
 "ja/)\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -38,8 +40,8 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
-"指定された認証情報を処理するための認証バックエンドを決定することができません"
-"でした。"
+"指定された認証情報を処理する認証バックエンドを決定することができませんでし"
+"た。"
 
 msgid "Password"
 msgstr "パスワード"
@@ -53,7 +55,7 @@ msgstr "リージョン"
 
 #, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
-msgstr "プロジェクト \"%(project_name)s\" への切り替えが成功しました。"
+msgstr "プロジェクト \"%(project_name)s\" へ切り替えました。"
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity Service により発行された認証トークンの期限が切れました。"

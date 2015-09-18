@@ -5,13 +5,15 @@
 #
 # Translators:
 # Tom Fifield <tom@openstack.org>, 2015
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
+# Tom Fifield <tom@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 1.4.1.dev13\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-09-18 06:13+0000\n"
+"PO-Revision-Date: 2015-09-17 03:40+0000\n"
+"Last-Translator: Tom Fifield <tom@openstack.org>\n"
 "Language-Team: English (Australia) (http://www.transifex.com/openstack/"
 "horizon/language/en_AU/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -42,8 +44,16 @@ msgstr ""
 msgid "Password"
 msgstr "Password"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Project switch failed for user \"%(username)s\"."
+
 msgid "Region"
 msgstr "Region"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Switch to project \"%(project_name)s\" successful."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "The authentication token issued by the Identity service has expired."
