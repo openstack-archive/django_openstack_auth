@@ -5,12 +5,14 @@
 #
 # Translators:
 # Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>, 2015
+# Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>, 2015. #zanata
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-20 20:19+0000\n"
+"POT-Creation-Date: 2015-09-21 06:07+0000\n"
+"PO-Revision-Date: 2015-09-18 03:50+0000\n"
 "Last-Translator: Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/openstack/horizon/"
 "language/es_MX/)\n"
@@ -25,14 +27,28 @@ msgstr ""
 "Se ha producido un error de autenticación. Por favor inténtelo de nuevo más "
 "tarde."
 
+msgid "Authenticate using"
+msgstr "Autentificar usando"
+
 msgid "Domain"
 msgstr "Dominio"
 
 msgid "Invalid credentials."
 msgstr "Credenciales inválidas."
 
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+"Autentificación de soporte no puede ser determinada para manejar las "
+"credenciales proveidas."
+
 msgid "Password"
 msgstr "Contraseña"
+
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Cambio de proyecto fallido para el usuario \"%(username)s\"."
 
 msgid "Region"
 msgstr "Región."

@@ -5,13 +5,15 @@
 #
 # Translators:
 # Łukasz Jernaś <deejay1@srem.org>, 2015
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
+# Łukasz Jernas <deejay1@srem.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-09-21 06:07+0000\n"
+"PO-Revision-Date: 2015-09-20 11:49+0000\n"
+"Last-Translator: Łukasz Jernas <deejay1@srem.org>\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/openstack/horizon/"
 "language/pl_PL/)\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
@@ -47,10 +49,14 @@ msgid "Region"
 msgstr "Region"
 
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "Tonek uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
+msgstr "Token uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
 
 msgid "Unable to authenticate to any available projects."
 msgstr "Nie można uwierzytelnić do żadnego z istniejących projektów."
+
+#, fuzzy
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Nie można nawiązać połączenia z keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Nie można pobrać uwierzytelnionych projektów."
