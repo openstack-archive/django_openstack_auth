@@ -9,10 +9,10 @@
 # Łukasz Jernas <deejay1@srem.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-21 06:07+0000\n"
-"PO-Revision-Date: 2015-09-20 11:49+0000\n"
+"POT-Creation-Date: 2015-09-22 07:29+0000\n"
+"PO-Revision-Date: 2015-09-21 10:42+0000\n"
 "Last-Translator: Łukasz Jernas <deejay1@srem.org>\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/openstack/horizon/"
 "language/pl_PL/)\n"
@@ -45,8 +45,16 @@ msgstr ""
 msgid "Password"
 msgstr "Hasło"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Nie można przełączyć projektu dla użytkownika „%(username)s”."
+
 msgid "Region"
 msgstr "Region"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Przełączono na projekt „%(project_name)s”."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Token uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
@@ -54,9 +62,8 @@ msgstr "Token uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
 msgid "Unable to authenticate to any available projects."
 msgstr "Nie można uwierzytelnić do żadnego z istniejących projektów."
 
-#, fuzzy
 msgid "Unable to establish connection to keystone endpoint."
-msgstr "Nie można nawiązać połączenia z keystone."
+msgstr "Nie można nawiązać połączenia z usługą keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Nie można pobrać uwierzytelnionych projektów."
