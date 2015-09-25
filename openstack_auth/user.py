@@ -191,7 +191,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
 
     """
 
-    keystone_user_id = db_models.CharField(primary_key=True, max_length=256)
+    keystone_user_id = db_models.CharField(primary_key=True, max_length=255)
     USERNAME_FIELD = 'keystone_user_id'
 
     def __init__(self, id=None, token=None, user=None, tenant_id=None,
