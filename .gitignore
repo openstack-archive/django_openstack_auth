@@ -3,7 +3,7 @@
 *.egg-info
 *.mo
 .DS_STORE
-docs/_build
+doc/build
 build
 dist
 .tox
