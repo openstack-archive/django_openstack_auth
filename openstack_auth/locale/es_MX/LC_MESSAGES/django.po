@@ -1,29 +1,36 @@
-# Spanish (Mexico) translations for django_openstack_auth.
+# Translations template for django_openstack_auth.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the
 # django_openstack_auth project.
 #
 # Translators:
 # Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>, 2015
+# Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>, 2015. #zanata
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-20 20:19+0000\n"
+"POT-Creation-Date: 2015-09-30 16:43+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-09-18 03:50+0000\n"
 "Last-Translator: Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/openstack/horizon/"
 "language/es_MX/)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.0\n"
+"Language: es-MX\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Zanata 3.7.1\n"
 
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Se ha producido un error de autenticación. Por favor inténtelo de nuevo más "
 "tarde."
+
+msgid "Authenticate using"
+msgstr "Autentificar usando"
 
 msgid "Domain"
 msgstr "Dominio"
@@ -31,8 +38,19 @@ msgstr "Dominio"
 msgid "Invalid credentials."
 msgstr "Credenciales inválidas."
 
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+"Autentificación de soporte no puede ser determinada para manejar las "
+"credenciales proveidas."
+
 msgid "Password"
 msgstr "Contraseña"
+
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Cambio de proyecto fallido para el usuario \"%(username)s\"."
 
 msgid "Region"
 msgstr "Región."

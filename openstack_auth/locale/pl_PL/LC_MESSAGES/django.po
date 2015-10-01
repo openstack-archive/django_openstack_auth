@@ -1,25 +1,29 @@
-# Polish (Poland) translations for django_openstack_auth.
+# Translations template for django_openstack_auth.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the
 # django_openstack_auth project.
 #
 # Translators:
 # Łukasz Jernaś <deejay1@srem.org>, 2015
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
+# Łukasz Jernas <deejay1@srem.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-09-30 16:43+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-09-21 10:42+0000\n"
+"Last-Translator: Łukasz Jernas <deejay1@srem.org>\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/openstack/horizon/"
 "language/pl_PL/)\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.0\n"
+"Language: pl-PL\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Zanata 3.7.1\n"
 
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Wystąpił błąd w trakcie uwierzytelniania. Proszę spróbować później."
@@ -43,14 +47,25 @@ msgstr ""
 msgid "Password"
 msgstr "Hasło"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "Nie można przełączyć projektu dla użytkownika „%(username)s”."
+
 msgid "Region"
 msgstr "Region"
 
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "Przełączono na projekt „%(project_name)s”."
+
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "Tonek uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
+msgstr "Token uwierzytelniania wydany przez usługę uwierzytelniania wygasł."
 
 msgid "Unable to authenticate to any available projects."
 msgstr "Nie można uwierzytelnić do żadnego z istniejących projektów."
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Nie można nawiązać połączenia z usługą keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Nie można pobrać uwierzytelnionych projektów."

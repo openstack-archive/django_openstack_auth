@@ -1,4 +1,4 @@
-# French translations for django_openstack_auth.
+# Translations template for django_openstack_auth.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the
 # django_openstack_auth project.
@@ -10,23 +10,30 @@
 # Maxime COQUEREL <max.coquerel@gmail.com>, 2015
 # Patte D <pattedeph@gmail.com>, 2015
 # Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
+# JF Taltavull <jftalta@gmail.com>, 2015. #zanata
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 06:25+0000\n"
-"PO-Revision-Date: 2015-07-23 23:14+0000\n"
-"Last-Translator: Corinne Verheyde <cverheyd@hotmail.com>\n"
+"POT-Creation-Date: 2015-09-30 16:43+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-09-16 08:51+0000\n"
+"Last-Translator: JF Taltavull <jftalta@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/openstack/horizon/language/"
 "fr/)\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.0\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Zanata 3.7.1\n"
 
+#, fuzzy
 msgid "An error occurred authenticating. Please try again later."
-msgstr "Une erreur s'est produite. Veuillez réessayer ultérieurement."
+msgstr ""
+"Une erreur s'est produite pendant l'authentification. Veuillez réessayer "
+"ultérieurement."
 
 msgid "Authenticate using"
 msgstr "Mode d'authentification"
@@ -37,12 +44,11 @@ msgstr "Domaine"
 msgid "Invalid credentials."
 msgstr "Informations d'identification non valides."
 
+#, fuzzy
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
-msgstr ""
-"Aucune identification principale ne peut être définie pour gérer les "
-"informations d'identification fournies."
+msgstr "Aucun backend d'authentification pour gérer les informations fournies."
 
 msgid "Password"
 msgstr "Mot de Passe"
@@ -54,9 +60,9 @@ msgstr "Le changement de projet a échoué pour l'utilisateur \"%(username)s\"."
 msgid "Region"
 msgstr "Région"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
-msgstr "Bascule vers le projet \"%(project_name)s\" avec succès. "
+msgstr "Bascule vers le projet \"%(project_name)s\" réussie. "
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
@@ -66,7 +72,7 @@ msgid "Unable to authenticate to any available projects."
 msgstr "Authentification impossible quel que soit le projet."
 
 msgid "Unable to establish connection to keystone endpoint."
-msgstr "Impossible d'établir la connection avec le point de sortie keystone"
+msgstr "Impossible d'établir la connexion avec le point d'accès keystone."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Impossible de récupérer les projets autorisés."

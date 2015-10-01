@@ -1,4 +1,4 @@
-# Japanese translations for django_openstack_auth.
+# Translations template for django_openstack_auth.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the
 # django_openstack_auth project.
@@ -7,20 +7,25 @@
 # Akihiro Motoki <amotoki@gmail.com>, 2015
 # Shu Muto <shu-mutou@rf.jp.nec.com>, 2015
 # ykatabam <ykatabam@redhat.com>, 2015
+# ykatabam <ykatabam@redhat.com>, 2015
+# Akihiro Motoki <amotoki@gmail.com>, 2015. #zanata
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version:  Horizon\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-10 06:05+0000\n"
-"PO-Revision-Date: 2015-08-08 11:31+0000\n"
-"Last-Translator: ykatabam <ykatabam@redhat.com>\n"
+"POT-Creation-Date: 2015-09-30 16:43+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-09-17 07:27+0000\n"
+"Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/openstack/horizon/language/"
 "ja/)\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.0\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Zanata 3.7.1\n"
 
 msgid "An error occurred authenticating. Please try again later."
 msgstr "認証中にエラーが発生しました。後ほどもう一度お試しください。"
@@ -38,8 +43,8 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
-"指定された認証情報を処理するための認証バックエンドを決定することができません"
-"でした。"
+"指定された認証情報を処理する認証バックエンドを決定することができませんでし"
+"た。"
 
 msgid "Password"
 msgstr "パスワード"
@@ -53,7 +58,7 @@ msgstr "リージョン"
 
 #, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
-msgstr "プロジェクト \"%(project_name)s\" への切り替えが成功しました。"
+msgstr "プロジェクト \"%(project_name)s\" へ切り替えました。"
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity Service により発行された認証トークンの期限が切れました。"
