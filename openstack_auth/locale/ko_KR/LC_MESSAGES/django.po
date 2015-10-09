@@ -6,17 +6,16 @@
 # Translators:
 # Ian Y. Choi <ianyrchoi@gmail.com>, 2015
 # Sungjin Kang <potopro@gmail.com>, 2015
-# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 # Sungjin Kang <gang.sungjin@gmail.com>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev4\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev5\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-22 12:36+0000\n"
+"POT-Creation-Date: 2015-09-24 11:10+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-23 03:40+0000\n"
+"PO-Revision-Date: 2015-10-08 01:23+0000\n"
 "Last-Translator: Sungjin Kang <gang.sungjin@gmail.com>\n"
 "Language-Team: Korean (Korea) (http://www.transifex.com/openstack/horizon/"
 "language/ko_KR/)\n"
@@ -35,20 +34,19 @@ msgid "Domain"
 msgstr "도메인"
 
 msgid "Invalid credentials."
-msgstr "잘못된 자격 증명입니다."
+msgstr "올바르지 않은 자격 증명입니다."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
-msgstr ""
-"인증이 안된 백엔드는 제공된 credential를 처리하기위해 결정할 수 있습니다"
+msgstr "인증이 안된 백엔드는 제공된 credential를 이용하여 결정할 수 있습니다"
 
 msgid "Password"
 msgstr "암호"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
-msgstr "\"%(username)s\" 사용자에 대한 프로젝트 전환에 실패했습니다."
+msgstr "\"%(username)s\" 사용자 프로젝트 전환에 실패했습니다."
 
 msgid "Region"
 msgstr "지역"

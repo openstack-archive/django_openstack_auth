@@ -9,16 +9,15 @@
 # ykatabam <ykatabam@redhat.com>, 2015
 # ykatabam <ykatabam@redhat.com>, 2015
 # Akihiro Motoki <amotoki@gmail.com>, 2015. #zanata
-# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev4\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev5\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-22 12:36+0000\n"
+"POT-Creation-Date: 2015-09-24 11:10+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-17 07:27+0000\n"
+"PO-Revision-Date: 2015-10-08 01:23+0000\n"
 "Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/openstack/horizon/language/"
 "ja/)\n"
@@ -42,9 +41,7 @@ msgstr "無効な認証情報です。"
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
-msgstr ""
-"指定された認証情報を処理する認証バックエンドを決定することができませんでし"
-"た。"
+msgstr "指定された認証情報を処理する認証バックエンドが決定できませんでした。"
 
 msgid "Password"
 msgstr "パスワード"
@@ -64,7 +61,7 @@ msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity Service により発行された認証トークンの期限が切れました。"
 
 msgid "Unable to authenticate to any available projects."
-msgstr "どの利用可能なプロジェクトに対しても認証できませんでした。"
+msgstr "利用可能などのプロジェクトに対しても認証できませんでした。"
 
 msgid "Unable to establish connection to keystone endpoint."
 msgstr "Keystone エンドポイントへの接続を確立できません。"
@@ -76,4 +73,4 @@ msgid "User Name"
 msgstr "ユーザー名"
 
 msgid "You are not authorized for any projects."
-msgstr "どのプロジェクトに対しても認可されていません。"
+msgstr "どのプロジェクトに対しても権限がありません。"
