@@ -1,0 +1,73 @@
+# Translations template for django_openstack_auth.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the
+# django_openstack_auth project.
+#
+# Translators:
+# Karthik Suresh <kali.karthik@gmail.com>, 2015. #zanata
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: django_openstack_auth 2.0.1.dev4\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-10-01 22:12+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-10-09 12:10+0000\n"
+"Last-Translator: Karthik Suresh <kali.karthik@gmail.com>\n"
+"Language-Team: Kannada (http://www.transifex.com/openstack/horizon/language/"
+"kn/)\n"
+"Generated-By: Babel 2.0\n"
+"Language: kn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Zanata 3.7.1\n"
+
+msgid "An error occurred authenticating. Please try again later."
+msgstr "ಒಂದು ದೋಷ ಉಂಟಾಗಿದೆ, ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ."
+
+msgid "Authenticate using"
+msgstr "ಆತಿಥೇಯಗಣಕಗಳನ್ನು  ಉಪಯೋಗಿಸಿ "
+
+msgid "Domain"
+msgstr "ಡೊಮೇನ್"
+
+msgid "Invalid credentials."
+msgstr "ತಪ್ಪು  ಕ್ರೆಡೆಂಶಿಯಲ್‌ "
+
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr "ಈ  ಕ್ರೆಡೆಂಶಿಯಲ್‌ ಇಂದ ಯಾವ ಮೌಲ್ಯಗಳು ಒದಗಿಸಿಲ್ಲ "
+
+msgid "Password"
+msgstr "ಗುಪ್ತಪದ"
+
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "ಆ ಪರಿಯೋಜನೆಗಾಗಿ %(username)s ಬಳಕೆದಾರನ ಯಾವುದೆ ಪಾತ್ರವನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ. "
+
+msgid "Region"
+msgstr "ಪ್ರದೇಶ"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "ಪರಿಯೋಜನೆ  \"%(project_name)s\"  ಗೆ  ಬದಲಾವಣೆ ಯಶಸ್ವಿಯಾಗಿದೆ "
+
+msgid "The authentication token issued by the Identity service has expired."
+msgstr "ಗುರುತಿನ ಸೇವಯಿಂದ  ಬಂದ ದ್ರುಡೀಕರಣೆಯ ಟೋಕನ್ ಅವಧಿಯಾಗಿದೆ "
+
+msgid "Unable to authenticate to any available projects."
+msgstr "ಲಭ್ಯವಿರುವ ಎಲ್ಲಾ ಆತಿಥೇಯಗಣಕಗಳನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "ಕೀಸ್ಟೋನ್ ಜೊತೆ ಸಂಪರ್ಕ ವಿಫಲವಾಗಿದೆ "
+
+msgid "Unable to retrieve authorized projects."
+msgstr "ಅಧಿಕಾರದ ಪರಿಯೋಜನೆಗಳನ್ನೂ ಹಿಂಪಡೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ "
+
+msgid "User Name"
+msgstr "ಬಳಕೆದಾರ ಹೆಸರು"
+
+msgid "You are not authorized for any projects."
+msgstr "ಈ ಕಾರ್ಯಚಾರಣೆಯನ್ನು ನಡೆಸಲು ನಿನಗೆ  ಅಧಿಕಾರವಿಲ್ಲ."

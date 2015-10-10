@@ -4,17 +4,18 @@
 # django_openstack_auth project.
 #
 # Translators:
+# Amandeep Singh Saini <jimidar@gmail.com>, 2015. #zanata
 # OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
+"Project-Id-Version: django_openstack_auth 2.0.1.dev4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-30 16:43+0000\n"
+"POT-Creation-Date: 2015-10-01 22:12+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"PO-Revision-Date: 2015-10-02 10:00+0000\n"
+"Last-Translator: Amandeep Singh Saini <jimidar@gmail.com>\n"
 "Language-Team: Panjabi (Punjabi) (India) (http://www.transifex.com/openstack/"
 "horizon/language/pa_IN/)\n"
 "Generated-By: Babel 2.0\n"
@@ -25,11 +26,27 @@ msgstr ""
 msgid "An error occurred authenticating. Please try again later."
 msgstr "ਪ੍ਰਮਾਣਿਕਤਾ ਵੇਲੇ ਇੱਕ ਗਲਤੀ ਵਾਪਰੀ। ਕਿਰਪਾ ਕਰ ਕੇ ਬਾਅਦ ਵਿੱਚ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
+msgid "Authenticate using"
+msgstr "ਇਹ ਵਰਤ ਕੇ ਪ੍ਰਮਾਣਿਤ ਕਰੋ"
+
 msgid "Domain"
 msgstr "ਡੋਮੇਨ"
 
+msgid "Invalid credentials."
+msgstr "ਗਲਤ ਵੇਰਵੇ।"
+
+#, fuzzy
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr "ਮੁਹੱਈਆ ਕੀਤੇ ਵੇਰਵਿਆਂ ਨਾਲ ਨਜਿੱਠਣ ਲਈ ਕੋਈ ਵੀ ਪ੍ਰਮਾਣਿਕਤਾ ਪਿਛਲਾ ਸਿਰਾ"
+
 msgid "Password"
 msgstr "ਪਛਾਣ-ਸ਼ਬਦ"
+
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "\"%(username)s\" ਵਰਤੋਂ ਕਾਰ ਲਈ"
 
 msgid "Region"
 msgstr "ਖੇਤਰ"
@@ -39,6 +56,9 @@ msgstr "ਪਛਾਣ ਸੇਵਾ ਦੁਆਰਾ ਜਾਰੀ ਕਿਰਿਆ�
 
 msgid "Unable to authenticate to any available projects."
 msgstr "ਕਿਸੇ ਵੀ ਉਪਲੱਬਧ ਪ੍ਰਾਜੈਕਟਾਂ ਨਾਲ ਪ੍ਰਮਾਣਿਕ ਹੋਣ ਤੋਂ ਅਸਮਰੱਥ।"
+
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "ਕੀਅਸਟੋਨ ਅੰਤ ਬਿੰਦੂ ਨਾਲ ਸੰਬੰਧ ਸਥਾਪਤ ਕਰਨ ਤੋਂ ਅਸਮਰੱਥ।"
 
 msgid "Unable to retrieve authorized projects."
 msgstr "ਅਧਿਕਾਰਤ ਪ੍ਰੋਜੈਕਟਾਂ ਨੂੰ ਪ੍ਰਾਪਤ ਕਰਨ ਤੋਂ ਅਸਮਰੱਥ।"
