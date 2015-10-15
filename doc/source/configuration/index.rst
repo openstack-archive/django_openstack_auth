@@ -37,6 +37,28 @@ the site header when logged in.
 You should also define ``OPENSTACK_KEYSTONE_URL`` to indicate which of
 the regions is the default one.
 
+
+``DEFAULT_SERVICE_REGIONS``
+---------------------------
+
+Default: ``{}``
+
+The default service region is set on a per-endpoint basis, meaning that once
+the user logs into some Keystone endpoint, if a default service region is
+defined for it in this setting and exists within Keystone catalog, it will be
+set as the initial service region in this endpoint. By default it is an empty
+dictionary because upstream can neither predict service region names in a
+specific deployment, nor tell whether this behavior is desired. The key of the
+dictionary is a full url of a Keystone endpoint with version suffix, the value
+is a region name.
+
+Example::
+
+    DEFAULT_SERVICE_REGIONS = {
+        OPENSTACK_KEYSTONE_URL: 'RegionOne'
+    }
+
+
 ``OPENSTACK_API_VERSIONS``
 --------------------------
 

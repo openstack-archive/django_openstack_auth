@@ -372,7 +372,8 @@ def get_project_list(*args, **kwargs):
     return projects
 
 
-def default_services_region(service_catalog, request=None):
+def default_services_region(service_catalog, request=None,
+                            selected_region=None):
     """Returns the first endpoint region for first non-identity service.
 
     Extracted from the service catalog.
@@ -396,8 +397,7 @@ def default_services_region(service_catalog, request=None):
                 LOG.error('No regions can be found in the service catalog.')
                 return None
 
-        selected_region = None
-        if request:
+        if request and selected_region is None:
             selected_region = request.COOKIES.get('services_region',
                                                   available_regions[0])
         if selected_region not in available_regions:
