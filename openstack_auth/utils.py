@@ -12,14 +12,12 @@
 # limitations under the License.
 
 import datetime
-import functools
 import logging
 
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import middleware
 from django.contrib.auth import models
-from django.utils import decorators
 from django.utils import timezone
 from keystoneclient.auth.identity import v2 as v2_auth
 from keystoneclient.auth.identity import v3 as v3_auth
@@ -31,8 +29,6 @@ from six.moves.urllib import parse as urlparse
 
 
 LOG = logging.getLogger(__name__)
-
-_PROJECT_CACHE = {}
 
 _TOKEN_TIMEOUT_MARGIN = getattr(settings, 'TOKEN_TIMEOUT_MARGIN', 0)
 
@@ -114,37 +110,6 @@ def is_safe_url(url, host=None):
         return False
     netloc = urlparse.urlparse(url)[1]
     return not netloc or netloc == host
-
-
-def memoize_by_keyword_arg(cache, kw_keys):
-    """Memoize a function using the list of keyword argument name as its key.
-
-    Wrap a function so that results for any keyword argument tuple are stored
-    in 'cache'. Note that the keyword args to the function must be usable as
-    dictionary keys.
-
-    :param cache: Dictionary object to store the results.
-    :param kw_keys: List of keyword arguments names. The values are used
-                    for generating the key in the cache.
-    """
-    def _decorator(func):
-        @functools.wraps(func, assigned=decorators.available_attrs(func))
-        def wrapper(*args, **kwargs):
-            mem_args = [kwargs[key] for key in kw_keys if key in kwargs]
-            mem_args = '__'.join(str(mem_arg) for mem_arg in mem_args)
-            if not mem_args:
-                return func(*args, **kwargs)
-            if mem_args in cache:
-                return cache[mem_args]
-            result = func(*args, **kwargs)
-            cache[mem_args] = result
-            return result
-        return wrapper
-    return _decorator
-
-
-def remove_project_cache(token):
-    _PROJECT_CACHE.pop(token, None)
 
 
 # Helper for figuring out keystone version
@@ -312,7 +277,6 @@ def get_token_auth_plugin(auth_url, token, project_id=None):
                              reauthenticate=False)
 
 
-@memoize_by_keyword_arg(_PROJECT_CACHE, ('token', ))
 def get_project_list(*args, **kwargs):
     is_federated = kwargs.get('is_federated', False)
     sess = kwargs.get('session') or get_session()
