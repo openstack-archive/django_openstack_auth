@@ -282,12 +282,22 @@ def url_path_replace(url, old, new, count=None):
 
 
 def fix_auth_url_version(auth_url):
-    """Fix up the auth url if an invalid version prefix was given.
+    """Fix up the auth url if an invalid or no version prefix was given.
 
     People still give a v2 auth_url even when they specify that they want v3
-    authentication. Fix the URL to say v3. This should be smarter and take the
-    base, unversioned URL and discovery.
+    authentication. Fix the URL to say v3 in this case and add version if it is
+    missing entirely. This should be smarter and use discovery.
     """
+
+    # Check for empty path component in endpoint URL and add keystone version
+    # to endpoint: as of Kilo, the identity URLs returned by Keystone might no
+    # longer contain API versions, leaving the version choice up to the user.
+    if urlparse.urlparse(auth_url)[3] == '':
+        if get_keystone_version() >= 3:
+            auth_url = urlparse.urljoin(auth_url, 'v3')
+        else:
+            auth_url = urlparse.urljoin(auth_url, 'v2.0')
+
     if get_keystone_version() >= 3:
         if has_in_url_path(auth_url, "/v2.0"):
             LOG.warning("The settings.py file points to a v2.0 keystone "
