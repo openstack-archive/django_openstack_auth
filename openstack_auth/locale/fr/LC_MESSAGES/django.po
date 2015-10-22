@@ -11,25 +11,24 @@
 # Patte D <pattedeph@gmail.com>, 2015
 # Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
 # JF Taltavull <jftalta@gmail.com>, 2015. #zanata
+# Kevin Tibi <kodokuu@gmail.com>, 2015. #zanata
 # OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev2\n"
+"Project-Id-Version: django_openstack_auth 2.0.2.dev1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-30 16:43+0000\n"
+"POT-Creation-Date: 2015-10-12 16:02+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-16 08:51+0000\n"
+"PO-Revision-Date: 2015-10-05 02:53+0000\n"
 "Last-Translator: JF Taltavull <jftalta@gmail.com>\n"
-"Language-Team: French (http://www.transifex.com/openstack/horizon/language/"
-"fr/)\n"
-"Generated-By: Babel 2.0\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Generated-By: Babel 2.0\n"
 "X-Generator: Zanata 3.7.1\n"
+"Language-Team: French\n"
 
-#, fuzzy
 msgid "An error occurred authenticating. Please try again later."
 msgstr ""
 "Une erreur s'est produite pendant l'authentification. Veuillez réessayer "
@@ -44,7 +43,6 @@ msgstr "Domaine"
 msgid "Invalid credentials."
 msgstr "Informations d'identification non valides."
 
-#, fuzzy
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
@@ -60,7 +58,7 @@ msgstr "Le changement de projet a échoué pour l'utilisateur \"%(username)s\"."
 msgid "Region"
 msgstr "Région"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
 msgstr "Bascule vers le projet \"%(project_name)s\" réussie. "
 
