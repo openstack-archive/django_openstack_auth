@@ -298,13 +298,18 @@ def fix_auth_url_version(auth_url):
     return auth_url
 
 
-def get_token_auth_plugin(auth_url, token, project_id=None):
+def get_token_auth_plugin(auth_url, token, project_id=None, domain_name=None):
     if get_keystone_version() >= 3:
-        return v3_auth.Token(auth_url=auth_url,
-                             token=token,
-                             project_id=project_id,
-                             reauthenticate=False)
-
+        if domain_name:
+            return v3_auth.Token(auth_url=auth_url,
+                                 token=token,
+                                 domain_name=domain_name,
+                                 reauthenticate=False)
+        else:
+            return v3_auth.Token(auth_url=auth_url,
+                                 token=token,
+                                 project_id=project_id,
+                                 reauthenticate=False)
     else:
         return v2_auth.Token(auth_url=auth_url,
                              token=token,
@@ -388,3 +393,8 @@ def get_endpoint_region(endpoint):
     Keystone V2 and V3.
     """
     return endpoint.get('region_id') or endpoint.get('region')
+
+
+def using_cookie_backed_sessions():
+    engine = getattr(settings, 'SESSION_ENGINE', '')
+    return "signed_cookies" in engine
