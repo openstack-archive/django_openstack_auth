@@ -496,7 +496,8 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         return auth_v3.Password(auth_url=url,
                                 password=password,
                                 username=username,
-                                user_domain_name=DEFAULT_DOMAIN)
+                                user_domain_name=DEFAULT_DOMAIN,
+                                unscoped=True)
 
     def _create_token_auth(self, project_id, token=None, url=None):
         if not token:

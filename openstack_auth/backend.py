@@ -138,11 +138,9 @@ class KeystoneBackend(object):
         request = kwargs.get('request')
 
         if request:
-            # Check if token is automatically scoped to default_project
-            # grab the project from this token, to use as a default
-            # if no recent_project is found in the cookie
-            recent_project = request.COOKIES.get('recent_project',
-                                                 unscoped_auth_ref.project_id)
+            # Grab recent_project found in the cookie, try to scope
+            # to the last project used.
+            recent_project = request.COOKIES.get('recent_project')
 
         # if a most recent project was found, try using it first
         if recent_project:
