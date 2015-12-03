@@ -21,6 +21,7 @@ from oslo_config import cfg
 from oslo_policy import opts as policy_opts
 from oslo_policy import policy
 
+from openstack_auth import user as auth_user
 from openstack_auth import utils as auth_utils
 
 LOG = logging.getLogger(__name__)
@@ -123,37 +124,63 @@ def check(actions, request, target=None):
     # same for user_id
     if target.get('user_id') is None:
         target['user_id'] = user.id
-    # same for domain_id
-    if target.get('domain_id') is None:
-        target['domain_id'] = user.domain_id
 
-    credentials = _user_to_credentials(request, user)
+    domain_id_keys = [
+        'domain_id',
+        'project.domain_id',
+        'user.domain_id',
+        'group.domain_id'
+    ]
+    # populates domain id keys with user's current domain id
+    for key in domain_id_keys:
+        if target.get(key) is None:
+            target[key] = user.user_domain_id
+
+    credentials = _user_to_credentials(user)
+    domain_credentials = _domain_to_credentials(request, user)
+    # if there is a domain token use the domain_id instead of the user's domain
+    if domain_credentials:
+        credentials['domain_id'] = domain_credentials.get('domain_id')
 
     enforcer = _get_enforcer()
 
     for action in actions:
         scope, action = action[0], action[1]
         if scope in enforcer:
-            # if any check fails return failure
-            if not enforcer[scope].enforce(action, target, credentials):
-                # to match service implementations, if a rule is not found,
-                # use the default rule for that service policy
-                #
-                # waiting to make the check because the first call to
-                # enforce loads the rules
-                if action not in enforcer[scope].rules:
-                    if not enforcer[scope].enforce('default',
-                                                   target, credentials):
-                        return False
-                else:
-                    return False
+            # this is for handling the v3 policy file and will only be
+            # needed when a domain scoped token is present
+            if scope == 'identity' and domain_credentials:
+                # use domain credentials
+                return _check_credentials(
+                    enforcer[scope], action, target, domain_credentials)
+
+            # use project credentials
+            return _check_credentials(
+                enforcer[scope], action, target, credentials)
+
         # if no policy for scope, allow action, underlying API will
         # ultimately block the action if not permitted, treat as though
         # allowed
     return True
 
 
-def _user_to_credentials(request, user):
+def _check_credentials(enforcer_scope, action, target, credentials):
+    is_valid = True
+    if not enforcer_scope.enforce(action, target, credentials):
+        # to match service implementations, if a rule is not found,
+        # use the default rule for that service policy
+        #
+        # waiting to make the check because the first call to
+        # enforce loads the rules
+        if action not in enforcer_scope.rules:
+            if not enforcer_scope.enforce('default', target, credentials):
+                is_valid = False
+        else:
+            is_valid = False
+    return is_valid
+
+
+def _user_to_credentials(user):
     if not hasattr(user, "_credentials"):
         roles = [role['name'] for role in user.roles]
         user._credentials = {'user_id': user.id,
@@ -165,3 +192,25 @@ def _user_to_credentials(request, user):
                              'is_admin': user.is_superuser,
                              'roles': roles}
     return user._credentials
+
+
+def _domain_to_credentials(request, user):
+    if not hasattr(user, "_domain_credentials"):
+        try:
+            domain_auth_ref = request.session.get('domain_token')
+
+            # no domain role or not running on V3
+            if not domain_auth_ref:
+                return None
+            domain_user = auth_user.create_user_from_token(
+                request, auth_user.Token(domain_auth_ref),
+                domain_auth_ref.service_catalog.url_for(endpoint_type=None))
+            user._domain_credentials = _user_to_credentials(domain_user)
+
+            # uses the domain_id associated with the domain_user
+            user._domain_credentials['domain_id'] = domain_user.domain_id
+
+        except Exception:
+            LOG.error("Failed to create user from domain scoped token.")
+            return None
+    return user._domain_credentials
