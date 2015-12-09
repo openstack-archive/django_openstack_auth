@@ -183,8 +183,6 @@ def logout(request, login_url=None, **kwargs):
 
 def delete_token(endpoint, token_id):
     """Delete a token."""
-    utils.remove_project_cache(token_id)
-
     try:
         endpoint = utils.fix_auth_url_version(endpoint)
 
