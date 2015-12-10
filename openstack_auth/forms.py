@@ -14,7 +14,6 @@
 import collections
 import logging
 
-import django
 from django.conf import settings
 from django.contrib.auth import authenticate  # noqa
 from django.contrib.auth import forms as django_auth_forms
@@ -94,13 +93,8 @@ class Login(django_auth_forms.AuthenticationForm):
             msg = ("Websso is enabled but horizon is not configured to work " +
                    "with keystone version 3 or above.")
             LOG.warning(msg)
-        # Starting from 1.7 Django uses OrderedDict for fields and keyOrder
-        # no longer works for it
-        if django.VERSION >= (1, 7):
-            self.fields = collections.OrderedDict(
-                (key, self.fields[key]) for key in fields_ordering)
-        else:
-            self.fields.keyOrder = fields_ordering
+        self.fields = collections.OrderedDict(
+            (key, self.fields[key]) for key in fields_ordering)
 
     @staticmethod
     def get_region_choices():

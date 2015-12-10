@@ -13,6 +13,7 @@
 
 import uuid
 
+import django
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
@@ -362,7 +363,10 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.get(url, form_data)
 
         if next:
-            expected_url = 'http://testserver%s' % next
+            if django.VERSION >= (1, 9):
+                expected_url = next
+            else:
+                expected_url = 'http://testserver%s' % next
             self.assertEqual(response['location'], expected_url)
         else:
             self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
@@ -408,7 +412,10 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.get(url, form_data)
 
         if next:
-            expected_url = 'http://testserver%s' % next
+            if django.VERSION >= (1, 9):
+                expected_url = next
+            else:
+                expected_url = 'http://testserver%s' % next
             self.assertEqual(response['location'], expected_url)
         else:
             self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
@@ -719,7 +726,10 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.get(url, form_data)
 
         if next:
-            expected_url = 'http://testserver%s' % next
+            if django.VERSION >= (1, 9):
+                expected_url = next
+            else:
+                expected_url = 'http://testserver%s' % next
             self.assertEqual(response['location'], expected_url)
         else:
             self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
@@ -764,7 +774,10 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.get(url, form_data)
 
         if next:
-            expected_url = 'http://testserver%s' % next
+            if django.VERSION >= (1, 9):
+                expected_url = next
+            else:
+                expected_url = 'http://testserver%s' % next
             self.assertEqual(response['location'], expected_url)
         else:
             self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
