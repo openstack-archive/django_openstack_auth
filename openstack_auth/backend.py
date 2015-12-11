@@ -20,7 +20,7 @@ import pytz
 from django.conf import settings
 from django.utils.module_loading import import_string  # noqa
 from django.utils.translation import ugettext_lazy as _
-from keystoneclient import exceptions as keystone_exceptions
+from keystoneauth1 import exceptions as keystone_exceptions
 
 from openstack_auth import exceptions
 from openstack_auth import user as auth_user
@@ -110,7 +110,7 @@ class KeystoneBackend(object):
 
         try:
             unscoped_auth_ref = unscoped_auth.get_access(session)
-        except keystone_exceptions.ConnectionRefused as exc:
+        except keystone_exceptions.ConnectFailure as exc:
             LOG.error(str(exc))
             msg = _('Unable to establish connection to keystone endpoint.')
             raise exceptions.KeystoneAuthException(msg)
@@ -224,7 +224,8 @@ class KeystoneBackend(object):
         user = auth_user.create_user_from_token(
             request,
             auth_user.Token(scoped_auth_ref, unscoped_token=unscoped_token),
-            scoped_auth_ref.service_catalog.url_for(endpoint_type=interface))
+            scoped_auth_ref.service_catalog.url_for(service_type='identity',
+                                                    interface=interface))
 
         if request is not None:
             request.session['unscoped_token'] = unscoped_token

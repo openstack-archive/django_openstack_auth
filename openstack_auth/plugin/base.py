@@ -13,7 +13,7 @@
 import abc
 
 from django.utils.translation import ugettext_lazy as _
-from keystoneclient import exceptions as keystone_exceptions
+from keystoneauth1 import exceptions as keystone_exceptions
 from keystoneclient.v2_0 import client as v2_client
 from keystoneclient.v3 import client as v3_client
 import six

@@ -18,11 +18,11 @@ from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django import http
 from django import test
-from keystoneclient.auth.identity import v2 as auth_v2
-from keystoneclient.auth.identity import v3 as auth_v3
-from keystoneclient.auth import token_endpoint
-from keystoneclient import exceptions as keystone_exceptions
-from keystoneclient import session
+from keystoneauth1 import exceptions as keystone_exceptions
+from keystoneauth1.identity import v2 as v2_auth
+from keystoneauth1.identity import v3 as v3_auth
+from keystoneauth1 import session
+from keystoneauth1 import token_endpoint
 from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 import mock
@@ -100,7 +100,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
     def setUp(self):
         super(OpenStackAuthTestsV2, self).setUp()
 
-        if self.interface:
+        if getattr(self, 'interface', None):
             override = self.settings(OPENSTACK_ENDPOINT_TYPE=self.interface)
             override.enable()
             self.addCleanup(override.disable)
@@ -116,8 +116,8 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         settings.OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v2.0"
 
         self.mox.StubOutClassWithMocks(token_endpoint, 'Token')
-        self.mox.StubOutClassWithMocks(auth_v2, 'Token')
-        self.mox.StubOutClassWithMocks(auth_v2, 'Password')
+        self.mox.StubOutClassWithMocks(v2_auth, 'Token')
+        self.mox.StubOutClassWithMocks(v2_auth, 'Password')
         self.mox.StubOutClassWithMocks(client_v2, 'Client')
 
     def _mock_unscoped_list_tenants(self, client, tenants):
@@ -152,7 +152,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         if not url:
             url = settings.OPENSTACK_KEYSTONE_URL
 
-        return auth_v2.Password(auth_url=url,
+        return v2_auth.Password(auth_url=url,
                                 password=password,
                                 username=username)
 
@@ -163,7 +163,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         if not url:
             url = settings.OPENSTACK_KEYSTONE_URL
 
-        return auth_v2.Token(auth_url=url,
+        return v2_auth.Token(auth_url=url,
                              token=token,
                              tenant_id=project_id,
                              reauthenticate=False)
@@ -332,7 +332,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         scoped = self.data.scoped_access_info
         sc = self.data.service_catalog
         et = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
-        endpoint = sc.url_for(endpoint_type=et)
+        endpoint = sc.url_for(service_type='identity', interface=et)
 
         form_data = self.get_form_data(user)
 
@@ -354,7 +354,7 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
 
         url = reverse('switch_tenants', args=[tenant.id])
 
-        scoped['token']['tenant']['id'] = self.data.tenant_two.id
+        scoped._token['tenant']['id'] = self.data.tenant_two.id
 
         if next:
             form_data.update({auth.REDIRECT_FIELD_NAME: next})
@@ -492,7 +492,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         if not url:
             url = settings.OPENSTACK_KEYSTONE_URL
 
-        return auth_v3.Password(auth_url=url,
+        return v3_auth.Password(auth_url=url,
                                 password=password,
                                 username=username,
                                 user_domain_name=DEFAULT_DOMAIN,
@@ -507,12 +507,12 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
             url = settings.OPENSTACK_KEYSTONE_URL
 
         if domain_name:
-            return auth_v3.Token(auth_url=url,
+            return v3_auth.Token(auth_url=url,
                                  token=token,
                                  domain_name=domain_name,
                                  reauthenticate=False)
         else:
-            return auth_v3.Token(auth_url=url,
+            return v3_auth.Token(auth_url=url,
                                  token=token,
                                  project_id=project_id,
                                  reauthenticate=False)
@@ -535,8 +535,8 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         settings.OPENSTACK_KEYSTONE_URL = "http://localhost:5000/v3"
 
         self.mox.StubOutClassWithMocks(token_endpoint, 'Token')
-        self.mox.StubOutClassWithMocks(auth_v3, 'Token')
-        self.mox.StubOutClassWithMocks(auth_v3, 'Password')
+        self.mox.StubOutClassWithMocks(v3_auth, 'Token')
+        self.mox.StubOutClassWithMocks(v3_auth, 'Password')
         self.mox.StubOutClassWithMocks(client_v3, 'Client')
 
     def test_login(self):
@@ -696,7 +696,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self._mock_scoped_client_for_tenant(
             scoped,
             project.id,
-            url=sc.url_for(endpoint_type=et),
+            url=sc.url_for(service_type='identity', interface=et),
             client=False)
 
         self.mox.ReplayAll()
@@ -711,7 +711,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
 
         url = reverse('switch_tenants', args=[project.id])
 
-        scoped['project']['id'] = self.data.project_two.id
+        scoped._project['id'] = self.data.project_two.id
 
         if next:
             form_data.update({auth.REDIRECT_FIELD_NAME: next})
@@ -800,7 +800,7 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
         if not url:
             url = settings.OPENSTACK_KEYSTONE_URL
 
-        return auth_v3.Token(auth_url=url,
+        return v3_auth.Token(auth_url=url,
                              token=token,
                              project_id=project_id,
                              reauthenticate=False)
@@ -854,8 +854,8 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
         }
 
         self.mox.StubOutClassWithMocks(token_endpoint, 'Token')
-        self.mox.StubOutClassWithMocks(auth_v3, 'Token')
-        self.mox.StubOutClassWithMocks(auth_v3, 'Password')
+        self.mox.StubOutClassWithMocks(v3_auth, 'Token')
+        self.mox.StubOutClassWithMocks(v3_auth, 'Password')
         self.mox.StubOutClassWithMocks(client_v3, 'Client')
 
     def test_login_form(self):
