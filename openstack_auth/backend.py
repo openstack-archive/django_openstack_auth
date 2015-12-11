@@ -276,8 +276,8 @@ class KeystoneBackend(object):
             return set()
         # TODO(gabrielhurley): Integrate policy-driven RBAC
         #                      when supported by Keystone.
-        role_perms = set(["openstack.roles.%s" % role['name'].lower()
-                          for role in user.roles])
+        role_perms = {"openstack.roles.%s" % role['name'].lower()
+                      for role in user.roles}
 
         services = []
         for service in user.service_catalog:
@@ -289,8 +289,8 @@ class KeystoneBackend(object):
                                in service.get('endpoints', [])]
             if user.services_region in service_regions:
                 services.append(service_type.lower())
-        service_perms = set(["openstack.services.%s" % service
-                             for service in services])
+        service_perms = {"openstack.services.%s" % service
+                         for service in services}
         return role_perms | service_perms
 
     def has_perm(self, user, perm, obj=None):

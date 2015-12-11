@@ -293,12 +293,12 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
 
         Returns ``True`` or ``False``.
         """
-        admin_roles = [role.lower() for role in getattr(
+        admin_roles = {role.lower() for role in getattr(
             settings,
             'OPENSTACK_KEYSTONE_ADMIN_ROLES',
-            ['admin'])]
-        user_roles = [role['name'].lower() for role in self.roles]
-        return True if set(admin_roles).intersection(user_roles) else False
+            ['admin'])}
+        user_roles = {role['name'].lower() for role in self.roles}
+        return not admin_roles.isdisjoint(user_roles)
 
     @property
     def authorized_tenants(self):
