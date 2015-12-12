@@ -114,6 +114,8 @@ def login(request, template_name=None, extra_context=None, **kwargs):
     if request.method == "POST":
         utils.set_response_cookie(res, 'login_region',
                                   request.POST.get('region', ''))
+        utils.set_response_cookie(res, 'login_domain',
+                                  request.POST.get('domain', ''))
 
     # Set the session data here because django's session key rotation
     # will erase it if we set it earlier.
