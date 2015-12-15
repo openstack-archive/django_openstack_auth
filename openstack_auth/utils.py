@@ -112,6 +112,13 @@ def is_safe_url(url, host=None):
     return not netloc or netloc == host
 
 
+# DEPRECATED -- Mitaka
+# This method definition is included to prevent breaking backward compatibility
+# The original functionality was problematic and has been removed.
+def remove_project_cache(token):
+    pass
+
+
 # Helper for figuring out keystone version
 # Implementation will change when API version discovery is available
 def get_keystone_version():
