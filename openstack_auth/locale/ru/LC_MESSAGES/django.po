@@ -9,23 +9,24 @@
 # Ilya Alekseyev <ilyaalekseyev@acm.org>, 2015
 # Ilya Shakhat <shakhat@gmail.com>, 2015
 # Nikita Burtsev, 2015
+# Kirill Zaitsev <k.zaitsev@me.com>, 2015. #zanata
 # OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev11\n"
+"Project-Id-Version: django_openstack_auth 2.1.2.dev1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-16 17:42+0000\n"
+"POT-Creation-Date: 2015-12-21 16:19+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-08-19 01:27+0000\n"
-"Last-Translator: Alexander Vasiliev <avasiliev@asdco.ru>\n"
+"PO-Revision-Date: 2015-12-21 09:13+0000\n"
+"Last-Translator: Kirill Zaitsev <k.zaitsev@me.com>\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.3\n"
 "Language-Team: Russian\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -74,6 +75,9 @@ msgstr "Невозможно получить авторизованные пр�
 
 msgid "User Name"
 msgstr "Имя пользователя"
+
+msgid "You are not authorized for any projects or domains."
+msgstr "Вы не авторизованы ни в одном проекте или домене."
 
 msgid "You are not authorized for any projects."
 msgstr "Вы не авторизованы ни в одном проекте."
