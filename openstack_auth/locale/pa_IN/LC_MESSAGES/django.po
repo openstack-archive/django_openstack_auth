@@ -4,22 +4,23 @@
 # django_openstack_auth project.
 #
 # Translators:
+# A S Alam <aalam@fedoraproject.org>, 2015. #zanata
 # Amandeep Singh Saini <jimidar@gmail.com>, 2015. #zanata
 # OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev11\n"
+"Project-Id-Version: django_openstack_auth 2.1.2.dev2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-16 17:42+0000\n"
+"POT-Creation-Date: 2015-12-22 23:29+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-10-02 10:00+0000\n"
-"Last-Translator: Amandeep Singh Saini <jimidar@gmail.com>\n"
+"PO-Revision-Date: 2015-12-28 03:33+0000\n"
+"Last-Translator: A S Alam <aalam@fedoraproject.org>\n"
 "Language: pa-IN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.3\n"
 "Language-Team: Punjabi (India)\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -34,18 +35,27 @@ msgstr "ਡੋਮੇਨ"
 msgid "Invalid credentials."
 msgstr "ਗਲਤ ਵੇਰਵੇ।"
 
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr "ਦਿੱਤੀਆਂ ਸਨਦਾਂ ਨੂੰ ਨਿਪਟਾਉਣ ਲਈ ਕੋਈ ਪਰਮਾਣਕਿਤਾ ਬੈਕਐਂਡ ਪਤਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।"
+
 msgid "Password"
-msgstr "ਪਛਾਣ-ਸ਼ਬਦ"
+msgstr "ਪਾਸਵਰਡ"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
-msgstr "\"%(username)s\" ਵਰਤੋਂ ਕਾਰ ਲਈ"
+msgstr "\"%(username)s\" ਵਰਤੋਂ ਕਾਰ ਲਈ ਪ੍ਰੋਜੈਕਟ ਬਦਲਣਾ ਫੇਲ੍ਹ ਹੈ।"
 
 msgid "Region"
 msgstr "ਖੇਤਰ"
 
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "\"%(project_name)s\" ਪ੍ਰੋਜੈਕਟ ਲਈ ਬਦਲਣਾ ਕਾਮਯਾਬ ਹੈ।"
+
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "ਪਛਾਣ ਸੇਵਾ ਦੁਆਰਾ ਜਾਰੀ ਕਿਰਿਆਸ਼ੀਲਤਾ ਟੋਕਨ ਮਿਆਦ ਪੁਗਾ ਚੁੱਕਾ ਹੈ।"
+msgstr "ਪਛਾਣ ਸੇਵਾ ਵਲੋਂ ਜਾਰੀ ਕੀਤੇ ਪਰਮਾਣਕਿਤਾ ਟੋਕਨ ਦੀ ਮਿਆਦ ਪੁੱਗ ਚੁੱਕੀ ਹੈ।"
 
 msgid "Unable to authenticate to any available projects."
 msgstr "ਕਿਸੇ ਵੀ ਉਪਲੱਬਧ ਪ੍ਰਾਜੈਕਟਾਂ ਨਾਲ ਪ੍ਰਮਾਣਿਕ ਹੋਣ ਤੋਂ ਅਸਮਰੱਥ।"
@@ -57,7 +67,10 @@ msgid "Unable to retrieve authorized projects."
 msgstr "ਅਧਿਕਾਰਤ ਪ੍ਰੋਜੈਕਟਾਂ ਨੂੰ ਪ੍ਰਾਪਤ ਕਰਨ ਤੋਂ ਅਸਮਰੱਥ।"
 
 msgid "User Name"
-msgstr "ਵਰਤੋਂਕਾਰ ਨਾਮ"
+msgstr "ਵਰਤੋਂਕਾਰ ਨਾਂ"
+
+msgid "You are not authorized for any projects or domains."
+msgstr "ਤੁਸੀਂ ਕਿਸੇ ਵੀ ਪ੍ਰੋਜੈਕਟ ਜਾਂ ਡੋਮੇਨ ਲਈ ਅਧਿਕਾਰਿਤ ਨਹੀਂ ਹੋ।"
 
 msgid "You are not authorized for any projects."
 msgstr "ਤੁਸੀਂ ਕੋਈ ਵੀ ਪ੍ਰਾਜੈਕਟਾਂ ਲਈ ਅਧਿਕਾਰਤ ਨਹੀਂ ਹੋ।"
