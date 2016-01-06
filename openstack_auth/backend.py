@@ -100,9 +100,9 @@ class KeystoneBackend(object):
         else:
             msg = _('No authentication backend could be determined to '
                     'handle the provided credentials.')
-            LOG.warn('No authentication backend could be determined to '
-                     'handle the provided credentials. This is likely a '
-                     'configuration error that should be addressed.')
+            LOG.warning('No authentication backend could be determined to '
+                        'handle the provided credentials. This is likely a '
+                        'configuration error that should be addressed.')
             raise exceptions.KeystoneAuthException(msg)
 
         session = utils.get_session()

@@ -58,8 +58,8 @@ def _get_enforcer():
                 LOG.debug("adding enforcer for service: %s" % service)
                 _ENFORCER[service] = enforcer
             else:
-                LOG.warn("policy file for service: %s not found at %s" %
-                         (service, enforcer.policy_path))
+                LOG.warning("policy file for service: %s not found at %s" %
+                            (service, enforcer.policy_path))
     return _ENFORCER
 
 
