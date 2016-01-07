@@ -13,6 +13,7 @@
 
 import datetime
 import logging
+import re
 
 from django.conf import settings
 from django.contrib import auth
@@ -278,6 +279,16 @@ def fix_auth_url_version(auth_url):
             auth_url = url_path_replace(auth_url, "/v2.0", "/v3", 1)
 
     return auth_url
+
+
+def clean_up_auth_url(auth_url):
+    """Clean up the auth url to extract the exact Keystone URL"""
+
+    # NOTE(mnaser): This drops the query and fragment because we're only
+    #               trying to extract the Keystone URL.
+    scheme, netloc, path, query, fragment = urlparse.urlsplit(auth_url)
+    return urlparse.urlunsplit((
+        scheme, netloc, re.sub(r'/auth.*', '', path), '', ''))
 
 
 def get_token_auth_plugin(auth_url, token, project_id=None, domain_name=None):
