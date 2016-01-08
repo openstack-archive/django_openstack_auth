@@ -204,7 +204,7 @@ def _domain_to_credentials(request, user):
                 return None
             domain_user = auth_user.create_user_from_token(
                 request, auth_user.Token(domain_auth_ref),
-                domain_auth_ref.service_catalog.url_for(endpoint_type=None))
+                domain_auth_ref.service_catalog.url_for(interface=None))
             user._domain_credentials = _user_to_credentials(domain_user)
 
             # uses the domain_id associated with the domain_user
