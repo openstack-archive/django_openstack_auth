@@ -84,18 +84,17 @@ class Token(object):
         # Token-related attributes
         self.id = auth_ref.auth_token
         self.unscoped_token = unscoped_token
-        if (_TOKEN_HASH_ENABLED and
-                (keystone_cms.is_asn1_token(self.id)
-                    or keystone_cms.is_pkiz(self.id))):
+        if _TOKEN_HASH_ENABLED and self._is_pki_token(self.id):
             algorithm = getattr(settings, 'OPENSTACK_TOKEN_HASH_ALGORITHM',
                                 'md5')
             hasher = hashlib.new(algorithm)
             hasher.update(self.id)
             self.id = hasher.hexdigest()
-            # If the scoped_token is long, then unscoped_token must be too.
-            hasher = hashlib.new(algorithm)
-            hasher.update(self.unscoped_token)
-            self.unscoped_token = hasher.hexdigest()
+            # Only hash unscoped token if needed
+            if self._is_pki_token(self.unscoped_token):
+                hasher = hashlib.new(algorithm)
+                hasher.update(self.unscoped_token)
+                self.unscoped_token = hasher.hexdigest()
         self.expires = auth_ref.expires
 
         # Project-related attributes
@@ -115,6 +114,11 @@ class Token(object):
         self.is_federated = auth_ref.is_federated
         self.roles = [{'name': role} for role in auth_ref.role_names]
         self.serviceCatalog = auth_ref.service_catalog.catalog
+
+    def _is_pki_token(self, token):
+        """Determines if this is a pki-based token (pki or pkiz)"""
+        return (keystone_cms.is_ans1_token(token)
+                or keystone_cms.is_pkiz(token))
 
 
 class User(models.AbstractBaseUser, models.AnonymousUser):
