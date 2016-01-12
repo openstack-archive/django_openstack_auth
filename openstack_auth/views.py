@@ -11,7 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import logging
-import re
 
 import django
 from django.conf import settings
@@ -135,7 +134,7 @@ def login(request, template_name=None, extra_context=None, **kwargs):
 def websso(request):
     """Logs a user in using a token from Keystone's POST."""
     referer = request.META.get('HTTP_REFERER', settings.OPENSTACK_KEYSTONE_URL)
-    auth_url = re.sub(r'/auth.*', '', referer)
+    auth_url = utils.clean_up_auth_url(referer)
     token = request.POST.get('token')
     try:
         request.user = auth.authenticate(request=request, auth_url=auth_url,

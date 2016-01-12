@@ -918,6 +918,25 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
         response = self.client.post(url, form_data)
         self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
 
+    def test_websso_login_with_auth_in_url(self):
+        settings.OPENSTACK_KEYSTONE_URL = 'http://auth.openstack.org:5000/v3'
+
+        projects = [self.data.project_one, self.data.project_two]
+        unscoped = self.data.federated_unscoped_access_info
+        token = unscoped.auth_token
+
+        form_data = {'token': token}
+        self._mock_unscoped_client_list_projects(unscoped, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+
+        self.mox.ReplayAll()
+
+        url = reverse('websso')
+
+        # POST to the page to log in.
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
 load_tests = load_tests_apply_scenarios
 
 
