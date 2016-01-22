@@ -297,10 +297,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
 
         Returns ``True`` or ``False``.
         """
-        admin_roles = {role.lower() for role in getattr(
-            settings,
-            'OPENSTACK_KEYSTONE_ADMIN_ROLES',
-            ['admin'])}
+        admin_roles = utils.get_admin_roles()
         user_roles = {role['name'].lower() for role in self.roles}
         return not admin_roles.isdisjoint(user_roles)
 

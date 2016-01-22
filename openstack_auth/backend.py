@@ -294,7 +294,7 @@ class KeystoneBackend(object):
             return set()
         # TODO(gabrielhurley): Integrate policy-driven RBAC
         #                      when supported by Keystone.
-        role_perms = {"openstack.roles.%s" % role['name'].lower()
+        role_perms = {utils.get_role_permission(role['name'])
                       for role in user.roles}
 
         services = []

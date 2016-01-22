@@ -390,3 +390,48 @@ def get_endpoint_region(endpoint):
 def using_cookie_backed_sessions():
     engine = getattr(settings, 'SESSION_ENGINE', '')
     return "signed_cookies" in engine
+
+
+def get_admin_roles():
+    """Common function for getting the admin roles from settings
+
+       Returns:
+        Set object including all admin roles.
+        If there is no role, this will return empty.
+        {
+            "foo", "bar", "admin"
+        }
+    """
+    admin_roles = {role.lower() for role
+                   in getattr(settings, 'OPENSTACK_KEYSTONE_ADMIN_ROLES',
+                              ['admin'])}
+    return admin_roles
+
+
+def get_role_permission(role):
+    """Common function for getting the permission froms arg
+
+    This format is 'openstack.roles.xxx' and 'xxx' is a real role name.
+
+    Returns:
+        String like "openstack.roles.admin"
+        If role is None, this will return None.
+    """
+    return "openstack.roles.%s" % role.lower()
+
+
+def get_admin_permissions():
+    """Common function for getting the admin permissions from settings
+
+    This format is 'openstack.roles.xxx' and 'xxx' is a real role name.
+
+    Returns:
+        Set object including all admin permission.
+        If there is no permission, this will return empty.
+        {
+            "openstack.roles.foo",
+            "openstack.roles.bar",
+            "openstack.roles.admin"
+        }
+    """
+    return {get_role_permission(role) for role in get_admin_roles()}

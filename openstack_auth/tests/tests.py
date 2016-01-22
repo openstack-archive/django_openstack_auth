@@ -19,6 +19,7 @@ from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django import http
 from django import test
+from django.test.utils import override_settings
 from keystoneauth1 import exceptions as keystone_exceptions
 from keystoneauth1.identity import v2 as v2_auth
 from keystoneauth1.identity import v3 as v3_auth
@@ -1107,3 +1108,22 @@ class PolicyTestCaseV3Admin(PolicyTestCase):
         value = policy.check((("identity", "admin_or_cloud_admin"),),
                              request=self.request)
         self.assertTrue(value)
+
+
+class RoleTestCaseAdmin(test.TestCase):
+
+    def test_get_admin_roles_with_default_value(self):
+        admin_roles = utils.get_admin_roles()
+        self.assertSetEqual({'admin'}, admin_roles)
+
+    @override_settings(OPENSTACK_KEYSTONE_ADMIN_ROLES=['foO', 'BAR', 'admin'])
+    def test_get_admin_roles(self):
+        admin_roles = utils.get_admin_roles()
+        self.assertSetEqual({'foo', 'bar', 'admin'}, admin_roles)
+
+    @override_settings(OPENSTACK_KEYSTONE_ADMIN_ROLES=['foO', 'BAR', 'admin'])
+    def test_get_admin_permissions(self):
+        admin_permissions = utils.get_admin_permissions()
+        self.assertSetEqual({'openstack.roles.foo',
+                             'openstack.roles.bar',
+                             'openstack.roles.admin'}, admin_permissions)
