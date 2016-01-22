@@ -13,17 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import django
+from django.test.runner import DiscoverRunner as test_runner
 import os
 import sys
 
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'openstack_auth.tests.settings'
-
-import django
-if django.VERSION < (1, 8, 0):
-    from django.test.simple import DjangoTestSuiteRunner as test_runner
-else:
-    from django.test.runner import DiscoverRunner as test_runner
 
 if hasattr(django, 'setup'):
     django.setup()
