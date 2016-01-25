@@ -180,12 +180,16 @@ class KeystoneBackend(object):
 
         interface = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'public')
 
+        endpoint = utils.fix_auth_url_version(
+            scoped_auth_ref.service_catalog.url_for(endpoint_type=interface))
+
         # If we made it here we succeeded. Create our User!
         unscoped_token = unscoped_auth_ref.auth_token
+
         user = auth_user.create_user_from_token(
             request,
             auth_user.Token(scoped_auth_ref, unscoped_token=unscoped_token),
-            scoped_auth_ref.service_catalog.url_for(endpoint_type=interface))
+            endpoint)
 
         if request is not None:
             request.session['unscoped_token'] = unscoped_token
