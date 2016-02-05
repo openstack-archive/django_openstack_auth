@@ -1127,3 +1127,32 @@ class RoleTestCaseAdmin(test.TestCase):
         self.assertSetEqual({'openstack.roles.foo',
                              'openstack.roles.bar',
                              'openstack.roles.admin'}, admin_permissions)
+
+
+class UtilsTestCase(test.TestCase):
+
+    def test_fix_auth_url_version_v20(self):
+        settings.OPENSTACK_API_VERSIONS['identity'] = 2.0
+        test_urls = [
+            ("http://a/", "http://a/v2.0"),
+            ("http://a", "http://a/v2.0"),
+            ("http://a:8080/", "http://a:8080/v2.0"),
+            ("http://a/v2.0", "http://a/v2.0"),
+            ("http://a/v2.0/", "http://a/v2.0/"),
+        ]
+        for src, expected in test_urls:
+            self.assertEqual(expected, utils.fix_auth_url_version(src))
+
+    def test_fix_auth_url_version_v3(self):
+        settings.OPENSTACK_API_VERSIONS['identity'] = 3
+        test_urls = [
+            ("http://a/", "http://a/v3"),
+            ("http://a", "http://a/v3"),
+            ("http://a:8080/", "http://a:8080/v3"),
+            ("http://a/v3", "http://a/v3"),
+            ("http://a/v3/", "http://a/v3/"),
+            ("http://a/v2.0/", "http://a/v3/"),
+            ("http://a/v2.0", "http://a/v3"),
+        ]
+        for src, expected in test_urls:
+            self.assertEqual(expected, utils.fix_auth_url_version(src))
