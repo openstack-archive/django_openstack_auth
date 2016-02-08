@@ -401,3 +401,6 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
                 if not self.has_a_matching_perm(perm, obj):
                     return False
         return True
+
+    class Meta(object):
+        app_label = 'openstack_auth'
