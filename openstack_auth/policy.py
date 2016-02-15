@@ -211,6 +211,6 @@ def _domain_to_credentials(request, user):
             user._domain_credentials['domain_id'] = domain_user.domain_id
 
         except Exception:
-            LOG.error("Failed to create user from domain scoped token.")
+            LOG.warning("Failed to create user from domain scoped token.")
             return None
     return user._domain_credentials
