@@ -11,25 +11,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf.urls import patterns
 from django.conf.urls import url
 
 from openstack_auth import utils
+from openstack_auth import views
 
 utils.patch_middleware_get_user()
 
 
-urlpatterns = patterns(
-    'openstack_auth.views',
-    url(r"^login/$", "login", name='login'),
-    url(r"^logout/$", 'logout', name='logout'),
-    url(r'^switch/(?P<tenant_id>[^/]+)/$', 'switch', name='switch_tenants'),
-    url(r'^switch_services_region/(?P<region_name>[^/]+)/$', 'switch_region',
+urlpatterns = [
+    url(r"^login/$", views.login, name='login'),
+    url(r"^logout/$", views.logout, name='logout'),
+    url(r'^switch/(?P<tenant_id>[^/]+)/$', views.switch,
+        name='switch_tenants'),
+    url(r'^switch_services_region/(?P<region_name>[^/]+)/$',
+        views.switch_region,
         name='switch_services_region')
-)
+]
 
 if utils.is_websso_enabled():
-    urlpatterns += patterns(
-        'openstack_auth.views',
-        url(r"^websso/$", "websso", name='websso')
-    )
+    urlpatterns.append(url(r"^websso/$", views.websso, name='websso'))
