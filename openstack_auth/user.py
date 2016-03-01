@@ -117,6 +117,8 @@ class Token(object):
 
     def _is_pki_token(self, token):
         """Determines if this is a pki-based token (pki or pkiz)"""
+        if token is None:
+            return False
         return (keystone_cms.is_ans1_token(token)
                 or keystone_cms.is_pkiz(token))
 
