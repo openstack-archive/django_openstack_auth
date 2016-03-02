@@ -29,9 +29,7 @@ from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 import mock
 from mox3 import mox
-import sys
 from testscenarios import load_tests_apply_scenarios  # noqa
-import unittest
 
 from openstack_auth import policy
 from openstack_auth.tests import data_v2
@@ -1165,7 +1163,6 @@ class UserTestCase(test.TestCase):
     def setUp(self):
         self.data = data_v3.generate_test_data(pki=True)
 
-    @unittest.skipIf(sys.version_info >= (3, 0), "Bug #1552443")
     def test_unscoped_token_is_none(self):
         created_token = user.Token(self.data.domain_scoped_access_info,
                                    unscoped_token=None)
