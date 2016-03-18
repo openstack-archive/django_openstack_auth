@@ -10,23 +10,22 @@
 # Maxime COQUEREL <max.coquerel@gmail.com>, 2015
 # Patte D <pattedeph@gmail.com>, 2015
 # Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
-# JF Taltavull <jftalta@gmail.com>, 2015. #zanata
-# Kevin Tibi <kodokuu@gmail.com>, 2015. #zanata
-# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
+# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Corinne Verheyde <cverheyd@gmail.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev11\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-16 17:42+0000\n"
+"POT-Creation-Date: 2016-03-15 18:47+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-10-08 01:23+0000\n"
-"Last-Translator: JF Taltavull <jftalta@gmail.com>\n"
+"PO-Revision-Date: 2016-03-09 02:21+0000\n"
+"Last-Translator: Corinne Verheyde <cverheyd@gmail.com>\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.3\n"
 "Language-Team: French\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -49,7 +48,7 @@ msgid ""
 msgstr "Aucun backend d'authentification pour gérer les informations fournies."
 
 msgid "Password"
-msgstr "Mot de Passe"
+msgstr "Mot de passe"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
@@ -76,7 +75,10 @@ msgid "Unable to retrieve authorized projects."
 msgstr "Impossible de récupérer les projets autorisés."
 
 msgid "User Name"
-msgstr "Nom d'Utilisateur"
+msgstr "Nom d'utilisateur"
+
+msgid "You are not authorized for any projects or domains."
+msgstr "Vous n'êtes autorisés sur aucun projet ou domaine."
 
 msgid "You are not authorized for any projects."
-msgstr "Vous n'êtes autorisé sur aucun projet."
+msgstr "Vous n'êtes autorisés sur aucun projet."
