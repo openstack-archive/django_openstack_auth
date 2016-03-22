@@ -88,12 +88,12 @@ class Token(object):
             algorithm = getattr(settings, 'OPENSTACK_TOKEN_HASH_ALGORITHM',
                                 'md5')
             hasher = hashlib.new(algorithm)
-            hasher.update(self.id)
+            hasher.update(self.id.encode('utf-8'))
             self.id = hasher.hexdigest()
             # Only hash unscoped token if needed
             if self._is_pki_token(self.unscoped_token):
                 hasher = hashlib.new(algorithm)
-                hasher.update(self.unscoped_token)
+                hasher.update(self.unscoped_token.encode('utf-8'))
                 self.unscoped_token = hasher.hexdigest()
         self.expires = auth_ref.expires
 
