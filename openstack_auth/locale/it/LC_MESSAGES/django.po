@@ -5,34 +5,58 @@
 #
 # Translators:
 # Salvatore Davide Rapisarda <sdrapisarda@gmail.com>, 2014
-# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
+# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Remo Mattei <remo@rm.ht>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev11\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-16 17:42+0000\n"
+"POT-Creation-Date: 2016-03-18 16:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"PO-Revision-Date: 2016-03-26 09:13+0000\n"
+"Last-Translator: Remo Mattei <remo@rm.ht>\n"
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.3\n"
 "Language-Team: Italian\n"
 
 msgid "An error occurred authenticating. Please try again later."
 msgstr "Si è verificato un errore. Riprova più tardi."
 
+msgid "Authenticate using"
+msgstr "Usando l'autenticazione "
+
 msgid "Domain"
 msgstr "Dominio"
+
+msgid "Invalid credentials."
+msgstr "Le credenziali non sono valide "
+
+msgid ""
+"No authentication backend could be determined to handle the provided "
+"credentials."
+msgstr ""
+"Non è possibile comunicare con nessuno dei back-end di autenticazione  per "
+"verificare le credenziali.  "
 
 msgid "Password"
 msgstr "Password"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr ""
+"Il passaggio al progetto non è riuscito per l'utente \"%(username)s\". "
+
 msgid "Region"
 msgstr "Regione"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr ""
+"Il passaggio al progetto \"%(project_name)s\" è riuscito con successo. "
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Il token di autenticazione che stai usando è scaduto."
@@ -41,11 +65,17 @@ msgid "Unable to authenticate to any available projects."
 msgstr ""
 "Impossibile effettuare l'autenticazione su nessun progetto disponibile."
 
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "Impossibile stabilire una connessione con gli endpoint di keystone. "
+
 msgid "Unable to retrieve authorized projects."
 msgstr "Impossibile ottenere l'accesso ai progetti."
 
 msgid "User Name"
 msgstr "Nome Utente"
+
+msgid "You are not authorized for any projects or domains."
+msgstr "Non sei autorizzato ad entrare a nessuno dei progetti o domini. "
 
 msgid "You are not authorized for any projects."
 msgstr "Non sei abilitato a nessun progetto."

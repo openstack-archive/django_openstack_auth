@@ -5,23 +5,23 @@
 #
 # Translators:
 # Łukasz Jernaś <deejay1@srem.org>, 2015
-# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
-# Łukasz Jernas <deejay1@srem.org>, 2015. #zanata
+# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Łukasz Jernas <deejay1@srem.org>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev11\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-16 17:42+0000\n"
+"POT-Creation-Date: 2016-03-18 16:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-21 10:42+0000\n"
+"PO-Revision-Date: 2016-03-21 09:03+0000\n"
 "Last-Translator: Łukasz Jernas <deejay1@srem.org>\n"
 "Language: pl-PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.3\n"
 "Language-Team: Polish (Poland)\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -71,6 +71,9 @@ msgstr "Nie można pobrać uwierzytelnionych projektów."
 
 msgid "User Name"
 msgstr "Nazwa użytkownika"
+
+msgid "You are not authorized for any projects or domains."
+msgstr "Brak upoważnień dla projektów lub domen."
 
 msgid "You are not authorized for any projects."
 msgstr "Nie upoważniono do żadnego projektu."

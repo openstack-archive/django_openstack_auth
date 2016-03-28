@@ -5,21 +5,22 @@
 #
 # Translators:
 # Zhang Xiaowei <zero00072@gmail.com>, 2015
-# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
+# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Jennifer <cristxu@tw.ibm.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.0.1.dev11\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-16 17:42+0000\n"
+"POT-Creation-Date: 2016-03-18 16:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-07-16 01:34+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"PO-Revision-Date: 2016-03-22 09:32+0000\n"
+"Last-Translator: Jennifer <cristxu@tw.ibm.com>\n"
 "Language: zh-TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.3\n"
 "Language-Team: Chinese (Taiwan)\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -42,8 +43,16 @@ msgstr "沒有選擇認證後端來處理提供的憑證。"
 msgid "Password"
 msgstr "密碼"
 
+#, python-format
+msgid "Project switch failed for user \"%(username)s\"."
+msgstr "使用者 \"%(username)s\" 的專案切換失敗。"
+
 msgid "Region"
 msgstr "區域"
+
+#, python-format
+msgid "Switch to project \"%(project_name)s\" successful."
+msgstr "成功切換至專案 \"%(project_name)s\"。"
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "認證伺服器發佈的門票已經過期。"
@@ -51,11 +60,17 @@ msgstr "認證伺服器發佈的門票已經過期。"
 msgid "Unable to authenticate to any available projects."
 msgstr "無法認證到任何可用的專案。"
 
+msgid "Unable to establish connection to keystone endpoint."
+msgstr "無法建立與 Keystone 端點的連線。"
+
 msgid "Unable to retrieve authorized projects."
 msgstr "無法取回已授權的專案。"
 
 msgid "User Name"
 msgstr "用戶名稱"
+
+msgid "You are not authorized for any projects or domains."
+msgstr "您未獲授權對任何專案或網域執行動作。"
 
 msgid "You are not authorized for any projects."
 msgstr "沒有授權您任何專案。"
