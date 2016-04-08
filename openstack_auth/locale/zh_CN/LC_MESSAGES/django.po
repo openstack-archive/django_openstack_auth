@@ -16,12 +16,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-29 11:46+0000\n"
+"POT-Creation-Date: 2016-03-15 18:47+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-03-08 08:57+0000\n"
-"Last-Translator: vuuv <froms2008@gmail.com>\n"
+"PO-Revision-Date: 2016-03-23 06:22+0000\n"
+"Last-Translator: qingszhao <zdqyuqing@163.com>\n"
 "Language: zh-CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.0\n"
@@ -50,20 +50,20 @@ msgstr "密码"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
-msgstr "为用户“%(username)s”切换工程失败"
+msgstr "为用户“%(username)s”切换项目失败"
 
 msgid "Region"
-msgstr "域"
+msgstr "区域"
 
 #, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
-msgstr "成功切换到工程\"%(project_name)s\""
+msgstr "成功切换到项目\"%(project_name)s\""
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "身份认证令牌已过期。"
 
 msgid "Unable to authenticate to any available projects."
-msgstr "无法跟可用的项目验证通过。"
+msgstr "无法验证任何可用的项目。"
 
 msgid "Unable to establish connection to keystone endpoint."
 msgstr "无法连接keystone端点。"
