@@ -145,6 +145,7 @@ def websso(request):
     return django_http.HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 
 
+@never_cache
 def logout(request, login_url=None, **kwargs):
     """Logs out the user if he is logged in. Then redirects to the log-in page.
 
