@@ -6,17 +6,16 @@
 # Translators:
 # Andre Campos Bezerra <andrecbezerra@gmail.com>, 2015
 # Gabriel Wainer, 2015
-# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
-# Marcelo Dieder <marcelodieder@gmail.com>, 2016. #zanata
+# Carlos Marques <marquesc@br.ibm.com>, 2016. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-15 18:47+0000\n"
+"POT-Creation-Date: 2016-04-16 20:15+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-03-09 02:54+0000\n"
+"PO-Revision-Date: 2016-04-27 04:36+0000\n"
 "Last-Translator: Marcelo Dieder <marcelodieder@gmail.com>\n"
 "Language: pt-BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -25,7 +24,7 @@ msgstr ""
 "Language-Team: Portuguese (Brazil)\n"
 
 msgid "An error occurred authenticating. Please try again later."
-msgstr "Um erro ocorreu autenticando. Por favor tente novamente mais tarde."
+msgstr "Ocorreu um erro de autenticação. Por favor tente novamente mais tarde."
 
 msgid "Authenticate using"
 msgstr "Autenticar usando"
@@ -34,14 +33,14 @@ msgid "Domain"
 msgstr "Domínio"
 
 msgid "Invalid credentials."
-msgstr "Credencial Inválida"
+msgstr "Credenciais inválidas."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
-"Nenhuma autenticação poderia ser determinada para lidar com as credenciais "
-"fornecidas."
+"Nenhum backend de autenticação pôde ser determinado para manipular as "
+"credenciais fornecidas."
 
 msgid "Password"
 msgstr "Senha"
@@ -61,13 +60,13 @@ msgid "The authentication token issued by the Identity service has expired."
 msgstr "O token de autenticação emitido pelo serviço de identidade expirou."
 
 msgid "Unable to authenticate to any available projects."
-msgstr "Não foi possível autenticar nos projetos disponíveis."
+msgstr "Não é possível autenticar-se a nenhum dos projetos disponíveis."
 
 msgid "Unable to establish connection to keystone endpoint."
-msgstr "Não foi possível estabelecer conexão com o endpoint do Keystone."
+msgstr "Não é possível estabelecer conexão com o terminal do keystone."
 
 msgid "Unable to retrieve authorized projects."
-msgstr "Não foi possível obter os projetos autorizados."
+msgstr "Não é possível recuperar os projetos autorizados."
 
 msgid "User Name"
 msgstr "Nome do Usuário"
