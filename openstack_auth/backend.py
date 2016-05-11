@@ -263,7 +263,7 @@ class KeystoneBackend(object):
             request.user = user
             timeout = getattr(settings, "SESSION_TIMEOUT", 3600)
             token_life = user.token.expires - datetime.datetime.now(pytz.utc)
-            session_time = min(timeout, token_life.seconds)
+            session_time = min(timeout, int(token_life.total_seconds()))
             request.session.set_expiry(session_time)
 
             scoped_client = keystone_client_class(session=session,
