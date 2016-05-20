@@ -115,7 +115,8 @@ def login(request, template_name=None, extra_context=None, **kwargs):
         auth_user.set_session_from_user(request, request.user)
         regions = dict(forms.Login.get_region_choices())
         region = request.user.endpoint
-        region_name = regions.get(region)
+        login_region = request.POST.get('region')
+        region_name = regions.get(login_region)
         request.session['region_endpoint'] = region
         request.session['region_name'] = region_name
     return res
