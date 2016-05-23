@@ -9,17 +9,16 @@
 # dario hereñu <magallania@gmail.com>, 2015
 # luis gil, 2015
 # Marian Tort <marian.tort@gmail.com>, 2014
-# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
 # Eugènia Torrella <tester03@es.ibm.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-29 15:39+0000\n"
+"Project-Id-Version: django_openstack_auth 2.2.2.dev4\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
+"POT-Creation-Date: 2016-05-12 21:57+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-03-31 08:04+0000\n"
+"PO-Revision-Date: 2016-05-13 03:15+0000\n"
 "Last-Translator: Eugènia Torrella <tester03@es.ibm.com>\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -28,7 +27,8 @@ msgstr ""
 "Language-Team: Spanish\n"
 
 msgid "An error occurred authenticating. Please try again later."
-msgstr "Se produjo un error de autenticación. Inténtelo de nuevo más tarde."
+msgstr ""
+"Se ha producido un error de autenticación. Inténtelo de nuevo más tarde."
 
 msgid "Authenticate using"
 msgstr "Autenticación con"
@@ -43,34 +43,35 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
-"No se ha podido determinar un backend de autenticación para gestionar las "
-"credenciales proporcionadas."
+"No se ha podido determinar un programa de fondo de autenticación para "
+"gestionar las credenciales proporcionadas."
 
 msgid "Password"
 msgstr "Contraseña"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
-msgstr "Intercambio de projecto fracasó para el usuario \"%(username)s\"."
+msgstr ""
+"Ha habido un error al cambiar de proyecto con el usuario \"%(username)s\"."
 
 msgid "Region"
 msgstr "Región"
 
 #, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
-msgstr "Cambio al proyecto \"%(project_name)s\" de manera exitosa."
+msgstr "Se ha cambiado satisfactoriamente al proyecto \"%(project_name)s\"."
 
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "El token de autenticación emitido por Identity Service ha expirado."
+msgstr "El token de autenticación emitido por Identity Service ha caducado."
 
 msgid "Unable to authenticate to any available projects."
 msgstr "No se puede autenticar en ninguno de los proyectos disponibles."
 
 msgid "Unable to establish connection to keystone endpoint."
-msgstr "No ha sido posible establecer conexión con el endpoint de keystone."
+msgstr "No se ha podido establecer conexión con el punto final de keystone."
 
 msgid "Unable to retrieve authorized projects."
-msgstr "No ha sido posible obtener los proyectos autorizados."
+msgstr "No se han podido recuperar los proyectos autorizados."
 
 msgid "User Name"
 msgstr "Usuario"
