@@ -262,14 +262,22 @@ def fix_auth_url_version(auth_url):
     missing entirely. This should be smarter and use discovery.
     """
 
-    # Check for empty path component in endpoint URL and add keystone version
-    # to endpoint: as of Kilo, the identity URLs returned by Keystone might no
-    # longer contain API versions, leaving the version choice up to the user.
-    if urlparse.urlparse(auth_url).path.rstrip('/') == '':
+    # Check if path component already contains version suffix and if it does
+    # not, append version suffix to the end of path, not erasing the previous
+    # path contents, since keystone web endpoint (like /identity) could be
+    # there. Keystone version needs to be added to endpoint because as of Kilo,
+    # the identity URLs returned by Keystone might no longer contain API
+    # versions, leaving the version choice up to the user.
+    url_path = urlparse.urlparse(auth_url).path
+    if not re.search('/(v3|v2\.0)', url_path):
+        # Conditional delimiter to prevent leading double // in path section,
+        # which would overwrite hostname:port section when passed into urljoin
+        delimiter = '' if url_path.endswith('/') else '/'
         if get_keystone_version() >= 3:
-            auth_url = urlparse.urljoin(auth_url, 'v3')
+            url_path += delimiter + 'v3'
         else:
-            auth_url = urlparse.urljoin(auth_url, 'v2.0')
+            url_path += delimiter + 'v2.0'
+        auth_url = urlparse.urljoin(auth_url, url_path)
 
     if get_keystone_version() >= 3:
         if has_in_url_path(auth_url, "/v2.0"):

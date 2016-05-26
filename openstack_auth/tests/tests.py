@@ -1139,6 +1139,10 @@ class UtilsTestCase(test.TestCase):
             ("http://a:8080/", "http://a:8080/v2.0"),
             ("http://a/v2.0", "http://a/v2.0"),
             ("http://a/v2.0/", "http://a/v2.0/"),
+            ("http://a/identity", "http://a/identity/v2.0"),
+            ("http://a/identity/", "http://a/identity/v2.0"),
+            ("http://a:5000/identity/v2.0", "http://a:5000/identity/v2.0"),
+            ("http://a/identity/v2.0/", "http://a/identity/v2.0/")
         ]
         for src, expected in test_urls:
             self.assertEqual(expected, utils.fix_auth_url_version(src))
@@ -1153,6 +1157,10 @@ class UtilsTestCase(test.TestCase):
             ("http://a/v3/", "http://a/v3/"),
             ("http://a/v2.0/", "http://a/v3/"),
             ("http://a/v2.0", "http://a/v3"),
+            ("http://a/identity", "http://a/identity/v3"),
+            ("http://a:5000/identity/", "http://a:5000/identity/v3"),
+            ("http://a/identity/v3", "http://a/identity/v3"),
+            ("http://a/identity/v3/", "http://a/identity/v3/")
         ]
         for src, expected in test_urls:
             self.assertEqual(expected, utils.fix_auth_url_version(src))
