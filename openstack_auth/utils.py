@@ -281,9 +281,10 @@ def fix_auth_url_version(auth_url):
 
     if get_keystone_version() >= 3:
         if has_in_url_path(auth_url, "/v2.0"):
-            LOG.warning("The settings.py file points to a v2.0 keystone "
-                        "endpoint, but v3 is specified as the API version "
-                        "to use. Using v3 endpoint for authentication.")
+            LOG.warning("The Keystone URL (either in Horizon settings or in "
+                        "service catalog) points to a v2.0 Keystone endpoint, "
+                        "but v3 is specified as the API version to use by "
+                        "Horizon. Using v3 endpoint for authentication.")
             auth_url = url_path_replace(auth_url, "/v2.0", "/v3", 1)
 
     return auth_url
