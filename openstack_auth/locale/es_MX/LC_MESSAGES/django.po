@@ -5,16 +5,16 @@
 #
 # Translators:
 # Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>, 2015
-# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.2.2.dev4\n"
+"Project-Id-Version: django_openstack_auth 2.2.2.dev8\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2016-05-12 21:57+0000\n"
+"POT-Creation-Date: 2016-06-07 22:35+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-18 03:50+0000\n"
+"PO-Revision-Date: 2016-06-07 05:50+0000\n"
 "Last-Translator: Heleno Jimenez de la Cruz <heleno.jimenez@gmail.com>\n"
 "Language: es-MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -73,5 +73,8 @@ msgstr "No se pueden recuperar los proyectos autorizados."
 msgid "User Name"
 msgstr "Nombre de Usuario"
 
+msgid "You are not authorized for any projects or domains."
+msgstr "No está autorizado para algunos proyectos o dominios"
+
 msgid "You are not authorized for any projects."
-msgstr "No estás autorizado para algunos proyectos."
+msgstr "No está autorizado para algunos proyectos."
