@@ -5,17 +5,16 @@
 #
 # Translators:
 # Zbyněk Schwarz <zbynek.schwarz@gmail.com>, 2014-2015
-# Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
-# Lenka Husáková <lenka.husakova@ultimum.io>, 2016. #zanata
+# Stanislav Ulrych <stanislav.ulrych@ultimum.io>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.3.1.dev2\n"
+"Project-Id-Version: django_openstack_auth 2.3.1.dev3\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2016-06-07 21:07+0000\n"
+"POT-Creation-Date: 2016-06-08 21:45+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-06-07 07:30+0000\n"
+"PO-Revision-Date: 2016-06-09 07:46+0000\n"
 "Last-Translator: Lenka Husáková <lenka.husakova@ultimum.io>\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
@@ -39,7 +38,7 @@ msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
-"Nebylo určeno žádné ověřovací podpůrná vrstva ke zpracování zadaných "
+"Nebyl rozpoznán žádný vhodný autentizační backend pro ověření zadaných "
 "přihlašovacích údajů."
 
 msgid "Password"
@@ -50,20 +49,20 @@ msgid "Project switch failed for user \"%(username)s\"."
 msgstr "Změna projektu selhala u uživatele \"%(username)s\"."
 
 msgid "Region"
-msgstr "Oblast"
+msgstr "Region"
 
 #, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
 msgstr "Změna projektu \"%(project_name)s\" byla úspěšná."
 
 msgid "The authentication token issued by the Identity service has expired."
-msgstr "Známka ověření přidělená Službou totožnosti vypršela."
+msgstr "Autentizační token poskytnutý službou identit vypršel."
 
 msgid "Unable to authenticate to any available projects."
 msgstr "Nelze se přihlásit do žádných dostupných projektů."
 
 msgid "Unable to establish connection to keystone endpoint."
-msgstr "Nelze se připojit ke koncovému bodu keystone."
+msgstr "Nelze se připojit ke keystone endpointu."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Nelze získat oprávněné projekty."
