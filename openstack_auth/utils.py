@@ -233,10 +233,10 @@ def get_websso_url(request, auth_url, websso_auth):
     return url
 
 
-def has_in_url_path(url, sub):
-    """Test if the `sub` string is in the `url` path."""
+def has_in_url_path(url, subs):
+    """Test if any of `subs` strings is present in the `url` path."""
     scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
-    return sub in path
+    return any([sub in path for sub in subs])
 
 
 def url_path_replace(url, old, new, count=None):
@@ -254,6 +254,33 @@ def url_path_replace(url, old, new, count=None):
         scheme, netloc, path.replace(old, new, *args), query, fragment))
 
 
+def url_path_append(url, suffix):
+    scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
+    path = (path + suffix).replace('//', '/')
+    return urlparse.urlunsplit((scheme, netloc, path, query, fragment))
+
+
+def _augment_url_with_version(auth_url):
+    """Optionally augment auth_url path with version suffix.
+
+    Check if path component already contains version suffix and if it does
+    not, append version suffix to the end of path, not erasing the previous
+    path contents, since keystone web endpoint (like /identity) could be
+    there. Keystone version needs to be added to endpoint because as of Kilo,
+    the identity URLs returned by Keystone might no longer contain API
+    versions, leaving the version choice up to the user.
+    """
+    if has_in_url_path(auth_url, ["/v2.0", "/v3"]):
+        return auth_url
+
+    if get_keystone_version() >= 3:
+        return url_path_append(auth_url, "/v3")
+    else:
+        return url_path_append(auth_url, "/v2.0")
+
+
+# TODO(tsufiev): remove this legacy version as soon as Horizon switches to
+# the new fix_auth_url_version_prefix() call
 def fix_auth_url_version(auth_url):
     """Fix up the auth url if an invalid or no version prefix was given.
 
@@ -261,33 +288,33 @@ def fix_auth_url_version(auth_url):
     authentication. Fix the URL to say v3 in this case and add version if it is
     missing entirely. This should be smarter and use discovery.
     """
+    auth_url = _augment_url_with_version(auth_url)
 
-    # Check if path component already contains version suffix and if it does
-    # not, append version suffix to the end of path, not erasing the previous
-    # path contents, since keystone web endpoint (like /identity) could be
-    # there. Keystone version needs to be added to endpoint because as of Kilo,
-    # the identity URLs returned by Keystone might no longer contain API
-    # versions, leaving the version choice up to the user.
-    url_path = urlparse.urlparse(auth_url).path
-    if not re.search('/(v3|v2\.0)', url_path):
-        # Conditional delimiter to prevent leading double // in path section,
-        # which would overwrite hostname:port section when passed into urljoin
-        delimiter = '' if url_path.endswith('/') else '/'
-        if get_keystone_version() >= 3:
-            url_path += delimiter + 'v3'
-        else:
-            url_path += delimiter + 'v2.0'
-        auth_url = urlparse.urljoin(auth_url, url_path)
-
-    if get_keystone_version() >= 3:
-        if has_in_url_path(auth_url, "/v2.0"):
-            LOG.warning("The Keystone URL (either in Horizon settings or in "
-                        "service catalog) points to a v2.0 Keystone endpoint, "
-                        "but v3 is specified as the API version to use by "
-                        "Horizon. Using v3 endpoint for authentication.")
-            auth_url = url_path_replace(auth_url, "/v2.0", "/v3", 1)
+    if get_keystone_version() >= 3 and has_in_url_path(auth_url, "/v2.0"):
+        LOG.warning("The Keystone URL (either in Horizon settings or in "
+                    "service catalog) points to a v2.0 Keystone endpoint, "
+                    "but v3 is specified as the API version to use by "
+                    "Horizon. Using v3 endpoint for authentication.")
+        auth_url = url_path_replace(auth_url, "/v2.0", "/v3", 1)
 
     return auth_url
+
+
+def fix_auth_url_version_prefix(auth_url):
+    """Fix up the auth url if an invalid or no version prefix was given.
+
+    People still give a v2 auth_url even when they specify that they want v3
+    authentication. Fix the URL to say v3 in this case and add version if it is
+    missing entirely. This should be smarter and use discovery.
+    """
+    auth_url = _augment_url_with_version(auth_url)
+
+    url_fixed = False
+    if get_keystone_version() >= 3 and has_in_url_path(auth_url, ["/v2.0"]):
+        url_fixed = True
+        auth_url = url_path_replace(auth_url, "/v2.0", "/v3", 1)
+
+    return auth_url, url_fixed
 
 
 def clean_up_auth_url(auth_url):
@@ -322,7 +349,7 @@ def get_token_auth_plugin(auth_url, token, project_id=None, domain_name=None):
 def get_project_list(*args, **kwargs):
     is_federated = kwargs.get('is_federated', False)
     sess = kwargs.get('session') or get_session()
-    auth_url = fix_auth_url_version(kwargs['auth_url'])
+    auth_url, _ = fix_auth_url_version_prefix(kwargs['auth_url'])
     auth = token_endpoint.Token(auth_url, kwargs['token'])
     client = get_keystone_client().Client(session=sess, auth=auth)
 
