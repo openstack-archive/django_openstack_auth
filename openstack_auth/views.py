@@ -179,7 +179,7 @@ def logout(request, login_url=None, **kwargs):
 def delete_token(endpoint, token_id):
     """Delete a token."""
     try:
-        endpoint = utils.fix_auth_url_version(endpoint)
+        endpoint, __ = utils.fix_auth_url_version_prefix(endpoint)
 
         session = utils.get_session()
         auth_plugin = token_endpoint.Token(endpoint=endpoint,
@@ -202,7 +202,7 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
     LOG.debug('Switching to tenant %s for user "%s".'
               % (tenant_id, request.user.username))
 
-    endpoint = utils.fix_auth_url_version(request.user.endpoint)
+    endpoint, __ = utils.fix_auth_url_version_prefix(request.user.endpoint)
     session = utils.get_session()
     # Keystone can be configured to prevent exchanging a scoped token for
     # another token. Always use the unscoped token for requesting a

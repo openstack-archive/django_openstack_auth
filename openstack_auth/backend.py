@@ -90,7 +90,12 @@ class KeystoneBackend(object):
         if not auth_url:
             auth_url = settings.OPENSTACK_KEYSTONE_URL
 
-        auth_url = utils.fix_auth_url_version(auth_url)
+        auth_url, url_fixed = utils.fix_auth_url_version_prefix(auth_url)
+        if url_fixed:
+            LOG.warning("The OPENSTACK_KEYSTONE_URL setting points to a v2.0 "
+                        "Keystone endpoint, but v3 is specified as the API "
+                        "version to use by Horizon. Using v3 endpoint for "
+                        "authentication.")
 
         for plugin in self.auth_plugins:
             unscoped_auth = plugin.get_plugin(auth_url=auth_url, **kwargs)
@@ -230,11 +235,16 @@ class KeystoneBackend(object):
 
         interface = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'public')
 
-        endpoint = utils.fix_auth_url_version(
+        endpoint, url_fixed = utils.fix_auth_url_version_prefix(
             scoped_auth_ref.service_catalog.url_for(
                 service_type='identity',
                 interface=interface,
                 region_name=region_name))
+        if url_fixed:
+            LOG.warning("The Keystone URL in service catalog points to a v2.0 "
+                        "Keystone endpoint, but v3 is specified as the API "
+                        "version to use by Horizon. Using v3 endpoint for "
+                        "authentication.")
 
         # If we made it here we succeeded. Create our User!
         unscoped_token = unscoped_auth_ref.auth_token
