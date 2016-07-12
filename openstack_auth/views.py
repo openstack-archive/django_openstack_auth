@@ -178,6 +178,8 @@ def logout(request, login_url=None, **kwargs):
 
 def delete_token(endpoint, token_id):
     """Delete a token."""
+    if utils.is_token_deletion_disabled():
+        return
     try:
         endpoint, __ = utils.fix_auth_url_version_prefix(endpoint)
 
