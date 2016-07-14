@@ -121,6 +121,8 @@ def check(actions, request, target=None):
     # the service APIs will correct us if we are too permissive.
     if target.get('project_id') is None:
         target['project_id'] = user.project_id
+    if target.get('tenant_id') is None:
+        target['tenant_id'] = target['project_id']
     # same for user_id
     if target.get('user_id') is None:
         target['user_id'] = user.id
@@ -187,6 +189,7 @@ def _user_to_credentials(user):
                              'token': user.token,
                              'username': user.username,
                              'project_id': user.project_id,
+                             'tenant_id': user.project_id,
                              'project_name': user.project_name,
                              'domain_id': user.user_domain_id,
                              'is_admin': user.is_superuser,
