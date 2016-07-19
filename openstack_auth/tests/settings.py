@@ -63,3 +63,10 @@ POLICY_FILES = {
     'identity': 'keystone_policy.json',
     'compute': 'nova_policy.json'
 }
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
