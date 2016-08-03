@@ -143,6 +143,10 @@ def get_keystone_client():
         return client_v3
 
 
+def is_token_deletion_disabled():
+    return getattr(settings, 'TOKEN_DELETION_DISABLED', False)
+
+
 def is_websso_enabled():
     """Websso is supported in Keystone version 3."""
     websso_enabled = getattr(settings, 'WEBSSO_ENABLED', False)
