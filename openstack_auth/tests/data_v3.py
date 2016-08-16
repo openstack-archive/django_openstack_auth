@@ -35,6 +35,7 @@ class TestResponse(requests.Response):
 
     It also provides some convenience to initialize with a dict.
     """
+    reason = ''
 
     def __init__(self, data):
         self._text = None
