@@ -475,3 +475,25 @@ def get_admin_permissions():
         }
     """
     return {get_role_permission(role) for role in get_admin_roles()}
+
+
+def get_client_ip(request):
+    """Return client ip address using SECURE_PROXY_ADDR_HEADER variable.
+
+    If not present or not defined on settings then REMOTE_ADDR is used.
+
+    :param request: Django http request object.
+    :type request: django.http.HttpRequest
+
+    :returns: Possible client ip address
+    :rtype: string
+    """
+    _SECURE_PROXY_ADDR_HEADER = getattr(
+        settings, 'SECURE_PROXY_ADDR_HEADER', False
+    )
+    if _SECURE_PROXY_ADDR_HEADER:
+        return request.META.get(
+            _SECURE_PROXY_ADDR_HEADER,
+            request.META.get('REMOTE_ADDR')
+        )
+    return request.META.get('REMOTE_ADDR')
