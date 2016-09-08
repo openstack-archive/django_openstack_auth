@@ -35,11 +35,10 @@ class TestResponse(requests.Response):
 
     It also provides some convenience to initialize with a dict.
     """
-    reason = ''
 
     def __init__(self, data):
         self._text = None
-        super(TestResponse, self)
+        super(TestResponse, self).__init__()
         if isinstance(data, dict):
             self.status_code = data.get('status_code', 200)
             self.headers = data.get('headers', None)
