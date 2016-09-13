@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
 import hashlib
 import logging
 
@@ -47,6 +48,7 @@ def create_user_from_token(request, token, endpoint, services_region=None):
     return User(id=token.user['id'],
                 token=token,
                 user=token.user['name'],
+                password_expires_at=token.user['password_expires_at'],
                 user_domain_id=token.user_domain_id,
                 # We need to consider already logged-in users with an old
                 # version of Token without user_domain_name.
@@ -76,9 +78,11 @@ class Token(object):
     """
     def __init__(self, auth_ref, unscoped_token=None):
         # User-related attributes
-        user = {}
-        user['id'] = auth_ref.user_id
-        user['name'] = auth_ref.username
+        user = {'id': auth_ref.user_id, 'name': auth_ref.username}
+        data = getattr(auth_ref, '_data', {})
+        expiration_date = data.get('token', {}).get('user', {})\
+            .get('password_expires_at')
+        user['password_expires_at'] = expiration_date
         self.user = user
         self.user_domain_id = auth_ref.user_domain_id
         self.user_domain_name = auth_ref.user_domain_name
@@ -195,6 +199,11 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
 
         Unscoped Keystone token.
 
+    .. attribute:: password_expires_at
+
+        Password expiration date. This attribute could be None when using
+        keystone version < 3.0 or if the feature is not enabled in keystone.
+
     """
 
     keystone_user_id = db_models.CharField(primary_key=True, max_length=255)
@@ -205,8 +214,8 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
                  authorized_tenants=None, endpoint=None, enabled=False,
                  services_region=None, user_domain_id=None,
                  user_domain_name=None, domain_id=None, domain_name=None,
-                 project_id=None, project_name=None,
-                 is_federated=False, unscoped_token=None, password=None):
+                 project_id=None, project_name=None, is_federated=False,
+                 unscoped_token=None, password=None, password_expires_at=None):
         self.id = id
         self.pk = id
         self.token = token
@@ -228,6 +237,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
         self.enabled = enabled
         self._authorized_tenants = authorized_tenants
         self.is_federated = is_federated
+        self.password_expires_at = password_expires_at
 
         # Unscoped token is used for listing user's project that works
         # for both federated and keystone user.
@@ -423,6 +433,18 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
                 if not self.has_a_matching_perm(perm, obj):
                     return False
         return True
+
+    def time_until_expiration(self):
+        """Returns the number of remaining days until user's password expires.
+
+        Calculates the number days until the user must change their password,
+        once the password expires the user will not able to log in until an
+        admin changes its password.
+        """
+        if self.password_expires_at is not None:
+            expiration_date = datetime.datetime.strptime(
+                self.password_expires_at, "%Y-%m-%dT%H:%M:%S.%f")
+            return expiration_date - datetime.datetime.now()
 
     class Meta(object):
         app_label = 'openstack_auth'

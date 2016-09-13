@@ -120,6 +120,16 @@ def login(request, template_name=None, extra_context=None, **kwargs):
         region_name = regions.get(login_region)
         request.session['region_endpoint'] = region
         request.session['region_name'] = region_name
+        expiration_time = request.user.time_until_expiration()
+        threshold_days = getattr(
+            settings, 'PASSWORD_EXPIRES_WARNING_THRESHOLD_DAYS', -1)
+        if expiration_time is not None and \
+                expiration_time.days <= threshold_days:
+            expiration_time = str(expiration_time).rsplit(':', 1)[0]
+            msg = (_('Please consider changing your password, it will expire'
+                     ' in %s minutes') %
+                   expiration_time).replace(':', ' Hours and ')
+            messages.warning(request, msg)
     return res
 
 
