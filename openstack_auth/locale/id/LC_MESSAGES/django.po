@@ -4,14 +4,8 @@
 # django_openstack_auth project.
 #
 # Translators:
-# Cédric Savignan <liced@liced.fr>, 2015
-# Corinne Verheyde <cverheyd@hotmail.com>, 2015
-# François Bureau, 2015
-# Maxime COQUEREL <max.coquerel@gmail.com>, 2015
-# Patte D <pattedeph@gmail.com>, 2015
-# Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
-# Adrien Cunin <adrien@adriencunin.fr>, 2016. #zanata
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# suhartono <cloudsuhartono@gmail.com>, 2016. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: django_openstack_auth 2.4.1.dev1\n"
@@ -20,66 +14,65 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-08-09 12:52+0000\n"
-"Last-Translator: Adrien Cunin <adrien@adriencunin.fr>\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"PO-Revision-Date: 2016-09-11 02:55+0000\n"
+"Last-Translator: suhartono <cloudsuhartono@gmail.com>\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.0\n"
 "X-Generator: Zanata 3.7.3\n"
-"Language-Team: French\n"
+"Language-Team: Indonesian\n"
 
 msgid "An error occurred authenticating. Please try again later."
-msgstr ""
-"Une erreur s'est produite pendant l'authentification. Veuillez réessayer "
-"ultérieurement."
+msgstr "Terjadi kesalahan otentikasi. Silakan coba lagi nanti."
 
 msgid "Authenticate using"
-msgstr "Mode d'authentification"
+msgstr "Otentikasi penggunaan"
 
 msgid "Domain"
-msgstr "Domaine"
+msgstr "Domain"
 
 msgid "Invalid credentials."
-msgstr "Informations d'identification non valides."
+msgstr "Kredensial tidak valid."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
-msgstr "Aucun backend d'authentification pour gérer les informations fournies."
+msgstr ""
+"Tidak ada otentikasi backend dapat ditentukan untuk menangani kredensial "
+"yang disediakan."
 
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Password"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
-msgstr "La bascule de projet a échoué pour l'utilisateur \"%(username)s\"."
+msgstr "Switch proyek gagal untuk pengguna \"%(username)s\"."
 
 msgid "Region"
-msgstr "Région"
+msgstr "Region"
 
 #, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
-msgstr "Bascule vers le projet \"%(project_name)s\" réussie. "
+msgstr "Switch proyek \"%(project_name)s\" sukses."
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr ""
-"Le jeton d'authentification délivré par le service d'Identité a expiré."
+"Token otentikasi yang dikeluarkan oleh layanan Identity telah berakhir."
 
 msgid "Unable to authenticate to any available projects."
-msgstr "Authentification impossible quel que soit le projet."
+msgstr "Tidak dapat otentikasi ke proyek-proyek yang tersedia."
 
 msgid "Unable to establish connection to keystone endpoint."
-msgstr "Impossible d'établir la connexion avec le point d'accès keystone."
+msgstr "Tidak dapat melakukan koneksi ke endpoint keystone."
 
 msgid "Unable to retrieve authorized projects."
-msgstr "Impossible de récupérer les projets autorisés."
+msgstr "Tidak dapat mengambil proyek yang berwenang (authorized)"
 
 msgid "User Name"
-msgstr "Nom d'utilisateur"
+msgstr "nama pengguna"
 
 msgid "You are not authorized for any projects or domains."
-msgstr "Vous n'êtes autorisé sur aucun projet ou domaine."
+msgstr "Anda tidak berwenang untuk setiap proyek atau domain."
 
-#, fuzzy
 msgid "You are not authorized for any projects."
-msgstr "Vous n'êtes autorisé sur aucun projet."
+msgstr "Anda tidak berwenang untuk setiap proyek."

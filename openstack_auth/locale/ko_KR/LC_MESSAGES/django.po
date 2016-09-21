@@ -6,17 +6,18 @@
 # Translators:
 # Ian Y. Choi <ianyrchoi@gmail.com>, 2015
 # Sungjin Kang <potopro@gmail.com>, 2015
+# Andrea Young Oak Li <youli@redhat.com>, 2016. #zanata
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.2.1.dev12\n"
+"Project-Id-Version: django_openstack_auth 2.4.1.dev1\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2016-05-09 19:52+0000\n"
+"POT-Creation-Date: 2016-09-20 22:54+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-03-18 02:48+0000\n"
-"Last-Translator: Ian Y. Choi <ianyrchoi@gmail.com>\n"
+"PO-Revision-Date: 2016-09-15 11:45+0000\n"
+"Last-Translator: Andrea Young Oak Li <youli@redhat.com>\n"
 "Language: ko-KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.0\n"
@@ -27,20 +28,19 @@ msgid "An error occurred authenticating. Please try again later."
 msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세요."
 
 msgid "Authenticate using"
-msgstr "인증 사용중"
+msgstr "인증 방법"
 
 msgid "Domain"
 msgstr "도메인"
 
 msgid "Invalid credentials."
-msgstr "올바르지 않은 credential입니다."
+msgstr "올바르지 않은 인증정보입니다."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
 "credentials."
 msgstr ""
-"제공된 credential에 대한 처리를 결정할 수 있는 인증 백엔드가 존재하지 않습니"
-"다."
+"제공된 인증정보에 대한 처리를 할 수 있는 인증 백엔드가 존재하지 않습니다."
 
 msgid "Password"
 msgstr "암호"
@@ -60,13 +60,13 @@ msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니다."
 
 msgid "Unable to authenticate to any available projects."
-msgstr "사용 가능한 어떤 프로젝트에서든 인증할 수 없습니다."
+msgstr "사용 가능한 어떤 프로젝트에서도 인증할 수 없습니다."
 
 msgid "Unable to establish connection to keystone endpoint."
 msgstr "Keystone 엔드포인트에 접속할 수 없습니다."
 
 msgid "Unable to retrieve authorized projects."
-msgstr "권한을 가진 프로젝트를 가져올 수 없습니다."
+msgstr "인증된 프로젝트를 가져올 수 없습니다."
 
 msgid "User Name"
 msgstr "사용자 이름"
