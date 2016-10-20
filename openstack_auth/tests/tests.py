@@ -959,8 +959,8 @@ class PolicyLoaderTestCase(test.TestCase):
         policy.reset()
         enforcer = policy._get_enforcer()
         self.assertEqual(2, len(enforcer))
-        self.assertTrue('identity' in enforcer)
-        self.assertTrue('compute' in enforcer)
+        self.assertIn('identity', enforcer)
+        self.assertIn('compute', enforcer)
 
     def test_policy_reset(self):
         policy._get_enforcer()
