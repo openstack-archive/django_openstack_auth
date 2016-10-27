@@ -130,20 +130,6 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         client = self._mock_unscoped_client(user)
         self._mock_unscoped_list_tenants(client, tenants)
 
-    def _mock_client_delete_token(self, user, token, url=None):
-        if not url:
-            url = settings.OPENSTACK_KEYSTONE_URL
-
-        plugin = token_endpoint.Token(
-            endpoint=url,
-            token=self.data.unscoped_access_info.auth_token)
-
-        client = self.ks_client_module.Client(session=mox.IsA(session.Session),
-                                              auth=plugin)
-        client.tokens = self.mox.CreateMockAnything()
-        client.tokens.delete(token=token)
-        return client
-
     def _create_password_auth(self, username=None, password=None, url=None):
         if not username:
             username = self.data.user.name
@@ -340,7 +326,6 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
 
         self._mock_unscoped_client_list_tenants(user, tenants)
         self._mock_scoped_client_for_tenant(unscoped, self.data.tenant_one.id)
-        self._mock_client_delete_token(user, unscoped.auth_token, endpoint)
         self._mock_scoped_client_for_tenant(scoped, tenant.id, url=endpoint,
                                             client=False)
 
