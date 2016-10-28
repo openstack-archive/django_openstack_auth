@@ -27,7 +27,6 @@ from django.views.decorators.csrf import csrf_exempt  # noqa
 from django.views.decorators.csrf import csrf_protect  # noqa
 from django.views.decorators.debug import sensitive_post_parameters  # noqa
 from keystoneauth1 import exceptions as keystone_exceptions
-from keystoneauth1 import token_endpoint
 import six
 
 from openstack_auth import exceptions
@@ -159,17 +158,6 @@ def logout(request, login_url=None, **kwargs):
     msg = 'Logging out user "%(username)s".' % \
         {'username': request.user.username}
     LOG.info(msg)
-    endpoint = request.session.get('region_endpoint')
-
-    # delete the project scoped token
-    token = request.session.get('token')
-    if token and endpoint:
-        delete_token(endpoint=endpoint, token_id=token.id)
-
-    # delete the domain scoped token if set
-    domain_token = request.session.get('domain_token')
-    if domain_token and endpoint:
-        delete_token(endpoint=endpoint, token_id=domain_token.auth_token)
 
     """ Securely logs a user out. """
     return django_auth_views.logout_then_login(request, login_url=login_url,
@@ -178,24 +166,7 @@ def logout(request, login_url=None, **kwargs):
 
 def delete_token(endpoint, token_id):
     """Delete a token."""
-    if utils.is_token_deletion_disabled():
-        return
-    try:
-        endpoint, __ = utils.fix_auth_url_version_prefix(endpoint)
-
-        session = utils.get_session()
-        auth_plugin = token_endpoint.Token(endpoint=endpoint,
-                                           token=token_id)
-        client = utils.get_keystone_client().Client(session=session,
-                                                    auth=auth_plugin)
-        if utils.get_keystone_version() >= 3:
-            client.tokens.revoke_token(token=token_id)
-        else:
-            client.tokens.delete(token=token_id)
-
-        LOG.info('Deleted token %s' % token_id)
-    except keystone_exceptions.ClientException:
-        LOG.info('Could not delete token')
+    LOG.warn("The delete_token method is deprecated and now does nothing")
 
 
 @login_required
@@ -234,10 +205,6 @@ def switch(request, tenant_id, redirect_field_name=auth.REDIRECT_FIELD_NAME):
         redirect_to = settings.LOGIN_REDIRECT_URL
 
     if auth_ref:
-        old_endpoint = request.session.get('region_endpoint')
-        old_token = request.session.get('token')
-        if old_token and old_endpoint and old_token.id != auth_ref.auth_token:
-            delete_token(endpoint=old_endpoint, token_id=old_token.id)
         user = auth_user.create_user_from_token(
             request,
             auth_user.Token(auth_ref, unscoped_token=unscoped_token),

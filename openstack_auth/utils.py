@@ -144,6 +144,7 @@ def get_keystone_client():
 
 
 def is_token_deletion_disabled():
+    LOG.warning("Deprecated TOKEN_DELETION_DISABLED setting is no longer used")
     return getattr(settings, 'TOKEN_DELETION_DISABLED', False)
 
 
