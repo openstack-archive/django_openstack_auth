@@ -75,7 +75,8 @@ def check(actions, request, target=None):
     to policy setting.
 
     :param actions: list of scope and action to do policy checks on,
-        the composition of which is (scope, action)
+        the composition of which is (scope, action). Multiple actions
+        are treated as a logical AND.
 
         * scope: service type managing the policy for action
 
@@ -153,12 +154,16 @@ def check(actions, request, target=None):
             # needed when a domain scoped token is present
             if scope == 'identity' and domain_credentials:
                 # use domain credentials
-                return _check_credentials(
-                    enforcer[scope], action, target, domain_credentials)
+                if not _check_credentials(enforcer[scope],
+                                          action,
+                                          target,
+                                          domain_credentials):
+                    return False
 
             # use project credentials
-            return _check_credentials(
-                enforcer[scope], action, target, credentials)
+            if not _check_credentials(enforcer[scope],
+                                      action, target, credentials):
+                return False
 
         # if no policy for scope, allow action, underlying API will
         # ultimately block the action if not permitted, treat as though
