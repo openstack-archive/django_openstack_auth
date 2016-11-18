@@ -76,15 +76,18 @@ class OpenStackAuthTestsMixin(object):
         plugin.get_access(mox.IsA(session.Session)).AndRaise(exc)
 
     def _mock_scoped_client_for_tenant(self, auth_ref, tenant_id, url=None,
-                                       client=True):
+                                       client=True, token=None):
         if url is None:
             url = settings.OPENSTACK_KEYSTONE_URL
 
+        if not token:
+            token = self.data.unscoped_access_info.auth_token
+
         plugin = self._create_token_auth(
             tenant_id,
-            token=self.data.unscoped_access_info.auth_token,
+            token=token,
             url=url)
-
+        self.scoped_token_auth = plugin
         plugin.get_access(mox.IsA(session.Session)).AndReturn(auth_ref)
         if client:
             return self.ks_client_module.Client(
@@ -96,6 +99,33 @@ class OpenStackAuthTestsMixin(object):
                 'domain': DEFAULT_DOMAIN,
                 'password': user.password,
                 'username': user.name}
+
+
+class OpenStackAuthFederatedTestsMixin(object):
+    """Common functions for federation"""
+    def _mock_unscoped_federated_list_projects(self, client, projects):
+        client.federation = self.mox.CreateMockAnything()
+        client.federation.projects = self.mox.CreateMockAnything()
+        client.federation.projects.list().AndReturn(projects)
+
+    def _mock_unscoped_token_client(self, unscoped, auth_url=None,
+                                    client=True):
+        if not auth_url:
+            auth_url = settings.OPENSTACK_KEYSTONE_URL
+        plugin = self._create_token_auth(
+            None,
+            token=unscoped.auth_token,
+            url=auth_url)
+        plugin.get_access(mox.IsA(session.Session)).AndReturn(unscoped)
+        plugin.auth_url = auth_url
+        if client:
+            return self.ks_client_module.Client(
+                session=mox.IsA(session.Session),
+                auth=plugin)
+
+    def _mock_federated_client_list_projects(self, unscoped, projects):
+        client = self._mock_unscoped_token_client(unscoped)
+        self._mock_unscoped_federated_list_projects(client, projects)
 
 
 class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
@@ -431,7 +461,9 @@ class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
         self.assertEqual(tenant_list, expected_tenants)
 
 
-class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
+class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
+                           OpenStackAuthFederatedTestsMixin,
+                           test.TestCase):
 
     def _mock_unscoped_client_list_projects(self, user, projects):
         client = self._mock_unscoped_client(user)
@@ -532,6 +564,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self.mox.StubOutClassWithMocks(v3_auth, 'Token')
         self.mox.StubOutClassWithMocks(v3_auth, 'Password')
         self.mox.StubOutClassWithMocks(client_v3, 'Client')
+        self.mox.StubOutClassWithMocks(v3_auth, 'Keystone2Keystone')
 
     def test_login(self):
         projects = [self.data.project_one, self.data.project_two]
@@ -774,6 +807,234 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
     def test_switch_region_with_next(self, next=None):
         self.test_switch_region(next='/next_url')
 
+    def test_switch_keystone_provider_remote_fail(self):
+        auth_url = settings.OPENSTACK_KEYSTONE_URL
+        target_provider = 'k2kserviceprovider'
+        self.data = data_v3.generate_test_data(service_providers=True)
+        self.sp_data = data_v3.generate_test_data(endpoint='http://sp2')
+        projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+        form_data = self.get_form_data(user)
+
+        # mock authenticate
+        self._mock_unscoped_and_domain_list_projects(user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+
+        # mock switch
+        plugin = v3_auth.Token(auth_url=auth_url,
+                               token=unscoped.auth_token,
+                               project_id=None,
+                               reauthenticate=False)
+        plugin.get_access(mox.IsA(session.Session)
+                          ).AndReturn(self.data.unscoped_access_info)
+        plugin.auth_url = auth_url
+        client = self.ks_client_module.Client(session=mox.IsA(session.Session),
+                                              auth=plugin)
+
+        self._mock_unscoped_list_projects(client, user, projects)
+        plugin = self._create_token_auth(
+            self.data.project_one.id,
+            token=self.data.unscoped_access_info.auth_token,
+            url=settings.OPENSTACK_KEYSTONE_URL)
+        plugin.get_access(mox.IsA(session.Session)).AndReturn(
+            settings.OPENSTACK_KEYSTONE_URL)
+        plugin.get_sp_auth_url(
+            mox.IsA(session.Session), target_provider
+        ).AndReturn('https://k2kserviceprovider/sp_url')
+
+        # let the K2K plugin fail when logging in
+        plugin = v3_auth.Keystone2Keystone(
+            base_plugin=plugin, service_provider=target_provider)
+        plugin.get_access(mox.IsA(session.Session)).AndRaise(
+            keystone_exceptions.AuthorizationFailure)
+        self.mox.ReplayAll()
+
+        # Log in
+        url = reverse('login')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Switch
+        url = reverse('switch_keystone_provider', args=[target_provider])
+        form_data['keystone_provider'] = target_provider
+        response = self.client.get(url, form_data, follow=True)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Assert that provider has not changed because of failure
+        self.assertEqual(self.client.session['keystone_provider_id'],
+                         'localkeystone')
+        # These should never change
+        self.assertEqual(self.client.session['k2k_base_unscoped_token'],
+                         unscoped.auth_token)
+        self.assertEqual(self.client.session['k2k_auth_url'], auth_url)
+
+    def test_switch_keystone_provider_remote(self):
+        auth_url = settings.OPENSTACK_KEYSTONE_URL
+        target_provider = 'k2kserviceprovider'
+        self.data = data_v3.generate_test_data(service_providers=True)
+        self.sp_data = data_v3.generate_test_data(endpoint='http://sp2')
+        projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+        form_data = self.get_form_data(user)
+
+        # mock authenticate
+        self._mock_unscoped_and_domain_list_projects(user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+
+        # mock switch
+        plugin = v3_auth.Token(auth_url=auth_url,
+                               token=unscoped.auth_token,
+                               project_id=None,
+                               reauthenticate=False)
+        plugin.get_access(mox.IsA(session.Session)).AndReturn(
+            self.data.unscoped_access_info)
+
+        plugin.auth_url = auth_url
+        client = self.ks_client_module.Client(session=mox.IsA(session.Session),
+                                              auth=plugin)
+
+        self._mock_unscoped_list_projects(client, user, projects)
+        plugin = self._create_token_auth(
+            self.data.project_one.id,
+            token=self.data.unscoped_access_info.auth_token,
+            url=settings.OPENSTACK_KEYSTONE_URL)
+        plugin.get_access(mox.IsA(session.Session)).AndReturn(
+            settings.OPENSTACK_KEYSTONE_URL)
+
+        plugin.get_sp_auth_url(
+            mox.IsA(session.Session), target_provider
+        ).AndReturn('https://k2kserviceprovider/sp_url')
+        plugin = v3_auth.Keystone2Keystone(base_plugin=plugin,
+                                           service_provider=target_provider)
+        plugin.get_access(mox.IsA(session.Session)). \
+            AndReturn(self.sp_data.unscoped_access_info)
+        plugin.auth_url = 'http://service_provider_endp:5000/v3'
+
+        # mock authenticate for service provider
+        sp_projects = [self.sp_data.project_one, self.sp_data.project_two]
+        sp_unscoped = self.sp_data.federated_unscoped_access_info
+        client = self._mock_unscoped_token_client(sp_unscoped, plugin.auth_url)
+        self._mock_unscoped_federated_list_projects(client, sp_projects)
+        self._mock_scoped_client_for_tenant(sp_unscoped,
+                                            self.sp_data.project_one.id,
+                                            url=plugin.auth_url,
+                                            token=sp_unscoped.auth_token)
+
+        self.mox.ReplayAll()
+
+        # Log in
+        url = reverse('login')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Switch
+        url = reverse('switch_keystone_provider', args=[target_provider])
+        form_data['keystone_provider'] = target_provider
+        response = self.client.get(url, form_data, follow=True)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Assert keystone provider has changed
+        self.assertEqual(self.client.session['keystone_provider_id'],
+                         target_provider)
+        # These should not change
+        self.assertEqual(self.client.session['k2k_base_unscoped_token'],
+                         unscoped.auth_token)
+        self.assertEqual(self.client.session['k2k_auth_url'], auth_url)
+
+    def test_switch_keystone_provider_local(self):
+        auth_url = settings.OPENSTACK_KEYSTONE_URL
+        self.data = data_v3.generate_test_data(service_providers=True)
+        keystone_provider = 'localkeystone'
+        projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+        form_data = self.get_form_data(user)
+
+        # mock authenticate
+        self._mock_unscoped_and_domain_list_projects(user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+        self._mock_unscoped_token_client(unscoped,
+                                         auth_url=auth_url,
+                                         client=False)
+        client = self._mock_unscoped_token_client(unscoped, auth_url)
+        self._mock_unscoped_list_projects(client, user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+
+        self.mox.ReplayAll()
+
+        # Log in
+        url = reverse('login')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Switch
+        url = reverse('switch_keystone_provider', args=[keystone_provider])
+        form_data['keystone_provider'] = keystone_provider
+        response = self.client.get(url, form_data, follow=True)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Assert nothing has changed since we are going from local to local
+        self.assertEqual(self.client.session['keystone_provider_id'],
+                         keystone_provider)
+        self.assertEqual(self.client.session['k2k_base_unscoped_token'],
+                         unscoped.auth_token)
+        self.assertEqual(self.client.session['k2k_auth_url'], auth_url)
+
+    def test_switch_keystone_provider_local_fail(self):
+        auth_url = settings.OPENSTACK_KEYSTONE_URL
+        self.data = data_v3.generate_test_data(service_providers=True)
+        keystone_provider = 'localkeystone'
+        projects = [self.data.project_one, self.data.project_two]
+        user = self.data.user
+        unscoped = self.data.unscoped_access_info
+        form_data = self.get_form_data(user)
+
+        # mock authenticate
+        self._mock_unscoped_and_domain_list_projects(user, projects)
+        self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
+
+        # Let using the base token for logging in fail
+        plugin = v3_auth.Token(auth_url=auth_url,
+                               token=unscoped.auth_token,
+                               project_id=None,
+                               reauthenticate=False)
+        plugin.get_access(mox.IsA(session.Session)). \
+            AndRaise(keystone_exceptions.AuthorizationFailure)
+        plugin.auth_url = auth_url
+        self.mox.ReplayAll()
+
+        # Log in
+        url = reverse('login')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(url, form_data)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Switch
+        url = reverse('switch_keystone_provider', args=[keystone_provider])
+        form_data['keystone_provider'] = keystone_provider
+        response = self.client.get(url, form_data, follow=True)
+        self.assertRedirects(response, settings.LOGIN_REDIRECT_URL)
+
+        # Assert
+        self.assertEqual(self.client.session['keystone_provider_id'],
+                         keystone_provider)
+        self.assertEqual(self.client.session['k2k_base_unscoped_token'],
+                         unscoped.auth_token)
+        self.assertEqual(self.client.session['k2k_auth_url'], auth_url)
+
     def test_tenant_sorting(self):
         projects = [self.data.project_two, self.data.project_one]
         expected_projects = [self.data.project_one, self.data.project_two]
@@ -791,7 +1052,9 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin, test.TestCase):
         self.assertEqual(project_list, expected_projects)
 
 
-class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
+class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin,
+                               OpenStackAuthFederatedTestsMixin,
+                               test.TestCase):
 
     def _create_token_auth(self, project_id=None, token=None, url=None):
         if not token:
@@ -804,26 +1067,6 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
                              token=token,
                              project_id=project_id,
                              reauthenticate=False)
-
-    def _mock_unscoped_client(self, unscoped):
-        plugin = self._create_token_auth(
-            None,
-            token=unscoped.auth_token,
-            url=settings.OPENSTACK_KEYSTONE_URL)
-        plugin.get_access(mox.IsA(session.Session)).AndReturn(unscoped)
-        plugin.auth_url = settings.OPENSTACK_KEYSTONE_URL
-
-        return self.ks_client_module.Client(session=mox.IsA(session.Session),
-                                            auth=plugin)
-
-    def _mock_unscoped_federated_list_projects(self, client, projects):
-        client.federation = self.mox.CreateMockAnything()
-        client.federation.projects = self.mox.CreateMockAnything()
-        client.federation.projects.list().AndReturn(projects)
-
-    def _mock_unscoped_client_list_projects(self, unscoped, projects):
-        client = self._mock_unscoped_client(unscoped)
-        self._mock_unscoped_federated_list_projects(client, projects)
 
     def setUp(self):
         super(OpenStackAuthTestsWebSSO, self).setUp()
@@ -908,7 +1151,7 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
         token = unscoped.auth_token
 
         form_data = {'token': token}
-        self._mock_unscoped_client_list_projects(unscoped, projects)
+        self._mock_federated_client_list_projects(unscoped, projects)
         self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
         self.mox.ReplayAll()
@@ -927,7 +1170,7 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
         token = unscoped.auth_token
 
         form_data = {'token': token}
-        self._mock_unscoped_client_list_projects(unscoped, projects)
+        self._mock_federated_client_list_projects(unscoped, projects)
         self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
         self.mox.ReplayAll()

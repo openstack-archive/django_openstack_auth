@@ -55,7 +55,8 @@ class TestResponse(requests.Response):
         return self._text
 
 
-def generate_test_data(pki=False):
+def generate_test_data(pki=False, service_providers=False,
+                       endpoint='localhost'):
     '''Builds a set of test_data data as returned by Keystone V2.'''
     test_data = TestDataContainer()
 
@@ -64,19 +65,19 @@ def generate_test_data(pki=False):
         'id': uuid.uuid4().hex,
         'endpoints': [
             {
-                'url': 'http://admin.localhost:35357/v3',
+                'url': 'http://admin.%s:35357/v3' % endpoint,
                 'region': 'RegionOne',
                 'interface': 'admin',
                 'id': uuid.uuid4().hex,
             },
             {
-                'url': 'http://internal.localhost:5000/v3',
+                'url': 'http://internal.%s:5000/v3' % endpoint,
                 'region': 'RegionOne',
                 'interface': 'internal',
                 'id': uuid.uuid4().hex
             },
             {
-                'url': 'http://public.localhost:5000/v3',
+                'url': 'http://public.%s:5000/v3' % endpoint,
                 'region': 'RegionOne',
                 'interface': 'public',
                 'id': uuid.uuid4().hex
@@ -131,43 +132,43 @@ def generate_test_data(pki=False):
         'id': uuid.uuid4().hex,
         'endpoints': [
             {
-                'url': ('http://nova-admin.localhost:8774/v2.0/%s'
-                        % (project_dict_1['id'])),
+                'url': ('http://nova-admin.%s:8774/v2.0/%s'
+                        % (endpoint, project_dict_1['id'])),
                 'region': 'RegionOne',
                 'interface': 'admin',
                 'id': uuid.uuid4().hex,
             },
             {
-                'url': ('http://nova-internal.localhost:8774/v2.0/%s'
-                        % (project_dict_1['id'])),
+                'url': ('http://nova-internal.%s:8774/v2.0/%s'
+                        % (endpoint, project_dict_1['id'])),
                 'region': 'RegionOne',
                 'interface': 'internal',
                 'id': uuid.uuid4().hex
             },
             {
-                'url': ('http://nova-public.localhost:8774/v2.0/%s'
-                        % (project_dict_1['id'])),
+                'url': ('http://nova-public.%s:8774/v2.0/%s'
+                        % (endpoint, project_dict_1['id'])),
                 'region': 'RegionOne',
                 'interface': 'public',
                 'id': uuid.uuid4().hex
             },
             {
-                'url': ('http://nova2-admin.localhost:8774/v2.0/%s'
-                        % (project_dict_1['id'])),
+                'url': ('http://nova2-admin.%s:8774/v2.0/%s'
+                        % (endpoint, project_dict_1['id'])),
                 'region': 'RegionTwo',
                 'interface': 'admin',
                 'id': uuid.uuid4().hex,
             },
             {
-                'url': ('http://nova2-internal.localhost:8774/v2.0/%s'
-                        % (project_dict_1['id'])),
+                'url': ('http://nova2-internal.%s:8774/v2.0/%s'
+                        % (endpoint, project_dict_1['id'])),
                 'region': 'RegionTwo',
                 'interface': 'internal',
                 'id': uuid.uuid4().hex
             },
             {
-                'url': ('http://nova2-public.localhost:8774/v2.0/%s'
-                        % (project_dict_1['id'])),
+                'url': ('http://nova2-public.%s:8774/v2.0/%s'
+                        % (endpoint, project_dict_1['id'])),
                 'region': 'RegionTwo',
                 'interface': 'public',
                 'id': uuid.uuid4().hex
@@ -218,6 +219,19 @@ def generate_test_data(pki=False):
         }
     }
 
+    sp_list = None
+    if service_providers:
+        test_data.sp_auth_url = 'http://service_provider_endp:5000/v3'
+        test_data.service_provider_id = 'k2kserviceprovider'
+        # The access info for the identity provider
+        # should return a list of service providers
+        sp_list = [
+            {'auth_url': test_data.sp_auth_url,
+             'id': test_data.service_provider_id,
+             'sp_url': 'https://k2kserviceprovider/sp_url'}
+        ]
+        scoped_token_dict['token']['service_providers'] = sp_list
+
     test_data.scoped_access_info = access.create(
         resp=auth_response,
         body=scoped_token_dict
@@ -263,6 +277,9 @@ def generate_test_data(pki=False):
             'catalog': [keystone_service]
         }
     }
+
+    if service_providers:
+        unscoped_token_dict['token']['service_providers'] = sp_list
 
     test_data.unscoped_access_info = access.create(
         resp=auth_response,

@@ -26,7 +26,10 @@ urlpatterns = [
         name='switch_tenants'),
     url(r'^switch_services_region/(?P<region_name>[^/]+)/$',
         views.switch_region,
-        name='switch_services_region')
+        name='switch_services_region'),
+    url(r'^switch_keystone_provider/(?P<keystone_provider>[^/]+)/$',
+        views.switch_keystone_provider,
+        name='switch_keystone_provider')
 ]
 
 if utils.is_websso_enabled():

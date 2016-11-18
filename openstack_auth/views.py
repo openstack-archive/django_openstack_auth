@@ -31,6 +31,8 @@ import six
 
 from openstack_auth import exceptions
 from openstack_auth import forms
+from openstack_auth import plugin
+
 # This is historic and is added back in to not break older versions of
 # Horizon, fix to Horizon to remove this requirement was committed in
 # Juno
@@ -240,4 +242,76 @@ def switch_region(request, region_name,
     response = shortcuts.redirect(redirect_to)
     utils.set_response_cookie(response, 'services_region',
                               request.session['services_region'])
+    return response
+
+
+@login_required
+def switch_keystone_provider(request, keystone_provider=None,
+                             redirect_field_name=auth.REDIRECT_FIELD_NAME):
+    """Switches the user's keystone provider using K2K Federation
+
+    If keystone_provider is given then we switch the user to
+    the keystone provider using K2K federation. Otherwise if keystone_provider
+    is None then we switch the user back to the Identity Provider Keystone
+    which a non federated token auth will be used.
+    """
+    base_token = request.session.get('k2k_base_unscoped_token', None)
+    k2k_auth_url = request.session.get('k2k_auth_url', None)
+    keystone_providers = request.session.get('keystone_providers', None)
+
+    if not base_token or not k2k_auth_url:
+        msg = _('K2K Federation not setup for this session')
+        raise exceptions.KeystoneAuthException(msg)
+
+    redirect_to = request.GET.get(redirect_field_name, '')
+    if not is_safe_url(url=redirect_to, host=request.get_host()):
+        redirect_to = settings.LOGIN_REDIRECT_URL
+
+    unscoped_auth_ref = None
+    keystone_idp_id = getattr(
+        settings, 'KEYSTONE_PROVIDER_IDP_ID', 'localkeystone')
+
+    if keystone_provider == keystone_idp_id:
+        current_plugin = plugin.TokenPlugin()
+        unscoped_auth = current_plugin.get_plugin(auth_url=k2k_auth_url,
+                                                  token=base_token)
+    else:
+        # Switch to service provider using K2K federation
+        plugins = [plugin.TokenPlugin()]
+        current_plugin = plugin.K2KAuthPlugin()
+
+        unscoped_auth = current_plugin.get_plugin(
+            auth_url=k2k_auth_url, service_provider=keystone_provider,
+            plugins=plugins, token=base_token)
+
+    try:
+        # Switch to identity provider using token auth
+        unscoped_auth_ref = current_plugin.get_access_info(unscoped_auth)
+    except exceptions.KeystoneAuthException as exc:
+        msg = 'Switching to Keystone Provider %s has failed. %s' \
+              % (keystone_provider, (six.text_type(exc)))
+        messages.error(request, msg)
+
+    if unscoped_auth_ref:
+        try:
+            request.user = auth.authenticate(
+                request=request, auth_url=unscoped_auth.auth_url,
+                token=unscoped_auth_ref.auth_token)
+        except exceptions.KeystoneAuthException as exc:
+            msg = 'Keystone provider switch failed: %s' % six.text_type(exc)
+            res = django_http.HttpResponseRedirect(settings.LOGIN_URL)
+            res.set_cookie('logout_reason', msg, max_age=10)
+            return res
+        auth.login(request, request.user)
+        auth_user.set_session_from_user(request, request.user)
+        request.session['keystone_provider_id'] = keystone_provider
+        request.session['keystone_providers'] = keystone_providers
+        request.session['k2k_base_unscoped_token'] = base_token
+        request.session['k2k_auth_url'] = k2k_auth_url
+        message = (
+            _('Switch to Keystone Provider "%(keystone_provider)s"'
+              'successful.') % {'keystone_provider': keystone_provider})
+        messages.success(request, message)
+
+    response = shortcuts.redirect(redirect_to)
     return response
