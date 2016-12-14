@@ -166,7 +166,7 @@ def logout(request, login_url=None, **kwargs):
 
 def delete_token(endpoint, token_id):
     """Delete a token."""
-    LOG.warn("The delete_token method is deprecated and now does nothing")
+    LOG.warning("The delete_token method is deprecated and now does nothing")
 
 
 @login_required
