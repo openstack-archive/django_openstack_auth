@@ -11,6 +11,7 @@
 # under the License.
 
 import abc
+import logging
 
 from django.utils.translation import ugettext_lazy as _
 from keystoneauth1 import exceptions as keystone_exceptions
@@ -21,6 +22,7 @@ import six
 from openstack_auth import exceptions
 from openstack_auth import utils
 
+LOG = logging.getLogger(__name__)
 __all__ = ['BasePlugin']
 
 
@@ -95,3 +97,114 @@ class BasePlugin(object):
                 keystone_exceptions.AuthorizationFailure):
             msg = _('Unable to retrieve authorized projects.')
             raise exceptions.KeystoneAuthException(msg)
+
+    def get_access_info(self, keystone_auth):
+        """Get the access info from an unscoped auth
+
+        This function provides the base functionality that the
+        plugins will use to authenticate and get the access info object.
+
+        :param keystone_auth: keystoneauth1 identity plugin
+        :raises: exceptions.KeystoneAuthException on auth failure
+        :returns: keystoneclient.access.AccessInfo
+        """
+        session = utils.get_session()
+
+        try:
+            unscoped_auth_ref = keystone_auth.get_access(session)
+        except keystone_exceptions.ConnectFailure as exc:
+            LOG.error(str(exc))
+            msg = _('Unable to establish connection to keystone endpoint.')
+            raise exceptions.KeystoneAuthException(msg)
+        except (keystone_exceptions.Unauthorized,
+                keystone_exceptions.Forbidden,
+                keystone_exceptions.NotFound) as exc:
+            LOG.debug(str(exc))
+            raise exceptions.KeystoneAuthException(_('Invalid credentials.'))
+        except (keystone_exceptions.ClientException,
+                keystone_exceptions.AuthorizationFailure) as exc:
+            msg = _("An error occurred authenticating. "
+                    "Please try again later.")
+            LOG.debug(str(exc))
+            raise exceptions.KeystoneAuthException(msg)
+        return unscoped_auth_ref
+
+    def get_project_scoped_auth(self, unscoped_auth, unscoped_auth_ref,
+                                recent_project=None):
+        """Get the project scoped keystone auth and access info
+
+        This function returns a project scoped keystone token plugin
+        and AccessInfo object.
+
+        :param unscoped_auth: keystone auth plugin
+        :param unscoped_auth_ref: keystoneclient.access.AccessInfo` or None.
+        :param recent_project: project that we should try to scope to
+        :return: keystone token auth plugin, AccessInfo object
+        """
+        auth_url = unscoped_auth.auth_url
+        session = utils.get_session()
+
+        projects = self.list_projects(
+            session, unscoped_auth, unscoped_auth_ref)
+        # Attempt to scope only to enabled projects
+        projects = [project for project in projects if project.enabled]
+
+        # if a most recent project was found, try using it first
+        if recent_project:
+            for pos, project in enumerate(projects):
+                if project.id == recent_project:
+                    # move recent project to the beginning
+                    projects.pop(pos)
+                    projects.insert(0, project)
+                    break
+
+        scoped_auth = None
+        scoped_auth_ref = None
+        for project in projects:
+            token = unscoped_auth_ref.auth_token
+            scoped_auth = utils.get_token_auth_plugin(auth_url,
+                                                      token=token,
+                                                      project_id=project.id)
+            try:
+                scoped_auth_ref = scoped_auth.get_access(session)
+            except (keystone_exceptions.ClientException,
+                    keystone_exceptions.AuthorizationFailure):
+                pass
+            else:
+                break
+
+        return scoped_auth, scoped_auth_ref
+
+    def get_domain_scoped_auth(self, unscoped_auth, unscoped_auth_ref,
+                               domain_name=None):
+        """Get the domain scoped keystone auth and access info
+
+        This function returns a domain scoped keystone token plugin
+        and AccessInfo object.
+
+        :param unscoped_auth: keystone auth plugin
+        :param unscoped_auth_ref: keystoneclient.access.AccessInfo` or None.
+        :param domain_name: domain that we should try to scope to
+        :return: keystone token auth plugin, AccessInfo object
+        """
+        session = utils.get_session()
+        auth_url = unscoped_auth.auth_url
+
+        if not domain_name or utils.get_keystone_version() < 3:
+            return None, None
+
+        # domain support can require domain scoped tokens to perform
+        # identity operations depending on the policy files being used
+        # for keystone.
+        domain_auth = None
+        domain_auth_ref = None
+        try:
+            token = unscoped_auth_ref.auth_token
+            domain_auth = utils.get_token_auth_plugin(
+                auth_url,
+                token,
+                domain_name=domain_name)
+            domain_auth_ref = domain_auth.get_access(session)
+        except Exception:
+            LOG.debug('Error getting domain scoped token.', exc_info=True)
+        return domain_auth, domain_auth_ref

@@ -55,6 +55,7 @@ class OpenStackAuthTestsMixin(object):
         plugin = self._create_password_auth()
         plugin.get_access(mox.IsA(session.Session)). \
             AndReturn(self.data.unscoped_access_info)
+        plugin.auth_url = settings.OPENSTACK_KEYSTONE_URL
         return self.ks_client_module.Client(session=mox.IsA(session.Session),
                                             auth=plugin)
 
@@ -810,6 +811,7 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin, test.TestCase):
             token=unscoped.auth_token,
             url=settings.OPENSTACK_KEYSTONE_URL)
         plugin.get_access(mox.IsA(session.Session)).AndReturn(unscoped)
+        plugin.auth_url = settings.OPENSTACK_KEYSTONE_URL
 
         return self.ks_client_module.Client(session=mox.IsA(session.Session),
                                             auth=plugin)

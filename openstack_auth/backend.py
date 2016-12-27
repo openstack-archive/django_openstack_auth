@@ -20,7 +20,6 @@ import pytz
 from django.conf import settings
 from django.utils.module_loading import import_string  # noqa
 from django.utils.translation import ugettext_lazy as _
-from keystoneauth1 import exceptions as keystone_exceptions
 
 from openstack_auth import exceptions
 from openstack_auth import user as auth_user
@@ -110,51 +109,23 @@ class KeystoneBackend(object):
                         'configuration error that should be addressed.')
             raise exceptions.KeystoneAuthException(msg)
 
-        session = utils.get_session()
-        keystone_client_class = utils.get_keystone_client().Client
-
-        try:
-            unscoped_auth_ref = unscoped_auth.get_access(session)
-        except keystone_exceptions.ConnectFailure as exc:
-            LOG.error(str(exc))
-            msg = _('Unable to establish connection to keystone endpoint.')
-            raise exceptions.KeystoneAuthException(msg)
-        except (keystone_exceptions.Unauthorized,
-                keystone_exceptions.Forbidden,
-                keystone_exceptions.NotFound) as exc:
-            LOG.debug(str(exc))
-            raise exceptions.KeystoneAuthException(_('Invalid credentials.'))
-        except (keystone_exceptions.ClientException,
-                keystone_exceptions.AuthorizationFailure) as exc:
-            msg = _("An error occurred authenticating. "
-                    "Please try again later.")
-            LOG.debug(str(exc))
-            raise exceptions.KeystoneAuthException(msg)
+        # the recent project id a user might have set in a cookie
+        recent_project = None
+        request = kwargs.get('request')
+        if request:
+            # Grab recent_project found in the cookie, try to scope
+            # to the last project used.
+            recent_project = request.COOKIES.get('recent_project')
+        unscoped_auth_ref = plugin.get_access_info(unscoped_auth)
 
         # Check expiry for our unscoped auth ref.
         self.check_auth_expiry(unscoped_auth_ref)
 
-        # domain support can require domain scoped tokens to perform
-        # identity operations depending on the policy files being used
-        # for keystone.
-        domain_auth = None
-        domain_auth_ref = None
-        if utils.get_keystone_version() >= 3 and 'user_domain_name' in kwargs:
-            try:
-                token = unscoped_auth_ref.auth_token
-                domain_auth = utils.get_token_auth_plugin(
-                    auth_url,
-                    token,
-                    domain_name=kwargs['user_domain_name'])
-                domain_auth_ref = domain_auth.get_access(session)
-            except Exception:
-                LOG.debug('Error getting domain scoped token.', exc_info=True)
-
-        projects = plugin.list_projects(session,
-                                        unscoped_auth,
-                                        unscoped_auth_ref)
-        # Attempt to scope only to enabled projects
-        projects = [project for project in projects if project.enabled]
+        domain_name = kwargs.get('user_domain_name', None)
+        domain_auth, domain_auth_ref = plugin.get_domain_scoped_auth(
+            unscoped_auth, unscoped_auth_ref, domain_name)
+        scoped_auth, scoped_auth_ref = plugin.get_project_scoped_auth(
+            unscoped_auth, unscoped_auth_ref, recent_project=recent_project)
 
         # Abort if there are no projects for this user and a valid domain
         # token has not been obtained
@@ -171,53 +142,16 @@ class KeystoneBackend(object):
         #                    token)
         #                 3) user cannot obtain a domain scoped token, but can
         #                    obtain a project scoped token
-        if not projects and not domain_auth_ref:
+        if not scoped_auth_ref and domain_auth_ref:
+            # if the user can't obtain a project scoped token, set the scoped
+            # token to be the domain token, if valid
+            scoped_auth = domain_auth
+            scoped_auth_ref = domain_auth_ref
+        elif not scoped_auth_ref and not domain_auth_ref:
             msg = _('You are not authorized for any projects.')
             if utils.get_keystone_version() >= 3:
                 msg = _('You are not authorized for any projects or domains.')
             raise exceptions.KeystoneAuthException(msg)
-
-        # the recent project id a user might have set in a cookie
-        recent_project = None
-        request = kwargs.get('request')
-
-        if request:
-            # Grab recent_project found in the cookie, try to scope
-            # to the last project used.
-            recent_project = request.COOKIES.get('recent_project')
-
-        # if a most recent project was found, try using it first
-        if recent_project:
-            for pos, project in enumerate(projects):
-                if project.id == recent_project:
-                    # move recent project to the beginning
-                    projects.pop(pos)
-                    projects.insert(0, project)
-                    break
-
-        for project in projects:
-            token = unscoped_auth_ref.auth_token
-            scoped_auth = utils.get_token_auth_plugin(auth_url,
-                                                      token=token,
-                                                      project_id=project.id)
-
-            try:
-                scoped_auth_ref = scoped_auth.get_access(session)
-            except (keystone_exceptions.ClientException,
-                    keystone_exceptions.AuthorizationFailure):
-                pass
-            else:
-                break
-        else:
-            # if the user can't obtain a project scoped token, set the scoped
-            # token to be the domain token, if valid
-            if domain_auth_ref:
-                scoped_auth = domain_auth
-                scoped_auth_ref = domain_auth_ref
-            else:
-                # if no domain or project token for user, abort
-                msg = _("Unable to authenticate to any available projects.")
-                raise exceptions.KeystoneAuthException(msg)
 
         # Check expiry for our new scoped token.
         self.check_auth_expiry(scoped_auth_ref)
@@ -276,6 +210,8 @@ class KeystoneBackend(object):
             session_time = min(timeout, int(token_life.total_seconds()))
             request.session.set_expiry(session_time)
 
+            keystone_client_class = utils.get_keystone_client().Client
+            session = utils.get_session()
             scoped_client = keystone_client_class(session=session,
                                                   auth=scoped_auth)
 
