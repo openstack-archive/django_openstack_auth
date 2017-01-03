@@ -1163,3 +1163,41 @@ class UserTestCase(test.TestCase):
         self.assertTrue(created_token._is_pki_token(
                         self.data.domain_scoped_access_info.auth_token))
         self.assertFalse(created_token._is_pki_token(None))
+
+
+class BehindProxyTestCase(test.TestCase):
+
+    def setUp(self):
+        self.request = http.HttpRequest()
+
+    def test_without_proxy(self):
+        self.request.META['REMOTE_ADDR'] = '10.111.111.2'
+        from openstack_auth.utils import get_client_ip
+        self.assertEqual('10.111.111.2', get_client_ip(self.request))
+
+    def test_with_proxy_no_settings(self):
+        from openstack_auth.utils import get_client_ip
+        self.request.META['REMOTE_ADDR'] = '10.111.111.2'
+        self.request.META['HTTP_X_REAL_IP'] = '192.168.15.33'
+        self.request.META['HTTP_X_FORWARDED_FOR'] = '172.18.0.2'
+        self.assertEqual('10.111.111.2', get_client_ip(self.request))
+
+    def test_with_settings_without_proxy(self):
+        from openstack_auth.utils import get_client_ip
+        self.request.META['REMOTE_ADDR'] = '10.111.111.2'
+        self.assertEqual('10.111.111.2', get_client_ip(self.request))
+
+    @override_settings(SECURE_PROXY_ADDR_HEADER='HTTP_X_FORWARDED_FOR')
+    def test_with_settings_with_proxy_forwardfor(self):
+        from openstack_auth.utils import get_client_ip
+        self.request.META['REMOTE_ADDR'] = '10.111.111.2'
+        self.request.META['HTTP_X_FORWARDED_FOR'] = '172.18.0.2'
+        self.assertEqual('172.18.0.2', get_client_ip(self.request))
+
+    @override_settings(SECURE_PROXY_ADDR_HEADER='HTTP_X_REAL_IP')
+    def test_with_settings_with_proxy_real_ip(self):
+        from openstack_auth.utils import get_client_ip
+        self.request.META['REMOTE_ADDR'] = '10.111.111.2'
+        self.request.META['HTTP_X_REAL_IP'] = '192.168.15.33'
+        self.request.META['HTTP_X_FORWARDED_FOR'] = '172.18.0.2'
+        self.assertEqual('192.168.15.33', get_client_ip(self.request))

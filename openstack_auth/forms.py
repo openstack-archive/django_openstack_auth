@@ -124,12 +124,18 @@ class Login(django_auth_forms.AuthenticationForm):
                                            password=password,
                                            user_domain_name=domain,
                                            auth_url=region)
-            msg = 'Login successful for user "%(username)s".' % \
-                {'username': username}
+            msg = 'Login successful for user "%(username)s", remote address '\
+                '%(remote_ip)s.' % {
+                    'username': username,
+                    'remote_ip': utils.get_client_ip(self.request)
+                }
             LOG.info(msg)
         except exceptions.KeystoneAuthException as exc:
-            msg = 'Login failed for user "%(username)s".' % \
-                {'username': username}
+            msg = 'Login failed for user "%(username)s", remote address '\
+                '%(remote_ip)s.' % {
+                    'username': username,
+                    'remote_ip': utils.get_client_ip(self.request)
+                }
             LOG.warning(msg)
             raise forms.ValidationError(exc)
         if hasattr(self, 'check_for_test_cookie'):  # Dropped in django 1.7
