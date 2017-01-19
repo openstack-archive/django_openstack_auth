@@ -498,3 +498,54 @@ def get_client_ip(request):
             request.META.get('REMOTE_ADDR')
         )
     return request.META.get('REMOTE_ADDR')
+
+
+def store_initial_k2k_session(auth_url, request, scoped_auth_ref,
+                              unscoped_auth_ref):
+    """Stores session variables if there are k2k service providers
+
+    This stores variables related to Keystone2Keystone federation. This
+    function gets skipped if there are no Keystone service providers.
+    An unscoped token to the identity provider keystone gets stored
+    so that it can be used to do federated login into the service
+    providers when switching keystone providers.
+    The settings file can be configured to set the display name
+    of the local (identity provider) keystone by setting
+    KEYSTONE_PROVIDER_IDP_NAME. The KEYSTONE_PROVIDER_IDP_ID settings
+    variable is used for comparison against the service providers.
+    It should not conflict with any of the service provider ids.
+
+    :param auth_url: base token auth url
+    :param request: Django http request object
+    :param scoped_auth_ref: Scoped Keystone access info object
+    :param unscoped_auth_ref: Unscoped Keystone access info object
+    """
+    keystone_provider_id = request.session.get('keystone_provider_id', None)
+    if keystone_provider_id:
+        return None
+
+    providers = getattr(scoped_auth_ref, 'service_providers', None)
+    if providers:
+        providers = getattr(providers, '_service_providers', None)
+
+    if providers:
+        keystone_idp_name = getattr(settings, 'KEYSTONE_PROVIDER_IDP_NAME',
+                                    'Local Keystone')
+        keystone_idp_id = getattr(
+            settings, 'KEYSTONE_PROVIDER_IDP_ID', 'localkeystone')
+        keystone_identity_provider = {'name': keystone_idp_name,
+                                      'id': keystone_idp_id}
+        # (edtubill) We will use the IDs as the display names
+        # We may want to be able to set display names in the future.
+        keystone_providers = [
+            {'name': provider_id, 'id': provider_id}
+            for provider_id in providers]
+
+        keystone_providers.append(keystone_identity_provider)
+
+        # We treat the Keystone idp ID as None
+        request.session['keystone_provider_id'] = keystone_idp_id
+        request.session['keystone_providers'] = keystone_providers
+        request.session['k2k_base_unscoped_token'] =\
+            unscoped_auth_ref.auth_token
+        request.session['k2k_auth_url'] = auth_url

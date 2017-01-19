@@ -13,8 +13,10 @@
 from openstack_auth.plugin.base import *  # noqa
 from openstack_auth.plugin.password import *  # noqa
 from openstack_auth.plugin.token import *  # noqa
+from openstack_auth.plugin.k2k import *  # noqa
 
 
 __all__ = ['BasePlugin',
            'PasswordPlugin',
-           'TokenPlugin']
+           'TokenPlugin',
+           'K2KAuthPlugin']

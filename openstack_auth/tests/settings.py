@@ -70,3 +70,5 @@ TEMPLATES = [
         'APP_DIRS': True,
     },
 ]
+
+AUTH_USER_MODEL = 'openstack_auth.User'
