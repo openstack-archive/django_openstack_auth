@@ -478,6 +478,13 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
         self._mock_unscoped_list_projects_fail(client, user)
 
     def _mock_unscoped_list_projects_fail(self, client, user):
+        plugin = self._create_token_auth(
+            project_id=None,
+            domain_name=DEFAULT_DOMAIN,
+            token=self.data.unscoped_access_info.auth_token,
+            url=settings.OPENSTACK_KEYSTONE_URL)
+        plugin.get_access(mox.IsA(session.Session)).AndReturn(
+            self.data.domain_scoped_access_info)
         client.projects = self.mox.CreateMockAnything()
         client.projects.list(user=user.id).AndRaise(
             keystone_exceptions.AuthorizationFailure)

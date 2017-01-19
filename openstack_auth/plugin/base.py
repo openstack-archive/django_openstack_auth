@@ -205,6 +205,7 @@ class BasePlugin(object):
                 token,
                 domain_name=domain_name)
             domain_auth_ref = domain_auth.get_access(session)
-        except Exception:
+        except (keystone_exceptions.ClientException,
+                keystone_exceptions.AuthorizationFailure):
             LOG.debug('Error getting domain scoped token.', exc_info=True)
         return domain_auth, domain_auth_ref
