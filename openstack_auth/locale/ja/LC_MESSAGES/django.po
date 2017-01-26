@@ -12,9 +12,9 @@
 # Yuko Katabami <yukokatabami@gmail.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.4.1.dev11\n"
+"Project-Id-Version: django_openstack_auth 3.1.1.dev1\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2016-09-30 20:21+0000\n"
+"POT-Creation-Date: 2017-01-25 19:41+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -59,9 +59,6 @@ msgstr "プロジェクト \"%(project_name)s\" へ正常に切り替えまし�
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "Identity サービスにより発行された認証トークンの期限が切れました。"
-
-msgid "Unable to authenticate to any available projects."
-msgstr "利用可能などのプロジェクトに対しても認証できませんでした。"
 
 msgid "Unable to establish connection to keystone endpoint."
 msgstr "Keystone エンドポイントへの接続を確立できません。"

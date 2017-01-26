@@ -7,9 +7,9 @@
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 2.2.1.dev12\n"
+"Project-Id-Version: django_openstack_auth 3.1.1.dev1\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2016-05-09 19:52+0000\n"
+"POT-Creation-Date: 2017-01-25 19:41+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,9 +35,6 @@ msgstr "क्षेत्र"
 
 msgid "The authentication token issued by the Identity service has expired."
 msgstr "पहचान सेवा द्वारा जारी प्रमाणीकरण टोकन समाप्त हो गया है."
-
-msgid "Unable to authenticate to any available projects."
-msgstr "किसी भी उपलब्ध परियोजनाओं को प्रमाणित करने में असमर्थ."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "अधिकृत परियोजनाओं को पुनः प्राप्त करने में असमर्थ."
