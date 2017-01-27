@@ -98,6 +98,18 @@ class BasePlugin(object):
             msg = _('Unable to retrieve authorized projects.')
             raise exceptions.KeystoneAuthException(msg)
 
+    def list_domains(self, session, auth_plugin, auth_ref=None):
+        try:
+            if self.keystone_version >= 3:
+                client = v3_client.Client(session=session, auth=auth_plugin)
+                return client.auth.domains()
+            else:
+                return []
+        except (keystone_exceptions.ClientException,
+                keystone_exceptions.AuthorizationFailure):
+            msg = _('Unable to retrieve authorized domains.')
+            raise exceptions.KeystoneAuthException(msg)
+
     def get_access_info(self, keystone_auth):
         """Get the access info from an unscoped auth
 
@@ -190,22 +202,36 @@ class BasePlugin(object):
         session = utils.get_session()
         auth_url = unscoped_auth.auth_url
 
-        if not domain_name or utils.get_keystone_version() < 3:
+        if utils.get_keystone_version() < 3:
             return None, None
+        if domain_name:
+            domains = [domain_name]
+        else:
+            domains = self.list_domains(session,
+                                        unscoped_auth,
+                                        unscoped_auth_ref)
+            domains = [domain.name for domain in domains if domain.enabled]
 
         # domain support can require domain scoped tokens to perform
         # identity operations depending on the policy files being used
         # for keystone.
         domain_auth = None
         domain_auth_ref = None
-        try:
+        for domain_name in domains:
             token = unscoped_auth_ref.auth_token
             domain_auth = utils.get_token_auth_plugin(
                 auth_url,
                 token,
                 domain_name=domain_name)
-            domain_auth_ref = domain_auth.get_access(session)
-        except (keystone_exceptions.ClientException,
-                keystone_exceptions.AuthorizationFailure):
-            LOG.debug('Error getting domain scoped token.', exc_info=True)
+            try:
+                domain_auth_ref = domain_auth.get_access(session)
+            except (keystone_exceptions.ClientException,
+                    keystone_exceptions.AuthorizationFailure):
+                pass
+            else:
+                if len(domains) > 1:
+                    LOG.info("More than one valid domain found for user %s,"
+                             " scoping to %s" %
+                             (unscoped_auth_ref.user_id, domain_name))
+                break
         return domain_auth, domain_auth_ref

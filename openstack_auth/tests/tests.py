@@ -108,8 +108,27 @@ class OpenStackAuthFederatedTestsMixin(object):
         client.federation.projects = self.mox.CreateMockAnything()
         client.federation.projects.list().AndReturn(projects)
 
+    def _mock_unscoped_list_domains(self, client, domains):
+        client.auth = self.mox.CreateMockAnything()
+        client.auth.domains().AndReturn(domains)
+
     def _mock_unscoped_token_client(self, unscoped, auth_url=None,
-                                    client=True):
+                                    client=True, plugin=None):
+        if not auth_url:
+            auth_url = settings.OPENSTACK_KEYSTONE_URL
+        if unscoped and not plugin:
+            plugin = self._create_token_auth(
+                None,
+                token=unscoped.auth_token,
+                url=auth_url)
+            plugin.get_access(mox.IsA(session.Session)).AndReturn(unscoped)
+        plugin.auth_url = auth_url
+        if client:
+            return self.ks_client_module.Client(
+                session=mox.IsA(session.Session),
+                auth=plugin)
+
+    def _mock_plugin(self, unscoped, auth_url=None):
         if not auth_url:
             auth_url = settings.OPENSTACK_KEYSTONE_URL
         plugin = self._create_token_auth(
@@ -117,15 +136,16 @@ class OpenStackAuthFederatedTestsMixin(object):
             token=unscoped.auth_token,
             url=auth_url)
         plugin.get_access(mox.IsA(session.Session)).AndReturn(unscoped)
-        plugin.auth_url = auth_url
-        if client:
-            return self.ks_client_module.Client(
-                session=mox.IsA(session.Session),
-                auth=plugin)
+        plugin.auth_url = settings.OPENSTACK_KEYSTONE_URL
+        return plugin
 
-    def _mock_federated_client_list_projects(self, unscoped, projects):
-        client = self._mock_unscoped_token_client(unscoped)
+    def _mock_federated_client_list_projects(self, unscoped_auth, projects):
+        client = self._mock_unscoped_token_client(None, plugin=unscoped_auth)
         self._mock_unscoped_federated_list_projects(client, projects)
+
+    def _mock_federated_client_list_domains(self, unscoped_auth, domains):
+        client = self._mock_unscoped_token_client(None, plugin=unscoped_auth)
+        self._mock_unscoped_list_domains(client, domains)
 
 
 class OpenStackAuthTestsV2(OpenStackAuthTestsMixin, test.TestCase):
@@ -885,6 +905,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
         self.data = data_v3.generate_test_data(service_providers=True)
         self.sp_data = data_v3.generate_test_data(endpoint='http://sp2')
         projects = [self.data.project_one, self.data.project_two]
+        domains = []
         user = self.data.user
         unscoped = self.data.unscoped_access_info
         form_data = self.get_form_data(user)
@@ -925,7 +946,13 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
         # mock authenticate for service provider
         sp_projects = [self.sp_data.project_one, self.sp_data.project_two]
         sp_unscoped = self.sp_data.federated_unscoped_access_info
-        client = self._mock_unscoped_token_client(sp_unscoped, plugin.auth_url)
+        sp_unscoped_auth = self._mock_plugin(sp_unscoped,
+                                             auth_url=plugin.auth_url)
+        client = self._mock_unscoped_token_client(None, plugin.auth_url,
+                                                  plugin=sp_unscoped_auth)
+        self._mock_unscoped_list_domains(client, domains)
+        client = self._mock_unscoped_token_client(None, plugin.auth_url,
+                                                  plugin=sp_unscoped_auth)
         self._mock_unscoped_federated_list_projects(client, sp_projects)
         self._mock_scoped_client_for_tenant(sp_unscoped,
                                             self.sp_data.project_one.id,
@@ -961,6 +988,7 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
         self.data = data_v3.generate_test_data(service_providers=True)
         keystone_provider = 'localkeystone'
         projects = [self.data.project_one, self.data.project_two]
+        domains = []
         user = self.data.user
         unscoped = self.data.unscoped_access_info
         form_data = self.get_form_data(user)
@@ -971,7 +999,12 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
         self._mock_unscoped_token_client(unscoped,
                                          auth_url=auth_url,
                                          client=False)
-        client = self._mock_unscoped_token_client(unscoped, auth_url)
+        unscoped_auth = self._mock_plugin(unscoped)
+        client = self._mock_unscoped_token_client(None, auth_url=auth_url,
+                                                  plugin=unscoped_auth)
+        self._mock_unscoped_list_domains(client, domains)
+        client = self._mock_unscoped_token_client(None, auth_url=auth_url,
+                                                  plugin=unscoped_auth)
         self._mock_unscoped_list_projects(client, user, projects)
         self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
@@ -1154,11 +1187,14 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin,
 
     def test_websso_login(self):
         projects = [self.data.project_one, self.data.project_two]
+        domains = []
         unscoped = self.data.federated_unscoped_access_info
         token = unscoped.auth_token
+        unscoped_auth = self._mock_plugin(unscoped)
 
         form_data = {'token': token}
-        self._mock_federated_client_list_projects(unscoped, projects)
+        self._mock_federated_client_list_domains(unscoped_auth, domains)
+        self._mock_federated_client_list_projects(unscoped_auth, projects)
         self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
         self.mox.ReplayAll()
@@ -1173,11 +1209,14 @@ class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin,
         settings.OPENSTACK_KEYSTONE_URL = 'http://auth.openstack.org:5000/v3'
 
         projects = [self.data.project_one, self.data.project_two]
+        domains = []
         unscoped = self.data.federated_unscoped_access_info
         token = unscoped.auth_token
+        unscoped_auth = self._mock_plugin(unscoped)
 
         form_data = {'token': token}
-        self._mock_federated_client_list_projects(unscoped, projects)
+        self._mock_federated_client_list_domains(unscoped_auth, domains)
+        self._mock_federated_client_list_projects(unscoped_auth, projects)
         self._mock_scoped_client_for_tenant(unscoped, self.data.project_one.id)
 
         self.mox.ReplayAll()
