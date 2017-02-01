@@ -105,6 +105,7 @@ class Token(object):
         project['name'] = auth_ref.project_name
         project['is_admin_project'] = getattr(auth_ref, 'is_admin_project',
                                               False)
+        project['domain_id'] = getattr(auth_ref, 'project_domain_id', None)
         self.project = project
         self.tenant = self.project
 
