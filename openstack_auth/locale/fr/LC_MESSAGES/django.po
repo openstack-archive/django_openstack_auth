@@ -12,16 +12,17 @@
 # Xavier Gauvrit <xavier.gauvrit@cloudwatt.com>, 2014
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
 # Gérald LONLAS <g.lonlas@gmail.com>, 2016. #zanata
+# JF Taltavull <jftalta@gmail.com>, 2017. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 3.1.1.dev1\n"
+"Project-Id-Version: django_openstack_auth 3.1.2.dev2\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2017-01-25 19:41+0000\n"
+"POT-Creation-Date: 2017-02-04 23:47+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-10-22 05:24+0000\n"
-"Last-Translator: Gérald LONLAS <g.lonlas@gmail.com>\n"
+"PO-Revision-Date: 2017-02-05 10:44+0000\n"
+"Last-Translator: JF Taltavull <jftalta@gmail.com>\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.0\n"
@@ -36,11 +37,17 @@ msgstr ""
 msgid "Authenticate using"
 msgstr "Mode d'authentification"
 
+msgid "Could not find service provider ID on Keystone."
+msgstr "Impossible de trouver l'ID du fournisseur de services sur Keystone."
+
 msgid "Domain"
 msgstr "Domaine"
 
 msgid "Invalid credentials."
-msgstr "Informations d'identification non valides."
+msgstr "Informations d'authentification non valides."
+
+msgid "K2K Federation not setup for this session"
+msgstr "La fédération K2K n'a pas été configurée pour cette session"
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -58,6 +65,15 @@ msgid "Region"
 msgstr "Région"
 
 #, python-format
+msgid "Service provider authentication failed. %s"
+msgstr "L'authentification du fournisseur de services a échoué. %s"
+
+#, python-format
+msgid "Switch to Keystone Provider \"%(keystone_provider)s\"successful."
+msgstr ""
+"Bascule vers le fournisseur Keystone \"%(keystone_provider)s\" réussie."
+
+#, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
 msgstr "Bascule vers le projet \"%(project_name)s\" réussie. "
 
@@ -66,7 +82,10 @@ msgstr ""
 "Le jeton d'authentification délivré par le service d'Identité a expiré."
 
 msgid "Unable to establish connection to keystone endpoint."
-msgstr "Impossible d'établir la connexion avec le point d'accès keystone."
+msgstr "Impossible d'établir la connexion avec le endpoint keystone."
+
+msgid "Unable to retrieve authorized domains."
+msgstr "Impossible de récupérer les domaines autorisés."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Impossible de récupérer les projets autorisés."
