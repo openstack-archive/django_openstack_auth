@@ -8,16 +8,17 @@
 # Sungjin Kang <potopro@gmail.com>, 2015
 # Andrea Young Oak Li <youli@redhat.com>, 2016. #zanata
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Sungjin Kang <gang.sungjin@gmail.com>, 2017. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 3.1.1.dev1\n"
+"Project-Id-Version: django_openstack_auth 3.1.2.dev2\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2017-01-25 19:41+0000\n"
+"POT-Creation-Date: 2017-02-04 23:47+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-09-15 11:45+0000\n"
-"Last-Translator: Andrea Young Oak Li <youli@redhat.com>\n"
+"PO-Revision-Date: 2017-02-04 03:08+0000\n"
+"Last-Translator: Sungjin Kang <gang.sungjin@gmail.com>\n"
 "Language: ko-KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.0\n"
@@ -30,11 +31,17 @@ msgstr "인증 중 오류가 발생했습니다. 잠시 후 다시 시도하세�
 msgid "Authenticate using"
 msgstr "인증 방법"
 
+msgid "Could not find service provider ID on Keystone."
+msgstr "Keystone 에서 서비스 프로바이더 ID 를 찾지 못하였습니다."
+
 msgid "Domain"
 msgstr "도메인"
 
 msgid "Invalid credentials."
 msgstr "올바르지 않은 인증정보입니다."
+
+msgid "K2K Federation not setup for this session"
+msgstr "이 세션에는 K2K Federation 이 설정되지 않았습니다."
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -53,6 +60,14 @@ msgid "Region"
 msgstr "지역"
 
 #, python-format
+msgid "Service provider authentication failed. %s"
+msgstr "서비스 프로바이더 인증에 실패했습니다. %s"
+
+#, python-format
+msgid "Switch to Keystone Provider \"%(keystone_provider)s\"successful."
+msgstr "Keystone 프로바이더 \"%(keystone_provider)s\" 로 변경하였습니다."
+
+#, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
 msgstr "프로젝트 \"%(project_name)s\" 로 전환에 성공하였습니다."
 
@@ -61,6 +76,9 @@ msgstr "Identity 서비스에서 발급한 인증 토큰이 만료되었습니�
 
 msgid "Unable to establish connection to keystone endpoint."
 msgstr "Keystone 엔드포인트에 접속할 수 없습니다."
+
+msgid "Unable to retrieve authorized domains."
+msgstr "인증된 도메인을 찾지 못했습니다."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "인증된 프로젝트를 가져올 수 없습니다."
