@@ -10,16 +10,17 @@
 # Ying Chun Guo <daisy.ycguo@gmail.com>, 2015
 # 刘俊朋 <liujunpeng@inspur.com>, 2015
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# liujunpeng <liujunpeng@inspur.com>, 2017. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 3.1.1.dev1\n"
+"Project-Id-Version: django_openstack_auth 3.1.2.dev1\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2017-01-25 19:41+0000\n"
+"POT-Creation-Date: 2017-02-09 07:48+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-03-23 06:22+0000\n"
-"Last-Translator: qingszhao <zdqyuqing@163.com>\n"
+"PO-Revision-Date: 2017-02-10 12:14+0000\n"
+"Last-Translator: liujunpeng <liujunpeng@inspur.com>\n"
 "Language: zh-CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.0\n"
@@ -32,11 +33,17 @@ msgstr "认证出现错误。请稍后重试。"
 msgid "Authenticate using"
 msgstr "使用认证"
 
+msgid "Could not find service provider ID on Keystone."
+msgstr "在Keystone上不能找到服务提供者ID。"
+
 msgid "Domain"
 msgstr "域"
 
 msgid "Invalid credentials."
 msgstr "凭据无效."
+
+msgid "K2K Federation not setup for this session"
+msgstr "会话没有建立K2K联邦"
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -54,6 +61,14 @@ msgid "Region"
 msgstr "区域"
 
 #, python-format
+msgid "Service provider authentication failed. %s"
+msgstr "服务提供者认证失败。%s"
+
+#, python-format
+msgid "Switch to Keystone Provider \"%(keystone_provider)s\"successful."
+msgstr "成功切换到 Keystone 提供者\"%(keystone_provider)s\"."
+
+#, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
 msgstr "成功切换到项目\"%(project_name)s\""
 
@@ -62,6 +77,9 @@ msgstr "身份认证令牌已过期。"
 
 msgid "Unable to establish connection to keystone endpoint."
 msgstr "无法连接keystone端点。"
+
+msgid "Unable to retrieve authorized domains."
+msgstr "无法获取授权域。"
 
 msgid "Unable to retrieve authorized projects."
 msgstr "无法获取授权的项目。"
