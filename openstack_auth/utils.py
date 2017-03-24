@@ -186,6 +186,7 @@ def get_websso_url(request, auth_url, websso_auth):
     :type websso_auth: string
 
     Example of horizon WebSSO setting::
+
         WEBSSO_CHOICES = (
             ("credentials", "Keystone Credentials"),
             ("oidc", "OpenID Connect"),
@@ -207,12 +208,14 @@ def get_websso_url(request, auth_url, websso_auth):
     The value in WEBSSO_IDP_MAPPING is expected to be a tuple formatted as
     (<idp_id>, <protocol_id>). Using the values found, a IdP/protocol
     specific URL will be constructed:
+
         /auth/OS-FEDERATION/identity_providers/<idp_id>
         /protocols/<protocol_id>/websso
 
     If no value is found from the WEBSSO_IDP_MAPPING dictionary, it will
     treat the value as the global WebSSO protocol <protocol_id> and
     construct the WebSSO URL by:
+
         /auth/OS-FEDERATION/websso/<protocol_id>
 
     :returns: Keystone WebSSO endpoint.
@@ -436,12 +439,14 @@ def using_cookie_backed_sessions():
 def get_admin_roles():
     """Common function for getting the admin roles from settings
 
-       Returns:
-        Set object including all admin roles.
-        If there is no role, this will return empty.
+    :return:
+      Set object including all admin roles.
+      If there is no role, this will return empty::
+
         {
             "foo", "bar", "admin"
         }
+
     """
     admin_roles = {role.lower() for role
                    in getattr(settings, 'OPENSTACK_KEYSTONE_ADMIN_ROLES',
@@ -454,9 +459,10 @@ def get_role_permission(role):
 
     This format is 'openstack.roles.xxx' and 'xxx' is a real role name.
 
-    Returns:
+    :returns:
         String like "openstack.roles.admin"
         If role is None, this will return None.
+
     """
     return "openstack.roles.%s" % role.lower()
 
@@ -466,14 +472,16 @@ def get_admin_permissions():
 
     This format is 'openstack.roles.xxx' and 'xxx' is a real role name.
 
-    Returns:
-        Set object including all admin permission.
-        If there is no permission, this will return empty.
+    :returns:
+       Set object including all admin permission.
+       If there is no permission, this will return empty::
+
         {
             "openstack.roles.foo",
             "openstack.roles.bar",
             "openstack.roles.admin"
         }
+
     """
     return {get_role_permission(role) for role in get_admin_roles()}
 

@@ -68,8 +68,11 @@ class KeystoneBackend(object):
         If authenticated, this return the user object based on the user ID
         and session data.
 
-        Note: this required monkey-patching the ``contrib.auth`` middleware
-        to make the ``request`` object available to the auth backend class.
+        .. note::
+
+          This required monkey-patching the ``contrib.auth`` middleware
+          to make the ``request`` object available to the auth backend class.
+
         """
         if (hasattr(self, 'request') and
                 user_id == self.request.session["user_id"]):
