@@ -259,8 +259,9 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
     def is_token_expired(self, margin=None):
         """Determine if the token is expired.
 
-        Returns ``True`` if the token is expired, ``False`` if not, and
-        ``None`` if there is no token set.
+        :returns:
+          ``True`` if the token is expired, ``False`` if not, and
+          ``None`` if there is no token set.
 
         :param margin:
            A security time margin in seconds before real expiration.
@@ -287,7 +288,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
         def is_anonymous(self):
             """Return if the user is not authenticated.
 
-            Returns ``True`` if not authenticated,``False`` otherwise.
+            :returns: ``True`` if not authenticated,``False`` otherwise.
             """
             return deprecation.CallableBool(not self.is_authenticated)
     else:
@@ -307,7 +308,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
         def is_anonymous(self, margin=None):
             """Return if the user is not authenticated.
 
-            Returns ``True`` if not authenticated,``False`` otherwise.
+            :returns: ``True`` if not authenticated,``False`` otherwise.
 
             :param margin:
                A security time margin in seconds before end of an eventual
@@ -327,7 +328,7 @@ class User(models.AbstractBaseUser, models.AnonymousUser):
     def is_superuser(self):
         """Evaluates whether this user has admin privileges.
 
-        Returns ``True`` or ``False``.
+        :returns: ``True`` or ``False``.
         """
         admin_roles = utils.get_admin_roles()
         user_roles = {role['name'].lower() for role in self.roles}
