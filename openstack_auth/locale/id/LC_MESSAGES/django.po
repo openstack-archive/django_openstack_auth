@@ -9,18 +9,18 @@
 # suhartono <cloudsuhartono@gmail.com>, 2017. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 3.1.1.dev7\n"
+"Project-Id-Version: django_openstack_auth 3.1.2.dev15\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2017-01-31 14:11+0000\n"
+"POT-Creation-Date: 2017-04-10 01:40+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-01-31 01:38+0000\n"
+"PO-Revision-Date: 2017-04-11 03:47+0000\n"
 "Last-Translator: suhartono <cloudsuhartono@gmail.com>\n"
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.3\n"
+"X-Generator: Zanata 3.9.6\n"
 "Language-Team: Indonesian\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -50,6 +50,11 @@ msgstr ""
 
 msgid "Password"
 msgstr "Password"
+
+#, python-format
+msgid "Please consider changing your password, it will expire in %s minutes"
+msgstr ""
+"Silakan mempertimbangkan mengubah sandi Anda, inu akan berakhir pada %s menit"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
