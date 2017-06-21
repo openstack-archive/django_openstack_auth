@@ -61,11 +61,22 @@ class Login(django_auth_forms.AuthenticationForm):
                    'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT',
                    False):
             last_domain = self.request.COOKIES.get('login_domain', None)
-            self.fields['domain'] = forms.CharField(
-                initial=last_domain,
-                label=_("Domain"),
-                required=True,
-                widget=forms.TextInput(attrs={"autofocus": "autofocus"}))
+            if getattr(settings,
+                       'OPENSTACK_KEYSTONE_DOMAIN_DROPDOWN',
+                       False):
+                self.fields['domain'] = forms.ChoiceField(
+                    label=_("Domain"),
+                    initial=last_domain,
+                    required=True,
+                    choices=getattr(settings,
+                                    'OPENSTACK_KEYSTONE_DOMAIN_CHOICES',
+                                    ()))
+            else:
+                self.fields['domain'] = forms.CharField(
+                    initial=last_domain,
+                    label=_("Domain"),
+                    required=True,
+                    widget=forms.TextInput(attrs={"autofocus": "autofocus"}))
             self.fields['username'].widget = forms.widgets.TextInput()
             fields_ordering = ['domain', 'username', 'password', 'region']
         self.fields['region'].choices = self.get_region_choices()
