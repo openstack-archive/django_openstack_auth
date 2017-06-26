@@ -11,12 +11,8 @@ The current version is designed to work with the Keystone V2 or V3 API.
 .. toctree::
    :maxdepth: 2
 
-   installation
-   ref/user
-   ref/views
-   ref/forms
-   ref/backend
-   ref/utils
+   install/index
+   reference/index
 
 Indices and tables
 ==================
