@@ -14,9 +14,6 @@ The current version is designed to work with the Keystone V2 or V3 API.
    install/index
    reference/index
 
-Indices and tables
-==================
-
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
