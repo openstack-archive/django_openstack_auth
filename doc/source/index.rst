@@ -12,6 +12,7 @@ The current version is designed to work with the Keystone V2 or V3 API.
    :maxdepth: 2
 
    install/index
+   configuration/index
    reference/index
 
 * :ref:`genindex`
