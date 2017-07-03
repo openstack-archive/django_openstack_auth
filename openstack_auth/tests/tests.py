@@ -1091,6 +1091,32 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
             token=unscoped.auth_token)
         self.assertEqual(project_list, expected_projects)
 
+    def test_login_form_multidomain(self):
+        override = self.settings(OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT=True)
+        override.enable()
+        self.addCleanup(override.disable)
+
+        url = reverse('login')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'name="domain" type="text"')
+
+    def test_login_form_multidomain_dropdown(self):
+        override = self.settings(OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT=True,
+                                 OPENSTACK_KEYSTONE_DOMAIN_DROPDOWN=True,
+                                 OPENSTACK_KEYSTONE_DOMAIN_CHOICES=(
+                                     ('Default', 'Default'),)
+                                 )
+        override.enable()
+        self.addCleanup(override.disable)
+
+        url = reverse('login')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'select id="id_domain" name="domain"')
+        self.assertContains(response, 'option value="Default"')
+        settings.OPENSTACK_KEYSTONE_DOMAIN_DROPDOWN = False
+
 
 class OpenStackAuthTestsWebSSO(OpenStackAuthTestsMixin,
                                OpenStackAuthFederatedTestsMixin,
