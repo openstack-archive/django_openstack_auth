@@ -29,7 +29,7 @@ from keystoneclient.v2_0 import client as client_v2
 from keystoneclient.v3 import client as client_v3
 import mock
 from mox3 import mox
-from testscenarios import load_tests_apply_scenarios  # noqa
+from testscenarios import load_tests_apply_scenarios
 
 from openstack_auth import policy
 from openstack_auth.tests import data_v2

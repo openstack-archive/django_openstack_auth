@@ -10,10 +10,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from openstack_auth.plugin.base import *  # noqa
-from openstack_auth.plugin.password import *  # noqa
-from openstack_auth.plugin.token import *  # noqa
-from openstack_auth.plugin.k2k import *  # noqa
+from openstack_auth.plugin.base import BasePlugin
+from openstack_auth.plugin.k2k import K2KAuthPlugin
+from openstack_auth.plugin.password import PasswordPlugin
+from openstack_auth.plugin.token import TokenPlugin
 
 
 __all__ = ['BasePlugin',
