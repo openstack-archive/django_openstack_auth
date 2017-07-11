@@ -28,7 +28,7 @@ __all__ = ['K2KAuthPlugin']
 
 class K2KAuthPlugin(base.BasePlugin):
 
-    def get_plugin(self, service_provider=None, auth_url=None, plugins=[],
+    def get_plugin(self, service_provider=None, auth_url=None, plugins=None,
                    **kwargs):
         """Authenticate using keystone to keystone federation.
 
@@ -41,6 +41,9 @@ class K2KAuthPlugin(base.BasePlugin):
         :param plugins: list of openstack_auth plugins to check
         :returns Keystone2Keystone keystone auth plugin
         """
+
+        # Avoid mutable default arg for plugins
+        plugins = plugins or []
 
         # service_provider being None prevents infinite recursion
         if utils.get_keystone_version() < 3 or not service_provider:
