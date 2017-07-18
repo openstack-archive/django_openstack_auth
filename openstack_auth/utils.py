@@ -17,7 +17,6 @@ import re
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth import middleware
 from django.contrib.auth import models
 from django.utils import timezone
 from keystoneauth1.identity import v2 as v2_auth
@@ -62,6 +61,10 @@ def get_user(request):
 
 
 def patch_middleware_get_user():
+    # NOTE(adriant): We can't import middleware until our customer user model
+    # is actually registered, otherwise a call to get_user_model within the
+    # middleware module will fail.
+    from django.contrib.auth import middleware
     middleware.get_user = middleware_get_user
     auth.get_user = get_user
 
