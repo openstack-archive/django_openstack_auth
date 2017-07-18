@@ -1099,7 +1099,8 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
         url = reverse('login')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'name="domain" type="text"')
+        self.assertContains(response, 'id="id_domain"')
+        self.assertContains(response, 'name="domain"')
 
     def test_login_form_multidomain_dropdown(self):
         override = self.settings(OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT=True,
@@ -1113,7 +1114,8 @@ class OpenStackAuthTestsV3(OpenStackAuthTestsMixin,
         url = reverse('login')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'select id="id_domain" name="domain"')
+        self.assertContains(response, 'id="id_domain"')
+        self.assertContains(response, 'name="domain"')
         self.assertContains(response, 'option value="Default"')
         settings.OPENSTACK_KEYSTONE_DOMAIN_DROPDOWN = False
 
