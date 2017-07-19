@@ -18,7 +18,7 @@ import logging
 import pytz
 
 from django.conf import settings
-from django.utils.module_loading import import_string  # noqa
+from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
 
 from openstack_auth import exceptions

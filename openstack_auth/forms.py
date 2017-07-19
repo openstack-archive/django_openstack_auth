@@ -15,11 +15,11 @@ import collections
 import logging
 
 from django.conf import settings
-from django.contrib.auth import authenticate  # noqa
+from django.contrib.auth import authenticate
 from django.contrib.auth import forms as django_auth_forms
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.debug import sensitive_variables  # noqa
+from django.views.decorators.debug import sensitive_variables
 
 from openstack_auth import exceptions
 from openstack_auth import utils

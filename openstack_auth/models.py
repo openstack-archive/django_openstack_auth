@@ -12,4 +12,7 @@
 # limitations under the License.
 
 # import the User model in here so Django can find it
-from openstack_auth.user import User        # noqa
+from openstack_auth.user import User
+
+
+__all__ = ['User']

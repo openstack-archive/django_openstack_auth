@@ -14,7 +14,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required  # noqa
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as django_auth_views
 from django.contrib import messages
 from django import http as django_http
@@ -22,10 +22,10 @@ from django import shortcuts
 from django.utils import functional
 from django.utils import http
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.cache import never_cache  # noqa
-from django.views.decorators.csrf import csrf_exempt  # noqa
-from django.views.decorators.csrf import csrf_protect  # noqa
-from django.views.decorators.debug import sensitive_post_parameters  # noqa
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 from keystoneauth1 import exceptions as keystone_exceptions
 import six
 
@@ -36,7 +36,7 @@ from openstack_auth import plugin
 # This is historic and is added back in to not break older versions of
 # Horizon, fix to Horizon to remove this requirement was committed in
 # Juno
-from openstack_auth.forms import Login  # noqa
+from openstack_auth.forms import Login  # noqa:F401
 from openstack_auth import user as auth_user
 from openstack_auth import utils
 
