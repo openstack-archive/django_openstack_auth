@@ -222,6 +222,23 @@ will deny the access and users must contact an admin to change their password.
 Setting this value to ``N`` days means the user will be alerted when the
 password expires in less than ``N+1`` days. ``-1`` disables the feature.
 
+``POLICY_DIRS``
+----------------
+
+Default: ``{}``
+
+Specifies a list of policy directories per service types. The directories
+are relative to ``POLICY_FILES_PATH``. Services whose additional policies
+are defined here must be defined in ``POLICY_FILES`` too. Otherwise,
+additional policies specified in ``POLICY_DIRS`` are not loaded.
+
+Example::
+
+    POLICY_DIRS = {
+        'identity': 'keystone_policy.d',
+        'compute': 'nova_policy.d'
+    }
+
 ``POLICY_FILES``
 ----------------
 
