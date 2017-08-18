@@ -13,20 +13,21 @@
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
 # Gérald LONLAS <g.lonlas@gmail.com>, 2016. #zanata
 # JF Taltavull <jftalta@gmail.com>, 2017. #zanata
+# Loic Nicolle <loic.nicolle@orange.com>, 2017. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 3.1.2.dev2\n"
+"Project-Id-Version: django_openstack_auth 3.5.1.dev3\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2017-02-04 23:47+0000\n"
+"POT-Creation-Date: 2017-08-15 13:05+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-02-05 10:44+0000\n"
-"Last-Translator: JF Taltavull <jftalta@gmail.com>\n"
+"PO-Revision-Date: 2017-07-19 09:06+0000\n"
+"Last-Translator: Loic Nicolle <loic.nicolle@orange.com>\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.3\n"
+"X-Generator: Zanata 3.9.6\n"
 "Language-Team: French\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -56,6 +57,10 @@ msgstr "Aucun backend d'authentification pour gérer les informations fournies."
 
 msgid "Password"
 msgstr "Mot de passe"
+
+#, python-format
+msgid "Please consider changing your password, it will expire in %s minutes"
+msgstr "Merci de changer votre mot de passe, il va expirer dans %s minutes"
 
 #, python-format
 msgid "Project switch failed for user \"%(username)s\"."
