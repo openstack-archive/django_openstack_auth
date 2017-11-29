@@ -1,27 +1,10 @@
-========================
-Team and repository tags
-========================
+The code has been merged into openstack/horizon.
 
-.. image:: http://governance.openstack.org/badges/django_openstack_auth.svg
-    :target: http://governance.openstack.org/reference/tags/index.html
+The contents of this repository are still available in the Git
+source code management system. To see the contents of this
+repository before it was merged into the horizon repo,
+please check out the previous commit with "git checkout HEAD^1".
 
-.. Change things from this point on
-
-=====================
-Django OpenStack Auth
-=====================
-
-Django OpenStack Auth is a pluggable Django authentication backend that
-works with Django's ``contrib.auth`` framework to authenticate a user against
-OpenStack's Keystone Identity API.
-
-The current version is designed to work with the Keystone v2.0 and v3 API.
-
-You can `view the installation instructions`_ on Read The Docs.
-
-.. _view the installation instructions: http://docs.openstack.org/developer/django_openstack_auth/
-
-* License: Apache License, Version 2.0
-* Documentation: http://django-openstack-auth.readthedocs.org/en/latest/
-* Source: http://git.openstack.org/cgit/openstack/django_openstack_auth/
-* Bugs: https://bugs.launchpad.net/django-openstack-auth
+For any further questions, please email
+openstack-dev@lists.openstack.org or
+join #openstack-horizon on Freenode.
