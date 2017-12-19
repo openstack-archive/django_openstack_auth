@@ -1,0 +1,10 @@
+- project:
+    name: openstack/django_openstack_auth
+    check:
+      jobs:
+        - horizon-openstack-tox-py27dj110
+        - horizon-openstack-tox-py27dj19
+    gate:
+      jobs:
+        - horizon-openstack-tox-py27dj110
+        - horizon-openstack-tox-py27dj19
