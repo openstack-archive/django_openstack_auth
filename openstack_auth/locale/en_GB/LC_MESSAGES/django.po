@@ -7,20 +7,21 @@
 # Rob Cresswell <robert.cresswell@outlook.com>, 2015
 # Andi Chandler <andi@gowling.com>, 2016. #zanata
 # Andreas Jaeger <jaegerandi@gmail.com>, 2016. #zanata
+# Andi Chandler <andi@gowling.com>, 2017. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: django_openstack_auth 3.1.1.dev1\n"
+"Project-Id-Version: django_openstack_auth VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/openstack-i18n/\n"
-"POT-Creation-Date: 2017-01-25 19:41+0000\n"
+"POT-Creation-Date: 2017-12-20 18:13+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-06-09 10:53+0000\n"
+"PO-Revision-Date: 2017-12-23 10:41+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language: en-GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.0\n"
-"X-Generator: Zanata 3.7.3\n"
+"X-Generator: Zanata 3.9.6\n"
 "Language-Team: English (United Kingdom)\n"
 
 msgid "An error occurred authenticating. Please try again later."
@@ -29,11 +30,17 @@ msgstr "An error occurred authenticating. Please try again later."
 msgid "Authenticate using"
 msgstr "Authenticate using"
 
+msgid "Could not find service provider ID on Keystone."
+msgstr "Could not find service provider ID on Keystone."
+
 msgid "Domain"
 msgstr "Domain"
 
 msgid "Invalid credentials."
 msgstr "Invalid credentials."
+
+msgid "K2K Federation not setup for this session"
+msgstr "K2K Federation not setup for this session"
 
 msgid ""
 "No authentication backend could be determined to handle the provided "
@@ -46,11 +53,23 @@ msgid "Password"
 msgstr "Password"
 
 #, python-format
+msgid "Please consider changing your password, it will expire in %s minutes"
+msgstr "Please consider changing your password, it will expire in %s minutes"
+
+#, python-format
 msgid "Project switch failed for user \"%(username)s\"."
 msgstr "Project switch failed for user \"%(username)s\"."
 
 msgid "Region"
 msgstr "Region"
+
+#, python-format
+msgid "Service provider authentication failed. %s"
+msgstr "Service provider authentication failed. %s"
+
+#, python-format
+msgid "Switch to Keystone Provider \"%(keystone_provider)s\"successful."
+msgstr "Switch to Keystone Provider \"%(keystone_provider)s\"successful."
 
 #, python-format
 msgid "Switch to project \"%(project_name)s\" successful."
@@ -61,6 +80,9 @@ msgstr "The authentication token issued by the Identity service has expired."
 
 msgid "Unable to establish connection to keystone endpoint."
 msgstr "Unable to establish connection to keystone endpoint."
+
+msgid "Unable to retrieve authorized domains."
+msgstr "Unable to retrieve authorised domains."
 
 msgid "Unable to retrieve authorized projects."
 msgstr "Unable to retrieve authorised projects."
