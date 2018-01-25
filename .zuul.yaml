@@ -1,5 +1,4 @@
 - project:
-    name: openstack/django_openstack_auth
     check:
       jobs:
         - horizon-openstack-tox-py27dj110
