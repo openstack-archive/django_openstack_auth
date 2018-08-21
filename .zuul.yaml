@@ -4,8 +4,21 @@
         - horizon-openstack-tox-py27dj110
         - horizon-openstack-tox-py27dj19
         - horizon-openstack-tox-py27dj18
+        - requirements-check
+        - openstack-tox-pep8
+        - openstack-tox-py27
+        - openstack-tox-py35
+        - build-openstack-sphinx-docs
     gate:
       jobs:
         - horizon-openstack-tox-py27dj110
         - horizon-openstack-tox-py27dj19
         - horizon-openstack-tox-py27dj18
+        - requirements-check
+        - openstack-tox-pep8
+        - openstack-tox-py27
+        - openstack-tox-py35
+        - build-openstack-sphinx-docs
+    post:
+      jobs:
+        - publish-openstack-sphinx-docs
