@@ -8,4 +8,4 @@ with "git checkout HEAD^3".
 
 For any further questions, please email
 openstack-dev@lists.openstack.org or
-join #openstack-horizon on Freenode.
+join #openstack-horizon on OFTC.
